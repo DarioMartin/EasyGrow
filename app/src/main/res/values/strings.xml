@@ -3,4 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="i_am_a_sanitary">Soy sanitario</string>
+    <string name="i_am_a_patient">Soy paciente</string>
+    <string name="welcome_title">Bienvenido a EasyGrow</string>
+    <string name="welcome_subtitle">¿Cómo vas a usar la aplicación?</string>
+    <string name="logout">Logout</string>
 </resources>

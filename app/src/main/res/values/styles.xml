@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EGButton">
+        <item name="android:layout_width">204dp</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="EGButton.Primary">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/eg_green</item>
+    </style>
+</resources>
