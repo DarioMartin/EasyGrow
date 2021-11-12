@@ -1,4 +1,4 @@
-package com.dariomartin.easygrow.ui.notifications
+package com.dariomartin.easygrow.ui.statistics
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

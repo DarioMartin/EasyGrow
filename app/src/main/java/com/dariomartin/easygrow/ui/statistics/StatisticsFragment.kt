@@ -1,4 +1,4 @@
-package com.dariomartin.easygrow.ui.notifications
+package com.dariomartin.easygrow.ui.statistics
 
 import android.os.Bundle
 import android.view.LayoutInflater

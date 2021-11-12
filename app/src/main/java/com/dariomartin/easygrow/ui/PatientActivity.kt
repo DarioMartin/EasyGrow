@@ -9,7 +9,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.ActivityPatientBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PatientActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPatientBinding

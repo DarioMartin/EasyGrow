@@ -9,4 +9,17 @@
     <string name="welcome_subtitle">¿Cómo vas a usar la aplicación?</string>
     <string name="logout">Logout</string>
     <string name="patient_picture">Foto del paciente</string>
+    <string name="full_name_format" translatable="false">%s %s</string>
+    <string name="height_cm_format">%d cm</string>
+    <string name="years_format">%d años</string>
+    <string name="weight_format">%.1f kg</string>
+    <string name="dose_item_dose">Dosis: %.2f %s</string>
+    <string name="dose_item_remaining_pens">Plumas restantes: %d</string>
+    <string name="arm_l">brazo izqd.</string>
+    <string name="arm_r">brazo dcho.</string>
+    <string name="leg_l">pierna izqd.</string>
+    <string name="leg_r">pierna dcha.</string>
+    <string name="abd_l">abdomen izqd.</string>
+    <string name="abd_r">abdomen dcho.</string>
+    <string name="remaining_doses">Dosis restantes: %d</string>
 </resources>

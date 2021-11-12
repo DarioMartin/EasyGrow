@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dose"
-        android:name="com.dariomartin.easygrow.ui.dashboard.DoseFragment"
+        android:name="com.dariomartin.easygrow.ui.dose.DoseFragment"
         android:label="@string/title_dose"
         tools:layout="@layout/fragment_dose" />
 
     <fragment
         android:id="@+id/navigation_statistics"
-        android:name="com.dariomartin.easygrow.ui.notifications.StatisticsFragment"
+        android:name="com.dariomartin.easygrow.ui.statistics.StatisticsFragment"
         android:label="@string/title_statistics"
         tools:layout="@layout/fragment_statistics" />
 </navigation>

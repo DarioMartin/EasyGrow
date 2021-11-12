@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_tratment"
+    android:padding="@dimen/spacing_l">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/treatment_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="42sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Omnitrope" />
+
+    <TextView
+        android:id="@+id/pharmacy_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/treatment_name"
+        tools:text="Sandoz" />
+
+    <TextView
+        android:id="@+id/dose"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:gravity="start"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@id/remaining_pens"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pharmacy_name"
+        tools:text="Dosis: 0,45 mg" />
+
+    <TextView
+        android:id="@+id/remaining_pens"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:gravity="end"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dose"
+        app:layout_constraintTop_toBottomOf="@id/pharmacy_name"
+        tools:text="Plumas restantes: 3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

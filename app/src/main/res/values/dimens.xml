@@ -15,4 +15,6 @@
     <dimen name="spacing_xxl_3">54dp</dimen>
     <dimen name="spacing_xxl_4">60dp</dimen>
     <dimen name="spacing_xxl_5">66dp</dimen>
-    <dimen name="spacing_xxl_6">72dp</dimen></resources>
+    <dimen name="spacing_xxl_6">72dp</dimen>
+    <dimen name="image_circle_stroke_width">3dp</dimen>
+</resources>
