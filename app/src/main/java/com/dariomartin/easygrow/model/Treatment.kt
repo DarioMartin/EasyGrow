@@ -2,28 +2,26 @@ package com.dariomartin.easygrow.model
 
 import android.icu.util.Measure
 import android.icu.util.MeasureUnit
-import com.dariomartin.easygrow.utils.Extensions.float
 import java.util.*
 
 data class Treatment(
     var drug: Drug,
-    var dose: Measure,
     val totalPens: Int = 0,
-    val date: Calendar
+    val lastUpdate: Calendar
 ) {
-    data class Drug(
-        val name: String,
-        val pharmacy: String,
-        val density: Density
-    ) {
-        fun calculateDoseMl(requiredDoseMg: Measure): Measure {
-            if (requiredDoseMg.unit != MeasureUnit.MILLIGRAM) throw IllegalArgumentException("Expecting mg value")
-            val dose = requiredDoseMg.float() * density.volume.float() / density.mass.float()
-            return Measure(dose, MeasureUnit.MILLILITER)
-        }
+
+    private val pens: MutableList<Pen> = mutableListOf()
+    var dose: Measure = Measure(0, MeasureUnit.MILLILITER)
+
+    fun addPens(i: Int) {
+        pens.addAll(List(i) { Pen() })
+    }
+
+    @JvmName("setDose1")
+    fun setDose(measure: Measure) {
+        val doseMeasure = drug.calculateDoseMl(measure)
+        dose = Measure(doseMeasure.number, MeasureUnit.MILLILITER)
     }
 }
 
-class Density(val mass: Measure, val volume: Measure) {
 
-}

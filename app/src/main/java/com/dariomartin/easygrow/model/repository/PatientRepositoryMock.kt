@@ -2,10 +2,7 @@ package com.dariomartin.easygrow.model.repository
 
 import android.icu.util.Measure
 import android.icu.util.MeasureUnit
-import com.dariomartin.easygrow.model.Administration
-import com.dariomartin.easygrow.model.Density
-import com.dariomartin.easygrow.model.Patient
-import com.dariomartin.easygrow.model.Treatment
+import com.dariomartin.easygrow.model.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.random.Random.Default.nextInt
@@ -39,31 +36,35 @@ class PatientRepositoryMock @Inject constructor() : IPatientRepository {
             cal.time = refCal.time
             cal.set(Calendar.HOUR, nextInt(20, 22))
             cal.set(Calendar.MINUTE, nextInt(0, 59))
-            val part = i % Administration.BodyPart.values().size
-            doses.add(Administration(cal, Administration.BodyPart.values()[part]))
+            val part = i % BodyPart.values().size
+            doses.add(Administration(cal, BodyPart.values()[part]))
             refCal.add(Calendar.DATE, 1)
         }
 
         return doses
     }
 
-    override fun recordAdministration(newBodyPart: Administration.BodyPart, date: Calendar) {
+    override fun recordAdministration(newBodyPart: BodyPart, date: Calendar) {
 
     }
 
     private fun getTreatment(patientWeight: Float): Treatment {
-        val drug = Treatment.Drug(
+        val drug = Drug(
             "Omnitrope", "Sandoz", density = Density(
                 Measure(10f, MeasureUnit.MILLIGRAM), Measure(1.5f, MeasureUnit.MILLILITER)
             )
         )
 
-        val doseMeasure =
-            drug.calculateDoseMl(Measure(0.035f * patientWeight, MeasureUnit.MILLIGRAM))
-        val dose = Measure(doseMeasure.number, MeasureUnit.MILLILITER)
+
         val lastDate = Calendar.getInstance()
-        lastDate.add(Calendar.DATE, -15)
-        return Treatment(drug = drug, dose = dose, totalPens = 5, date = lastDate)
+        lastDate.add(Calendar.DATE, -18)
+
+        val treatment = Treatment(drug = drug, lastUpdate = lastDate)
+
+        treatment.setDose(Measure(0.035f * patientWeight, MeasureUnit.MILLIGRAM))
+        treatment.addPens(5)
+
+        return treatment
     }
 
     private fun getBirthDay(): Calendar {

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dariomartin.easygrow.model.Administration
+import com.dariomartin.easygrow.model.BodyPart
 import com.dariomartin.easygrow.model.Treatment
 import com.dariomartin.easygrow.model.repository.IPatientRepository
 import com.dariomartin.easygrow.utils.Extensions.float
@@ -16,10 +17,16 @@ import javax.inject.Inject
 class DosesViewModel @Inject constructor(private val patientRepository: IPatientRepository) :
     ViewModel() {
 
-    val doses: MutableLiveData<Map<Administration.BodyPart, Boolean>> = MutableLiveData()
-    private var newBodyPart: Administration.BodyPart? = null
-    private var date: Calendar? = null
+    companion object {
+        private const val MULTIPLE_ADMINS = true
+    }
+
+    val lastAdministrations: MutableLiveData<Map<BodyPart, Boolean>> = MutableLiveData()
     val penDoses: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
+
+    //private var newBodyParts: MutableList<BodyPart>? = null
+    private var newAdministrations: MutableList<Administration> = mutableListOf()
+    private var date: Calendar? = null
 
     init {
         getPreviousAdministrations()
@@ -29,14 +36,16 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
         viewModelScope.launch {
             val treatment = patientRepository.getPatient().treatment
 
-            val administrations = patientRepository.getAdministrations()
-            val last3Administrations =
-                administrations.sortedBy { it.date }.takeLast(3).map { it.bodyPart to true }.toMap()
-                    .toMutableMap()
-            newBodyPart?.let { last3Administrations[it] = true }
-            doses.value = last3Administrations
+            val totalAdministrations: List<Administration> =
+                patientRepository.getAdministrations() + newAdministrations
 
-            calculateRemainingDoses(treatment, administrations)
+            val last3Administrations =
+                totalAdministrations.sortedBy { it.date }.takeLast(3).map { it.bodyPart to true }
+                    .toMap().toMutableMap()
+
+            lastAdministrations.value = last3Administrations
+
+            calculateRemainingDoses(treatment, totalAdministrations)
         }
     }
 
@@ -44,8 +53,8 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
         treatment: Treatment,
         previousAdministrations: List<Administration>
     ) {
-        val currentAdministrations =
-            previousAdministrations.filter { it.date > treatment.date }.size
+        var currentAdministrations =
+            previousAdministrations.filter { it.date > treatment.lastUpdate }.size + newAdministrations.size
         val dosesPerPen = (treatment.drug.density.volume.float() / treatment.dose.float()).toInt()
         val consumedPens = currentAdministrations / dosesPerPen
         val remainingPens = treatment.totalPens - consumedPens
@@ -54,28 +63,52 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
         penDoses.value = Pair(dosesPerPen, remainingDosesInPen)
     }
 
-    fun newDose(bodyPart: Administration.BodyPart) {
-        newBodyPart = when {
-            bodyPart == newBodyPart -> null
-            checkAvailability(bodyPart) -> {
-                date = Calendar.getInstance()
-                bodyPart
-            }
-            else -> newBodyPart
+    fun newAdministration(bodyPart: BodyPart) {
+        if (MULTIPLE_ADMINS) {
+            newMultipleAdministration(bodyPart)
+        } else {
+            newSingleAdministration(bodyPart)
         }
+
+
         getPreviousAdministrations()
     }
 
-    fun recordAdministration() {
-        newBodyPart?.let { bodyPart ->
-            date?.let { calendar ->
-                patientRepository.recordAdministration(bodyPart, calendar)
+    private fun newMultipleAdministration(bodyPart: BodyPart) {
+        when {
+            newAdministrations.isEmpty() || checkAvailability(bodyPart) -> {
+                newAdministrations.add(Administration(Calendar.getInstance(), bodyPart))
             }
         }
     }
 
-    private fun checkAvailability(bodyPart: Administration.BodyPart): Boolean {
-        return !(doses.value?.get(bodyPart) ?: false)
+    private fun newSingleAdministration(bodyPart: BodyPart) {
+        when {
+            newAdministrations.isEmpty() && checkAvailability(bodyPart) -> {
+                newAdministrations.add(Administration(Calendar.getInstance(), bodyPart))
+            }
+            newAdministrations.isNotEmpty() && checkAvailability(bodyPart) -> {
+                newAdministrations.clear()
+                newAdministrations.add(Administration(Calendar.getInstance(), bodyPart))
+            }
+            else -> {
+                newAdministrations.clear()
+            }
+        }
+    }
+
+    fun recordAdministration() {
+        /*newBodyPart?.let { bodyPart ->
+            date?.let { calendar ->
+                patientRepository.recordAdministration(bodyPart, calendar)
+            }
+        }*/
+    }
+
+    private fun checkAvailability(bodyPart: BodyPart): Boolean {
+        return !(lastAdministrations.value?.get(bodyPart) ?: false) &&
+                newAdministrations.none { it.bodyPart == bodyPart }
     }
 
 }
+

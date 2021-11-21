@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.FragmentDoseBinding
 import com.dariomartin.easygrow.model.Administration
+import com.dariomartin.easygrow.model.BodyPart
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +38,7 @@ class DoseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.doses.observe(viewLifecycleOwner, { dosesMap ->
+        viewModel.lastAdministrations.observe(viewLifecycleOwner, { dosesMap ->
             updateBodyMap(dosesMap)
         })
 
@@ -46,22 +47,22 @@ class DoseFragment : Fragment() {
         })
 
         binding.body.armL.setOnClickListener {
-            viewModel.newDose(Administration.BodyPart.ARM_L)
+            viewModel.newAdministration(BodyPart.ARM_L)
         }
         binding.body.armR.setOnClickListener {
-            viewModel.newDose(Administration.BodyPart.ARM_R)
+            viewModel.newAdministration(BodyPart.ARM_R)
         }
         binding.body.absL.setOnClickListener {
-            viewModel.newDose(Administration.BodyPart.ABS_L)
+            viewModel.newAdministration(BodyPart.ABS_L)
         }
         binding.body.absR.setOnClickListener {
-            viewModel.newDose(Administration.BodyPart.ABS_R)
+            viewModel.newAdministration(BodyPart.ABS_R)
         }
         binding.body.legL.setOnClickListener {
-            viewModel.newDose(Administration.BodyPart.LEG_L)
+            viewModel.newAdministration(BodyPart.LEG_L)
         }
         binding.body.legR.setOnClickListener {
-            viewModel.newDose(Administration.BodyPart.LEG_R)
+            viewModel.newAdministration(BodyPart.LEG_R)
         }
     }
 
@@ -70,19 +71,19 @@ class DoseFragment : Fragment() {
         binding.header.remainingDoses.text =getString(R.string.remaining_doses, penDoses.second)
     }
 
-    private fun updateBodyMap(dosesMap: Map<Administration.BodyPart, Boolean>) {
+    private fun updateBodyMap(dosesMap: Map<BodyPart, Boolean>) {
         binding.body.armLCheck.visibility =
-            if (dosesMap[Administration.BodyPart.ARM_L] == true) View.VISIBLE else View.GONE
+            if (dosesMap[BodyPart.ARM_L] == true) View.VISIBLE else View.GONE
         binding.body.armRCheck.visibility =
-            if (dosesMap[Administration.BodyPart.ARM_R] == true) View.VISIBLE else View.GONE
+            if (dosesMap[BodyPart.ARM_R] == true) View.VISIBLE else View.GONE
         binding.body.absLCheck.visibility =
-            if (dosesMap[Administration.BodyPart.ABS_L] == true) View.VISIBLE else View.GONE
+            if (dosesMap[BodyPart.ABS_L] == true) View.VISIBLE else View.GONE
         binding.body.absRCheck.visibility =
-            if (dosesMap[Administration.BodyPart.ABS_R] == true) View.VISIBLE else View.GONE
+            if (dosesMap[BodyPart.ABS_R] == true) View.VISIBLE else View.GONE
         binding.body.legLCheck.visibility =
-            if (dosesMap[Administration.BodyPart.LEG_L] == true) View.VISIBLE else View.GONE
+            if (dosesMap[BodyPart.LEG_L] == true) View.VISIBLE else View.GONE
         binding.body.legRCheck.visibility =
-            if (dosesMap[Administration.BodyPart.LEG_R] == true) View.VISIBLE else View.GONE
+            if (dosesMap[BodyPart.LEG_R] == true) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {
