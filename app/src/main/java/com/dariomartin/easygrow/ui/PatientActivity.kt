@@ -9,7 +9,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.ActivityPatientBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PatientActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPatientBinding
@@ -27,7 +29,7 @@ class PatientActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_profile, R.id.navigation_dose, R.id.navigation_statistics
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

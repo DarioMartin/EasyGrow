@@ -4,15 +4,48 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.3046875" />
+        <entry key="app/src/main/res/drawable/bg_tratment.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.2791666666666667" />
+        <entry key="app/src/main/res/drawable/ic_arm_l_check.xml" value="0.3145833333333333" />
+        <entry key="app/src/main/res/drawable/ic_dose.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/ic_kid_doses.xml" value="0.3145833333333333" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/pen_bakground.xml" value="0.2604166666666667" />
+        <entry key="app/src/main/res/drawable/pen_button.xml" value="0.3015625" />
+        <entry key="app/src/main/res/drawable/pen_empty_dose.xml" value="0.2604166666666667" />
+        <entry key="app/src/main/res/drawable/pen_needle.xml" value="0.3015625" />
+        <entry key="app/src/main/res/drawable/pen_remaining_dose.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/shadow.xml" value="0.3921875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_patient.xml" value="0.22447916666666667" />
+        <entry key="app/src/main/res/layout/dose_item.xml" value="0.16184666249192817" />
+        <entry key="app/src/main/res/layout/dose_item_empty.xml" value="0.24427083333333333" />
+        <entry key="app/src/main/res/layout/dose_vie_header_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_dose.xml" value="0.125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18309543434171835" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.4010590579624603" />
+        <entry key="app/src/main/res/layout/kid_body.xml" value="0.39317773788150806" />
+        <entry key="app/src/main/res/layout/patient_header.xml" value="0.39374772158540616" />
+        <entry key="app/src/main/res/layout/penview_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/treatment_administration.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/treatment_dose.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/treatment_header.xml" value="0.5" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.22447916666666667" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.10320030664361464" />
+      </ProjectState>
+    </option>
   </component>
 </project>
