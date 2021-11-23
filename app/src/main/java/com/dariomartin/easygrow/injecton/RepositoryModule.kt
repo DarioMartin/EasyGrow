@@ -1,7 +1,6 @@
 package com.dariomartin.easygrow.injecton
 
-import com.dariomartin.easygrow.model.repository.IPatientRepository
-import com.dariomartin.easygrow.model.repository.PatientRepositoryMock
+import com.dariomartin.easygrow.data.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +12,17 @@ class RepositoryModule {
 
     @Provides
     fun providePatientRepository(): IPatientRepository {
-        return PatientRepositoryMock()
+        return PatientRepositoryImpl()
     }
+
+    @Provides
+    fun provideUserRepository(): IUserRepository {
+        return UserRepositoryImpl()
+    }
+
+    @Provides
+    fun provideLoginRepository(): IAuthRepository {
+        return AuthRepositoryImpl()
+    }
+
 }

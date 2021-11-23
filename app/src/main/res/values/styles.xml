@@ -13,4 +13,9 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/eg_green</item>
     </style>
+
+    <style name="EGButton.Secondary">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/eg_purple</item>
+    </style>
 </resources>

@@ -15,8 +15,18 @@ object Utils {
         }
     }
 
-    fun getFormattedDate(format: String, date: Long): String {
+    fun dateToString(format: String, date: Long): String {
         return SimpleDateFormat(format, Locale.getDefault()).format(date)
+    }
+
+    fun stringToCalendar(format: String, date: String): Calendar {
+        val calendar = Calendar.getInstance()
+        return calendar.apply {
+            try {
+                SimpleDateFormat(format, Locale.getDefault()).parse(date)?.let { time = it }
+            } catch (e: Exception) {
+            }
+        }
     }
 
 }
