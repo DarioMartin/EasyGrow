@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.dariomartin.easygrow.ui.sanitary.SanitaryActivity
 import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.databinding.ActivityMainBinding
 import com.dariomartin.easygrow.ui.login.LoginActivity
 import com.dariomartin.easygrow.ui.patient.PatientActivity
-import com.dariomartin.easygrow.ui.sanitary.SanitaryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 

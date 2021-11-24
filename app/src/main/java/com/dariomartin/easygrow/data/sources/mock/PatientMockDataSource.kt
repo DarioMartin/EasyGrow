@@ -3,15 +3,17 @@ package com.dariomartin.easygrow.data.sources.mock
 import android.icu.util.Measure
 import android.icu.util.MeasureUnit
 import com.dariomartin.easygrow.data.dto.AdministrationDTO
+import com.dariomartin.easygrow.data.dto.DoctorDTO
+import com.dariomartin.easygrow.data.dto.DrugDTO
 import com.dariomartin.easygrow.data.dto.PatientDTO
 import com.dariomartin.easygrow.data.mapper.Mapper
 import com.dariomartin.easygrow.data.model.*
-import com.dariomartin.easygrow.data.sources.IUserDataSource
+import com.dariomartin.easygrow.data.sources.IDataSource
 import java.util.*
 import javax.inject.Inject
 import kotlin.random.Random.Default.nextInt
 
-class PatientMockDataSource @Inject constructor() : IUserDataSource {
+class PatientMockDataSource @Inject constructor() : IDataSource {
 
     lateinit var patient: Patient
 
@@ -38,11 +40,55 @@ class PatientMockDataSource @Inject constructor() : IUserDataSource {
     override suspend fun setType(userId: String, type: User.Type) {
     }
 
+    override suspend fun addPatient(patient: PatientDTO) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removePatient(patientId: String) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getPatient(patientId: String): PatientDTO {
         return Mapper.patientMapper(patient)
     }
 
-    override suspend fun updatePatient(patientId: String, patient: PatientDTO) {
+    override suspend fun addDoctor(doctor: DoctorDTO) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removeDoctor(doctorId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getDoctor(doctorId: String): DoctorDTO? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDoctor(doctor: DoctorDTO) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addDrug(drug: DrugDTO) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removeDrug(drugId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getDrug(drugId: String): DrugDTO? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDrug(drug: DrugDTO) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getDrugs(): List<DrugDTO> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updatePatient(patient: PatientDTO) {
         this.patient.name = patient.name
         this.patient.surname = patient.surname
         this.patient.height = patient.height
@@ -71,7 +117,22 @@ class PatientMockDataSource @Inject constructor() : IUserDataSource {
         return doses.map { Mapper.administrationMapper(it) }
     }
 
-    override suspend fun addAdminstration(patientId: String, administrationDTO: AdministrationDTO) {
+    override suspend fun assignPatientToDoctor(patientId: String, doctorId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removePatientFromDoctor(patientId: String, doctorId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getDoctorPatients(doctorId: String): List<PatientDTO> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addAdministration(
+        patientId: String,
+        administrationDTO: AdministrationDTO
+    ) {
 
     }
 
@@ -79,7 +140,7 @@ class PatientMockDataSource @Inject constructor() : IUserDataSource {
         val drug = Drug(
             "Omnitrope", "Sandoz", density = Density(
                 Measure(10f, MeasureUnit.MILLIGRAM), Measure(1.5f, MeasureUnit.MILLILITER)
-            )
+            ), ""
         )
 
 

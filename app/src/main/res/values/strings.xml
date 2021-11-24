@@ -52,4 +52,8 @@
     <string name="edit">Editar</string>
     <string name="kg">kg</string>
     <string name="cm">cm</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="patients_tab">Pacientes</string>
+    <string name="drugs_tab">Fármacos</string>
 </resources>

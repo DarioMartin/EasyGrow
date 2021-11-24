@@ -1,19 +1,18 @@
 package com.dariomartin.easygrow.data.mapper
 
 import com.dariomartin.easygrow.data.dto.AdministrationDTO
+import com.dariomartin.easygrow.data.dto.DrugDTO
 import com.dariomartin.easygrow.data.dto.PatientDTO
-import com.dariomartin.easygrow.data.model.Administration
-import com.dariomartin.easygrow.data.model.BodyPart
-import com.dariomartin.easygrow.data.model.Patient
-import com.dariomartin.easygrow.data.model.User
+import com.dariomartin.easygrow.data.dto.TreatmentDTO
+import com.dariomartin.easygrow.data.model.*
 import com.dariomartin.easygrow.utils.Utils.dateToString
 import com.dariomartin.easygrow.utils.Utils.stringToCalendar
 
 object Mapper {
 
-    fun patientDtoMapper(patientDTO: PatientDTO, userId: String): Patient {
+    fun patientDtoMapper(patientDTO: PatientDTO): Patient {
         return Patient(
-            id = userId,
+            id = patientDTO.id,
             name = patientDTO.name,
             surname = patientDTO.surname,
             email = patientDTO.email,
@@ -21,8 +20,13 @@ object Mapper {
             photo = patientDTO.photo,
             height = patientDTO.height,
             birthday = stringToCalendar("dd/MM/yyyy", patientDTO.birthday),
-            weight = patientDTO.weight
+            weight = patientDTO.weight,
+            treatment = treatmentDTO(patientDTO.treatment)
         )
+    }
+
+    private fun treatmentDTO(treatment: TreatmentDTO?): Treatment? {
+        return null
     }
 
     fun patientMapper(patient: Patient): PatientDTO {
@@ -49,6 +53,22 @@ object Mapper {
         return AdministrationDTO(
             date = dateToString("dd/MM/yyyy hh:mm", admin.date.timeInMillis),
             bodyPart = admin.bodyPart.name
+        )
+    }
+
+    fun drugDtoMapper(drug: DrugDTO): Drug {
+        return Drug(
+            name = drug.name,
+            pharmacy = drug.pharmacy,
+            url = drug.url
+        )
+    }
+
+    fun drugMapper(drug: Drug): DrugDTO {
+        return DrugDTO(
+            name = drug.name,
+            pharmacy = drug.pharmacy,
+            url = drug.url
         )
     }
 }
