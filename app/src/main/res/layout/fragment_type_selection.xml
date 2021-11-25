@@ -75,15 +75,11 @@
 
     <TextView
         android:id="@+id/logout"
+        style="@style/EGLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_s"
-        android:fontFamily="sans-serif-light"
-        android:padding="@dimen/spacing_xxs"
         android:text="@string/logout"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

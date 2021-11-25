@@ -14,15 +14,32 @@
         <action
             android:id="@+id/action_navigation_login_to_navigation_sign_up"
             app:destination="@id/navigation_sign_up" />
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_type_selection"
+            app:destination="@id/navigation_tape_selection" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_sign_up"
         android:name="com.dariomartin.easygrow.ui.login.SignUpFragment"
         android:label="@string/title_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_navigation_sign_up_to_navigation_login"
+            app:destination="@id/navigation_login" />
+        <action
+            android:id="@+id/action_navigation_sign_up_to_navigation_type_selection"
+            app:destination="@id/navigation_tape_selection" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_tape_selection"
+        android:name="com.dariomartin.easygrow.ui.login.TypeSelectionFragment"
+        android:label="@string/title_type_selection"
+        tools:layout="@layout/fragment_type_selection">
+
+        <action
+            android:id="@+id/action_navigation_type_selection_to_navigation_login"
             app:destination="@id/navigation_login" />
     </fragment>
 

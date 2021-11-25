@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dariomartin.easygrow" >
+    package="com.dariomartin.easygrow">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,16 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyGrow"
         tools:ignore="LockedOrientationActivity"
-        tools:replace="android:allowBackup" >
-        <activity
-            android:name=".ui.sanitary.SanitaryActivity"
-            android:exported="false"
-            android:label="@string/title_activity_sanitary"
-            android:theme="@style/Theme.EasyGrow.NoActionBar" />
+        tools:replace="android:allowBackup">
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.patient.PatientActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.patient.PatientActivity"
+            android:name=".ui.sanitary.SanitaryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
     </application>

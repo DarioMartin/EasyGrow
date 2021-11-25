@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.dariomartin.easygrow.databinding.FragmentSignUpBinding
-import com.dariomartin.easygrow.ui.main.MainActivity
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -67,7 +66,7 @@ class SignUpFragment : Fragment() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                updateUiWithUser()
+                onSighUpSuccess()
             }
             requireActivity().setResult(Activity.RESULT_OK)
         })
@@ -111,9 +110,9 @@ class SignUpFragment : Fragment() {
 
     }
 
-    private fun updateUiWithUser() {
-        requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
-        requireActivity().finish()
+    private fun onSighUpSuccess() {
+        val action = SignUpFragmentDirections.actionNavigationSignUpToNavigationTypeSelection()
+        findNavController().navigate(action)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

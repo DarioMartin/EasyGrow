@@ -1,4 +1,4 @@
-package com.dariomartin.easygrow.ui.main
+package com.dariomartin.easygrow.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class TypeSelectionViewModel @Inject constructor(
     private val loginRepository: IAuthRepository,
     private val userRepository: IUserRepository
 ) :

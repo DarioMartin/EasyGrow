@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.dariomartin.easygrow.databinding.FragmentLoginBinding
-import com.dariomartin.easygrow.ui.main.MainActivity
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -111,8 +110,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun onLoginSuccess() {
-        requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
-        requireActivity().finish()
+        val action = LoginFragmentDirections.actionNavigationLoginToNavigationTypeSelection()
+        findNavController().navigate(action)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
