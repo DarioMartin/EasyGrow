@@ -1,7 +1,6 @@
 package com.dariomartin.easygrow.ui.login
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -40,11 +40,12 @@ class LoginFragment : Fragment() {
         val email = binding.email
         val password = binding.password
         val login = binding.login
+        val signUp = binding.signUp
         val loading = binding.loading
 
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-        loginViewModel.loginFormState.observe(viewLifecycleOwner, Observer {
+        loginViewModel.signUpFormState.observe(viewLifecycleOwner, Observer {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
@@ -58,7 +59,7 @@ class LoginFragment : Fragment() {
             }
         })
 
-        loginViewModel.loginResult.observe(viewLifecycleOwner, Observer {
+        loginViewModel.signUpResult.observe(viewLifecycleOwner, Observer {
             val loginResult = it ?: return@Observer
 
             loading.visibility = View.GONE
@@ -88,25 +89,30 @@ class LoginFragment : Fragment() {
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            email.text.toString(),
-                            password.text.toString()
-                        )
+                    EditorInfo.IME_ACTION_DONE -> login(email, password)
                 }
                 false
             }
 
             login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(email.text.toString(), password.text.toString())
+                login(email, password)
             }
+
+
         }
 
-        binding.signUp.setOnClickListener {
+        signUp.setOnClickListener {
             val action = LoginFragmentDirections.actionNavigationLoginToNavigationSignUp()
             findNavController().navigate(action)
         }
+    }
+
+    private fun login(
+        email: AppCompatEditText,
+        password: AppCompatEditText
+    ) {
+        binding.loading.visibility = View.VISIBLE
+        loginViewModel.login(email.text.toString(), password.text.toString())
     }
 
     private fun onLoginSuccess() {

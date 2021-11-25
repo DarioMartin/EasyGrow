@@ -1,7 +1,6 @@
 package com.dariomartin.easygrow.ui.login
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -37,77 +37,106 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val name = binding.name
+        val surname = binding.surname
         val email = binding.email
         val password = binding.password
+        val signUp = binding.signUp
         val login = binding.login
         val loading = binding.loading
 
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-        loginViewModel.loginFormState.observe(viewLifecycleOwner, Observer {
-            val loginState = it ?: return@Observer
+        loginViewModel.signUpFormState.observe(viewLifecycleOwner, Observer {
+            val signUpState = it ?: return@Observer
 
-            // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            signUp.isEnabled = signUpState.isDataValid
 
-            if (loginState.usernameError != null) {
-                email.error = getString(loginState.usernameError)
+            if (signUpState.usernameError != null) {
+                email.error = getString(signUpState.usernameError)
             }
-            if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
+            if (signUpState.passwordError != null) {
+                password.error = getString(signUpState.passwordError)
             }
         })
 
-        loginViewModel.loginResult.observe(viewLifecycleOwner, Observer {
-            val loginResult = it ?: return@Observer
+        loginViewModel.signUpResult.observe(viewLifecycleOwner, Observer {
+            val signUpResult = it ?: return@Observer
 
             loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
+            if (signUpResult.error != null) {
+                showLoginFailed(signUpResult.error)
             }
-            if (loginResult.success != null) {
+            if (signUpResult.success != null) {
                 onSighUpSuccess()
             }
             requireActivity().setResult(Activity.RESULT_OK)
         })
 
+        name.afterTextChanged {
+            onDataChanged(name, surname, email, password)
+        }
+
+        surname.afterTextChanged {
+            onDataChanged(name, surname, email, password)
+        }
+
         email.afterTextChanged {
-            loginViewModel.loginDataChanged(
-                email.text.toString(),
-                password.text.toString()
-            )
+            onDataChanged(name, surname, email, password)
         }
 
         password.apply {
             afterTextChanged {
-                loginViewModel.loginDataChanged(
-                    email.text.toString(),
-                    password.text.toString()
-                )
+                onDataChanged(name, surname, email, password)
             }
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            email.text.toString(),
-                            password.text.toString()
-                        )
+                        signUp(name, surname, email, password)
                 }
                 false
             }
 
-            login.setOnClickListener {
+            signUp.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(email.text.toString(), password.text.toString())
+                signUp(name, surname, email, password)
             }
         }
 
-        binding.login.setOnClickListener {
+        login.setOnClickListener {
             val action = SignUpFragmentDirections.actionNavigationSignUpToNavigationLogin()
             findNavController().navigate(action)
         }
 
+    }
+
+    private fun signUp(
+        name: AppCompatEditText,
+        surname: AppCompatEditText,
+        email: AppCompatEditText,
+        password: AppCompatEditText
+    ) {
+        loginViewModel.signUp(
+            name.text.toString(),
+            surname.text.toString(),
+            email.text.toString(),
+            password.text.toString()
+        )
+    }
+
+    private fun onDataChanged(
+        name: AppCompatEditText,
+        surname: AppCompatEditText,
+        email: AppCompatEditText,
+        password: AppCompatEditText
+    ) {
+        loginViewModel.signUpDataChanged(
+            name.text.toString(),
+            surname.text.toString(),
+            email.text.toString(),
+            password.text.toString()
+        )
     }
 
     private fun onSighUpSuccess() {

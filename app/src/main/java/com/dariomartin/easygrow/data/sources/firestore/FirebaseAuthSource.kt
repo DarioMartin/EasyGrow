@@ -28,6 +28,15 @@ class FirebaseAuthSource @Inject constructor() : IAuth {
         }
     }
 
+    override suspend fun signUp(
+        name: String,
+        surname: String,
+        email: String,
+        password: String
+    ): Result<Boolean> {
+        return Result.Error(IOException("Error signing up"))
+    }
+
     override fun logout() {
         auth.signOut()
     }
