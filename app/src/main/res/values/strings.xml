@@ -56,4 +56,12 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="patients_tab">Pacientes</string>
     <string name="drugs_tab">Fármacos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_login">Login</string>
+    <string name="title_sign_up">SignUp</string>
+    <string name="sign_up">Registrarme</string>
+    <string name="login">Login</string>
+    <string name="prompt_surname">Apellidos</string>
+    <string name="prompt_name">Nombre</string>
 </resources>
