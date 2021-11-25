@@ -4,7 +4,7 @@ import com.dariomartin.easygrow.data.mapper.Mapper
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.BodyPart
 import com.dariomartin.easygrow.data.model.Patient
-import com.dariomartin.easygrow.data.sources.firestore.FirestoreUserDataSource
+import com.dariomartin.easygrow.data.sources.firestore.FirestoreDataSource
 import com.dariomartin.easygrow.data.sources.mock.PatientMockDataSource
 import com.dariomartin.easygrow.ui.patient.profile.PatientForm
 import com.google.firebase.auth.FirebaseAuth
@@ -15,13 +15,13 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
 
     private val auth = FirebaseAuth.getInstance()
 
-    private val firestore = FirestoreUserDataSource()
+    private val firestore = FirestoreDataSource()
     private val mock = PatientMockDataSource()
 
     override suspend fun getPatient(): Patient? {
         return auth.currentUser?.uid?.let { uid ->
             firestore.getPatient(uid)?.let { dto ->
-                Mapper.patientDtoMapper(dto, uid)
+                Mapper.patientDtoMapper(dto)
             }
         }
     }
@@ -32,12 +32,13 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
 
     override suspend fun updatePatient(patientForm: PatientForm) {
         getPatient()?.apply {
+            this.id = auth.currentUser?.uid ?: ""
             this.name = patientForm.name
             this.surname = patientForm.surname
             this.height = patientForm.height
             this.weight = patientForm.weight
         }?.let {
-            firestore.updatePatient(it.id, Mapper.patientMapper(it))
+            firestore.updatePatient(Mapper.patientMapper(it))
         }
     }
 
@@ -50,7 +51,7 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
 
     override suspend fun addAdministration(administration: Administration) {
         auth.currentUser?.uid?.let {
-            firestore.addAdminstration(
+            firestore.addAdministration(
                 it,
                 Mapper.administrationMapper(administration)
             )

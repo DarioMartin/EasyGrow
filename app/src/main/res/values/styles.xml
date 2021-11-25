@@ -5,7 +5,8 @@
         <item name="android:layout_width">204dp</item>
         <item name="android:layout_height">42dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="textAllCaps">true</item>
     </style>
 
@@ -17,5 +18,29 @@
     <style name="EGButton.Secondary">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/eg_purple</item>
+    </style>
+
+    <style name="EGInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColor">@color/eg_purple</item>
+        <item name="android:textColorHint">@color/eg_purple</item>
+        <item name="boxStrokeErrorColor">@color/eg_purple</item>
+        <item name="errorIconTint">@color/eg_purple</item>
+        <item name="errorTextColor">@color/eg_orange</item>
+        <item name="hintTextColor">@color/eg_purple</item>
+        <item name="boxStrokeColor">@color/eg_purple</item>
+        <item name="boxStrokeWidth">0.5dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+    </style>
+
+    <style name="EGLink">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">@dimen/spacing_xs</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="EGInputEditText">
+        <item name="android:textColor">@color/eg_purple</item>
     </style>
 </resources>

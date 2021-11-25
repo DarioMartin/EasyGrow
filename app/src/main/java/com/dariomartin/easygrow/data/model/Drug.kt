@@ -7,7 +7,8 @@ import com.dariomartin.easygrow.utils.Extensions.float
 data class Drug(
     val name: String,
     val pharmacy: String,
-    val density: Density
+    val density: Density = Density(),
+    val url: String
 ) {
     fun calculateDoseMl(requiredDoseMg: Measure): Measure {
         if (requiredDoseMg.unit != MeasureUnit.MILLIGRAM) throw IllegalArgumentException("Expecting mg value")

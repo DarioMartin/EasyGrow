@@ -16,6 +16,11 @@ class RepositoryModule {
     }
 
     @Provides
+    fun provideDoctorRepository(): IDoctorRepository {
+        return DoctorRepositoryImpl()
+    }
+
+    @Provides
     fun provideUserRepository(): IUserRepository {
         return UserRepositoryImpl()
     }

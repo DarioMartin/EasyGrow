@@ -52,4 +52,17 @@
     <string name="edit">Editar</string>
     <string name="kg">kg</string>
     <string name="cm">cm</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="patients_tab">Pacientes</string>
+    <string name="drugs_tab">Fármacos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_login">Login</string>
+    <string name="title_sign_up">SignUp</string>
+    <string name="sign_up">Registrarme</string>
+    <string name="login">Login</string>
+    <string name="prompt_surname">Apellidos</string>
+    <string name="prompt_name">Nombre</string>
+    <string name="title_type_selection">Type Selection</string>
 </resources>

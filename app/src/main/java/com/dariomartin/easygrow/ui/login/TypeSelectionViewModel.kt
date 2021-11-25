@@ -1,4 +1,4 @@
-package com.dariomartin.easygrow.ui.main
+package com.dariomartin.easygrow.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,11 +7,12 @@ import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.data.repository.IAuthRepository
 import com.dariomartin.easygrow.data.repository.IUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class TypeSelectionViewModel @Inject constructor(
     private val loginRepository: IAuthRepository,
     private val userRepository: IUserRepository
 ) :
@@ -26,7 +27,10 @@ class MainViewModel @Inject constructor(
     }
 
     fun setUserType(type: User.Type) {
-        viewModelScope.launch { userRepository.setType(type) }
+        GlobalScope.launch {
+            userRepository.setType(type)
+            userType.postValue(type)
+        }
     }
 
     fun logout() {

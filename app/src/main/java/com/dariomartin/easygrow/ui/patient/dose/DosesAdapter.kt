@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.R
-import com.dariomartin.easygrow.databinding.TreatmentAdministrationBinding
 import com.dariomartin.easygrow.databinding.TreatmentHeaderBinding
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.Treatment
+import com.dariomartin.easygrow.databinding.TreatmentAdministrationItemBinding
 import com.dariomartin.easygrow.utils.Utils
 import com.dariomartin.easygrow.utils.Utils.dateToString
 
@@ -38,7 +38,7 @@ class DosesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             )
             else -> DoseViewHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.treatment_administration, parent, false)
+                    .inflate(R.layout.treatment_administration_item, parent, false)
             )
         }
     }
@@ -77,7 +77,7 @@ class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 }
 
 class DoseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val binding = TreatmentAdministrationBinding.bind(view)
+    private val binding = TreatmentAdministrationItemBinding.bind(view)
 
     fun bind(administration: Administration) {
         binding.date.text = dateToString("dd MMM yyyy", administration.date.timeInMillis)
