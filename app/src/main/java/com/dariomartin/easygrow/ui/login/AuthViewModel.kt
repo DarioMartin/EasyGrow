@@ -31,7 +31,7 @@ class AuthViewModel @Inject constructor(
 
     init {
         if (authRepository.isLoggedIn()) {
-            _signUpResult.value = AuthResult(success = true)
+            _loginResult.value = AuthResult(success = true)
         }
     }
 

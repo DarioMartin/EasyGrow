@@ -13,7 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.ActivityPatientBinding
-import com.dariomartin.easygrow.ui.login.LoginActivity
+import com.dariomartin.easygrow.ui.login.AuthActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,7 +62,7 @@ class PatientActivity : AppCompatActivity() {
 
     private fun logout() {
         viewModel.logout()
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, AuthActivity::class.java))
         finish()
     }
 }
