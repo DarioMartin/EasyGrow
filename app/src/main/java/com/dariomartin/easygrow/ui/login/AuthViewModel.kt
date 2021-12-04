@@ -8,50 +8,59 @@ import androidx.lifecycle.viewModelScope
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.Result
 import com.dariomartin.easygrow.data.repository.IAuthRepository
+import com.dariomartin.easygrow.injecton.EGPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepository: IAuthRepository) :
+class AuthViewModel @Inject constructor(
+    private val authRepository: IAuthRepository,
+    private val pref: EGPreferences
+) :
     ViewModel() {
 
     private val _signUpForm = MutableLiveData<LoginFormState>()
     val signUpFormState: LiveData<LoginFormState> = _signUpForm
 
-    private val _signUpResult = MutableLiveData<LoginResult>()
-    val signUpResult: LiveData<LoginResult> = _signUpResult
+    private val _loginResult = MutableLiveData<AuthResult>()
+    val authResult: LiveData<AuthResult> = _loginResult
+
+    private val _signUpResult = MutableLiveData<AuthResult>()
+    val signUpResult: LiveData<AuthResult> = _signUpResult
 
     init {
-        if (loginRepository.isLoggedIn()) {
-            _signUpResult.value = LoginResult(success = true)
+        if (authRepository.isLoggedIn()) {
+            _signUpResult.value = AuthResult(success = true)
         }
     }
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
-            val result = loginRepository.login(email, password)
+            val result = authRepository.login(email, password)
 
             if (result is Result.Success) {
-                _signUpResult.postValue(
-                    LoginResult(success = true)
+                _loginResult.postValue(
+                    AuthResult(success = true)
                 )
             } else {
-                _signUpResult.postValue(LoginResult(error = R.string.login_failed))
+                _loginResult.postValue(AuthResult(error = R.string.login_failed))
             }
         }
     }
 
     fun signUp(name: String, surname: String, email: String, password: String) {
         viewModelScope.launch {
-            val result = loginRepository.signUp(name, surname, email, password)
+            val result = authRepository.signUp(email, password)
 
             if (result is Result.Success) {
+                pref.saveUserName(name)
+                pref.saveUserSurname(surname)
                 _signUpResult.postValue(
-                    LoginResult(success = true)
+                    AuthResult(success = true)
                 )
             } else {
-                _signUpResult.postValue(LoginResult(error = R.string.login_failed))
+                _signUpResult.postValue(AuthResult(error = R.string.sign_up_failed))
             }
         }
     }

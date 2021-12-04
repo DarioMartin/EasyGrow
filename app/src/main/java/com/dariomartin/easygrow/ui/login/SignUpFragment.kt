@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var loginViewModel: AuthViewModel
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
 
@@ -29,7 +29,7 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        loginViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,7 +45,7 @@ class SignUpFragment : Fragment() {
         val login = binding.login
         val loading = binding.loading
 
-        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        loginViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
         loginViewModel.signUpFormState.observe(viewLifecycleOwner, Observer {
             val signUpState = it ?: return@Observer
@@ -66,8 +66,7 @@ class SignUpFragment : Fragment() {
             loading.visibility = View.GONE
             if (signUpResult.error != null) {
                 showLoginFailed(signUpResult.error)
-            }
-            if (signUpResult.success != null) {
+            } else if (signUpResult.success) {
                 onSighUpSuccess()
             }
             requireActivity().setResult(Activity.RESULT_OK)

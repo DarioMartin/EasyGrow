@@ -28,13 +28,16 @@ class FirebaseAuthSource @Inject constructor() : IAuth {
         }
     }
 
-    override suspend fun signUp(
-        name: String,
-        surname: String,
-        email: String,
-        password: String
-    ): Result<Boolean> {
-        return Result.Error(IOException("Error signing up"))
+    override suspend fun signUp(email: String, password: String): Result<Boolean> {
+        return try {
+            val authResult = auth.createUserWithEmailAndPassword(email, password).await()
+            authResult.user?.let {
+                Log.d(TAG, "signUp:success")
+                Result.Success(true)
+            } ?: Result.Error(IOException("Error signing up"))
+        } catch (e: Throwable) {
+            Result.Error(IOException("Error signing up", e))
+        }
     }
 
     override fun logout() {
