@@ -2,18 +2,18 @@ package com.dariomartin.easygrow.ui.login
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.dariomartin.easygrow.databinding.ActivityLoginBinding
+import com.dariomartin.easygrow.databinding.ActivityAuthBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: ActivityAuthBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityAuthBinding.inflate(layoutInflater)
 
         supportActionBar?.hide()
 

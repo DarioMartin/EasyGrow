@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.ActivitySanitaryBinding
-import com.dariomartin.easygrow.ui.login.LoginActivity
+import com.dariomartin.easygrow.ui.login.AuthActivity
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,7 +57,7 @@ class SanitaryActivity : AppCompatActivity() {
 
     private fun logout() {
         viewModel.logout()
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, AuthActivity::class.java))
         finish()
     }
 }

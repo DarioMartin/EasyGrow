@@ -9,7 +9,8 @@ import com.dariomartin.easygrow.data.sources.firestore.FirebaseAuthSource
 import com.dariomartin.easygrow.data.sources.firestore.FirestoreDataSource
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor() : IUserRepository {
+class UserRepositoryImpl @Inject constructor() :
+    IUserRepository {
 
     private val auth: IAuth = FirebaseAuthSource()
     private val userDataSource: IDataSource = FirestoreDataSource()
@@ -19,15 +20,31 @@ class UserRepositoryImpl @Inject constructor() : IUserRepository {
         return userDataSource.getType(userId)
     }
 
-    override suspend fun setType(type: User.Type) {
+    override suspend fun updateUser(name: String, surname: String, type: User.Type) {
         val userId = auth.getUserId()
         userId?.let { userDataSource.setType(it, type) }
 
         when (type) {
             User.Type.PATIENT -> auth.getUserId()
-                ?.let { userDataSource.addPatient(PatientDTO(id = it)) }
+                ?.let {
+                    userDataSource.addPatient(
+                        PatientDTO(
+                            id = it,
+                            name = name,
+                            surname = surname
+                        )
+                    )
+                }
             User.Type.SANITARY -> auth.getUserId()
-                ?.let { userDataSource.addDoctor(DoctorDTO(id = it)) }
+                ?.let {
+                    userDataSource.addDoctor(
+                        DoctorDTO(
+                            id = it,
+                            name = name,
+                            surname = surname
+                        )
+                    )
+                }
         }
     }
 }

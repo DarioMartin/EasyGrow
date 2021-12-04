@@ -15,13 +15,8 @@ class AuthRepositoryImpl @Inject constructor() : IAuthRepository {
         return auth.login(email, password)
     }
 
-    override suspend fun signUp(
-        name: String,
-        surname: String,
-        email: String,
-        password: String
-    ): Result<Boolean> {
-        return auth.signUp(name, surname, email, password)
+    override suspend fun signUp(email: String, password: String): Result<Boolean> {
+        return auth.signUp(email, password)
     }
 
     override fun logout() {

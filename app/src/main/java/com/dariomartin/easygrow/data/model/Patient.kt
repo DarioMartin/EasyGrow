@@ -10,18 +10,25 @@ data class Patient(
     var surname: String,
     var photo: String,
     var height: Int,
-    var birthday: Calendar,
+    var birthday: Calendar?,
     var weight: Float,
     var treatment: Treatment? = null
 ) : User() {
 
     fun getAge(): Int {
         val today = Calendar.getInstance()
-        var age = today[Calendar.YEAR] - birthday[Calendar.YEAR]
-        if (today[Calendar.DAY_OF_YEAR] < birthday[Calendar.DAY_OF_YEAR]) {
-            age--
+        var age = 0
+        birthday?.let {
+            age = today[Calendar.YEAR] - it.get(Calendar.YEAR)
+            if (today[Calendar.DAY_OF_YEAR] < it.get(Calendar.DAY_OF_YEAR)) {
+                age--
+            }
         }
         return age
+    }
+
+    override fun missingData(): Boolean {
+        return name.isEmpty() || surname.isEmpty() || height <= 0 || birthday == null || weight <= 0
     }
 
 }

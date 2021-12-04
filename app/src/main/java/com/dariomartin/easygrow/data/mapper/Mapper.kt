@@ -7,6 +7,7 @@ import com.dariomartin.easygrow.data.dto.TreatmentDTO
 import com.dariomartin.easygrow.data.model.*
 import com.dariomartin.easygrow.utils.Utils.dateToString
 import com.dariomartin.easygrow.utils.Utils.stringToCalendar
+import java.util.*
 
 object Mapper {
 
@@ -36,13 +37,13 @@ object Mapper {
             email = patient.email,
             photo = patient.photo,
             height = patient.height,
-            birthday = dateToString("dd/MM/yyyy", patient.birthday.timeInMillis),
+            birthday = dateToString("dd/MM/yyyy", patient.birthday?.timeInMillis),
             weight = patient.weight
         )
     }
 
     fun administrationDtoMapper(adminDto: AdministrationDTO): Administration {
-        val date = stringToCalendar("dd/MM/yyyy hh:mm", adminDto.date)
+        val date = stringToCalendar("dd/MM/yyyy hh:mm", adminDto.date) ?: Calendar.getInstance()
         return Administration(
             date = date,
             bodyPart = BodyPart.valueOf(adminDto.bodyPart)

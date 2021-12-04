@@ -1,6 +1,7 @@
 package com.dariomartin.easygrow.ui.patient.profile
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -94,10 +95,30 @@ class ProfileFragment : Fragment() {
             .into(binding.header.patientPicture)
 
         dosesAdapter.treatment = patient.treatment
+
+        if (patient.missingData()) {
+            showCompleteDataDialog()
+        }
+    }
+
+    private fun showCompleteDataDialog() {
+        val builder: AlertDialog.Builder? = activity?.let {
+            AlertDialog.Builder(it)
+        }
+
+        builder?.setTitle(R.string.dialog_missing_patient_data_title)
+            ?.setMessage(R.string.dialog_missing_patient_data_body)
+            ?.setPositiveButton(R.string.accept) { _, _ -> goToDetails() }
+            ?.setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+        val dialog: AlertDialog? = builder?.create()
+
+        dialog?.show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }
+
