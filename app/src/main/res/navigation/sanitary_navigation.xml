@@ -24,6 +24,11 @@
         android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="patientId"
+            android:defaultValue="null"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_ProfileFragment_to_profileUpdateFragment"
             app:destination="@id/profileUpdateFragment" />
@@ -45,7 +50,7 @@
         android:id="@+id/patientSearchFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.patientsearch.PatientSearchFragment"
         android:label="patient_search_fragment"
-        tools:layout="@layout/patient_search_fragment" >
+        tools:layout="@layout/patient_search_fragment">
         <action
             android:id="@+id/action_patientSearchFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment" />

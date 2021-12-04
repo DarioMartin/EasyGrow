@@ -1,6 +1,8 @@
 package com.dariomartin.easygrow.data.repository
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.dariomartin.easygrow.data.mapper.Mapper
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.BodyPart
@@ -57,8 +59,8 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
         }
     }
 
-    override fun getLivePatient(): LiveData<Patient> {
-        return auth.currentUser?.uid?.let { uid ->
+    override fun getLivePatient(patientId: String?): LiveData<Patient> {
+        return (patientId ?: auth.currentUser?.uid)?.let { uid ->
             firestore.getLivePatient(uid).map { Mapper.patientDtoMapper(it) }
         } ?: MutableLiveData()
     }

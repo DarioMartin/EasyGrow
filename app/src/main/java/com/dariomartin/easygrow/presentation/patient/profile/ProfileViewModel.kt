@@ -15,10 +15,6 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(private val patientRepository: IPatientRepository) :
     ViewModel() {
 
-    val patient:LiveData<Patient> by lazy {
-        return@lazy patientRepository.getLivePatient()
-    }
-
     val successfulUpdate: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val administrations by lazy {
@@ -28,6 +24,11 @@ class ProfileViewModel @Inject constructor(private val patientRepository: IPatie
                 patientRepository.getAdministrations().sortedByDescending { it.date })
         }
         return@lazy liveData
+    }
+
+
+    fun getPatient(patientId: String? = null): LiveData<Patient> {
+        return patientRepository.getLivePatient(patientId)
     }
 
     fun updatePatient(patientForm: PatientForm) {

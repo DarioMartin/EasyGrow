@@ -7,6 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.dariomartin.easygrow.R
@@ -23,6 +24,8 @@ class ProfileFragment : Fragment() {
     private val dosesAdapter: DosesAdapter = DosesAdapter()
 
     private val binding get() = _binding!!
+
+    val args: ProfileFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,10 +45,9 @@ class ProfileFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        profileViewModel.patient
-            .observe(
-                viewLifecycleOwner,
-                { patient -> patient?.let { paintPatient(patient) } ?: onPatientError() })
+        profileViewModel.getPatient(args.patientId).observe(
+            viewLifecycleOwner,
+            { patient -> patient?.let { paintPatient(patient) } ?: onPatientError() })
 
         profileViewModel.administrations
             .observe(

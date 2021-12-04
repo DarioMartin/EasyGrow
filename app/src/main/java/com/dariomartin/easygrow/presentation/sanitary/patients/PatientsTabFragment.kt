@@ -10,22 +10,27 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
+import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PatientsTabFragment : Fragment() {
 
     companion object {
-        fun newInstance(): Fragment {
-            return PatientsTabFragment()
+        fun newInstance(listener: TabItemListener?): Fragment {
+            val fragment = PatientsTabFragment()
+            fragment.listener = listener
+            return fragment
         }
     }
 
+    private var listener: TabItemListener? = null
     private lateinit var pageViewModel: PatientsTabViewModel
     private var _binding: FragmentSanitaryBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter = PatientsAdapter()
+    private val adapter =
+        PatientsAdapter { patient: Patient -> listener?.onTabItemClicked(patient) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
