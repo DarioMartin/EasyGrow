@@ -10,7 +10,7 @@
     android:paddingEnd="@dimen/spacing_l"
     android:paddingBottom="@dimen/spacing_xs">
 
-    <com.dariomartin.easygrow.ui.customviews.PenView
+    <com.dariomartin.easygrow.presentation.customviews.PenView
         android:id="@+id/pen"
         android:layout_width="match_parent"
         android:layout_height="43dp"

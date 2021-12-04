@@ -2,6 +2,8 @@ package com.dariomartin.easygrow.data.sources.mock
 
 import android.icu.util.Measure
 import android.icu.util.MeasureUnit
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.dariomartin.easygrow.data.dto.AdministrationDTO
 import com.dariomartin.easygrow.data.dto.DoctorDTO
 import com.dariomartin.easygrow.data.dto.DrugDTO
@@ -161,4 +163,8 @@ class PatientMockDataSource @Inject constructor() : IDataSource {
         return cal
     }
 
+
+    override fun getLivePatient(patientId: String): LiveData<PatientDTO> {
+        return MutableLiveData()
+    }
 }

@@ -1,12 +1,12 @@
 package com.dariomartin.easygrow.data.repository
 
+import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.mapper.Mapper
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.BodyPart
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.data.sources.firestore.FirestoreDataSource
-import com.dariomartin.easygrow.data.sources.mock.PatientMockDataSource
-import com.dariomartin.easygrow.ui.patient.profile.PatientForm
+import com.dariomartin.easygrow.presentation.patient.profile.PatientForm
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import javax.inject.Inject
@@ -56,4 +56,11 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
             )
         }
     }
+
+    override fun getLivePatient(): LiveData<Patient> {
+        return auth.currentUser?.uid?.let { uid ->
+            firestore.getLivePatient(uid).map { Mapper.patientDtoMapper(it) }
+        } ?: MutableLiveData()
+    }
+
 }

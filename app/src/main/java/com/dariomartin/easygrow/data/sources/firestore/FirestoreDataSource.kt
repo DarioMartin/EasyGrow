@@ -1,5 +1,7 @@
 package com.dariomartin.easygrow.data.sources.firestore
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.dariomartin.easygrow.data.dto.AdministrationDTO
 import com.dariomartin.easygrow.data.dto.DoctorDTO
 import com.dariomartin.easygrow.data.dto.DrugDTO
@@ -125,4 +127,23 @@ class FirestoreDataSource : IDataSource {
         return doctor?.patients?.mapNotNull { getPatient(it) } ?: listOf()
     }
 
+
+    override fun getLivePatient(patientId: String): LiveData<PatientDTO> {
+        val liveData = MutableLiveData<PatientDTO>()
+
+        firestore.collection(PATIENTS).document(patientId).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                liveData.postValue(
+                    snapshot.toObject(PatientDTO::class.java)
+                        ?.apply { id = patientId }
+                )
+            }
+        }
+
+        return liveData
+    }
 }

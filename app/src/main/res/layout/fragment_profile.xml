@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/eg_grey_3"
-    tools:context=".ui.patient.profile.ProfileFragment">
+    tools:context=".presentation.patient.profile.ProfileFragment">
 
     <include
         android:id="@+id/header"

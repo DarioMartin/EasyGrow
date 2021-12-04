@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/eg_purple_3"
     android:padding="@dimen/spacing_m"
-    tools:context=".ui.patient.profile.ProfileFragment">
+    tools:context=".presentation.patient.profile.ProfileFragment">
 
     <ImageView
         android:id="@+id/patient_picture"

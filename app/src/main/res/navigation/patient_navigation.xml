@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.dariomartin.easygrow.ui.patient.profile.ProfileFragment"
+        android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -17,19 +17,19 @@
 
     <fragment
         android:id="@+id/navigation_profile_update"
-        android:name="com.dariomartin.easygrow.ui.patient.profile.ProfileUpdateFragment"
+        android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileUpdateFragment"
         android:label="@string/title_profile_update"
         tools:layout="@layout/fragment_profile_update" />
 
     <fragment
         android:id="@+id/navigation_dose"
-        android:name="com.dariomartin.easygrow.ui.patient.dose.DoseFragment"
+        android:name="com.dariomartin.easygrow.presentation.patient.dose.DoseFragment"
         android:label="@string/title_dose"
         tools:layout="@layout/fragment_dose" />
 
     <fragment
         android:id="@+id/navigation_statistics"
-        android:name="com.dariomartin.easygrow.ui.patient.statistics.StatisticsFragment"
+        android:name="com.dariomartin.easygrow.presentation.patient.statistics.StatisticsFragment"
         android:label="@string/title_statistics"
         tools:layout="@layout/fragment_statistics" />
 </navigation>
