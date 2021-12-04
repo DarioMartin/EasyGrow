@@ -1,7 +1,6 @@
 package com.dariomartin.easygrow.data.sources.firestore
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.dto.AdministrationDTO
 import com.dariomartin.easygrow.data.dto.DoctorDTO
 import com.dariomartin.easygrow.data.dto.DrugDTO
@@ -11,6 +10,7 @@ import com.dariomartin.easygrow.data.sources.IDataSource
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+
 
 class FirestoreDataSource : IDataSource {
 
@@ -122,9 +122,24 @@ class FirestoreDataSource : IDataSource {
     }
 
 
-    override suspend fun getDoctorPatients(doctorId: String): List<PatientDTO> {
-        val doctor = getDoctor(doctorId)
-        return doctor?.patients?.mapNotNull { getPatient(it) } ?: listOf()
+    override fun getDoctorPatients(doctorId: String): LiveData<MutableList<PatientDTO>> {
+        val result = MediatorLiveData<MutableList<PatientDTO>>()
+
+        val doctorLiveData = getLiveDoctor(doctorId).map { doctorDto ->
+            doctorDto.patients
+        }
+
+        result.addSource(doctorLiveData) { patients ->
+            val list = mutableListOf<PatientDTO>()
+            patients.map {
+                result.addSource(getLivePatient(it)) { patientDTO ->
+                    list.add(patientDTO)
+                    result.value = list
+                }
+            }
+        }
+
+        return result
     }
 
 
@@ -139,7 +154,26 @@ class FirestoreDataSource : IDataSource {
             if (snapshot != null && snapshot.exists()) {
                 liveData.postValue(
                     snapshot.toObject(PatientDTO::class.java)
-                        ?.apply { id = patientId }
+                        ?.apply { id = snapshot.id }
+                )
+            }
+        }
+
+        return liveData
+    }
+
+    override fun getLiveDoctor(doctorId: String): LiveData<DoctorDTO> {
+        val liveData = MutableLiveData<DoctorDTO>()
+
+        firestore.collection(DOCTORS).document(doctorId).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                liveData.postValue(
+                    snapshot.toObject(DoctorDTO::class.java)
+                        ?.apply { id = snapshot.id }
                 )
             }
         }

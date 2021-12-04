@@ -16,7 +16,6 @@ interface IDataSource {
     suspend fun getPatient(patientId: String): PatientDTO?
     suspend fun updatePatient(patient: PatientDTO)
 
-    fun getLivePatient(patientId: String): LiveData<PatientDTO>
 
     suspend fun addDoctor(doctor: DoctorDTO)
     suspend fun removeDoctor(doctorId: String)
@@ -35,5 +34,10 @@ interface IDataSource {
     suspend fun assignPatientToDoctor(patientId: String, doctorId: String)
     suspend fun removePatientFromDoctor(patientId: String, doctorId: String)
 
-    suspend fun getDoctorPatients(doctorId: String): List<PatientDTO>
+    fun getDoctorPatients(doctorId: String): LiveData<MutableList<PatientDTO>>
+
+    fun getLivePatient(patientId: String): LiveData<PatientDTO>
+
+    fun getLiveDoctor(doctorId: String): LiveData<DoctorDTO>
+
 }

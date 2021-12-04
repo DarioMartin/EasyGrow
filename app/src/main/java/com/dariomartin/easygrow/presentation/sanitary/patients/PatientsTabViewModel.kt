@@ -11,12 +11,8 @@ import javax.inject.Inject
 class PatientsTabViewModel @Inject constructor(private val doctorRepository: IDoctorRepository) :
     ViewModel() {
 
-    val patients by lazy {
-        val liveData = MutableLiveData<List<Patient>>()
-        viewModelScope.launch {
-            liveData.postValue(doctorRepository.getAssignedPatients())
-        }
-        return@lazy liveData
+    fun getPatients(): LiveData<MutableList<Patient>> {
+        return doctorRepository.getAssignedPatients()
     }
 
 

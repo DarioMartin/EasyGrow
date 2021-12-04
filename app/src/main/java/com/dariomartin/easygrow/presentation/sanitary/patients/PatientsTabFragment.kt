@@ -47,7 +47,7 @@ class PatientsTabFragment : Fragment() {
 
         setupRecyclerView()
 
-        pageViewModel.patients.observe(viewLifecycleOwner, { patients ->
+        pageViewModel.getPatients().observe(viewLifecycleOwner, { patients ->
             if (patients.isNullOrEmpty()) {
                 showEmptyMessage()
             } else {
