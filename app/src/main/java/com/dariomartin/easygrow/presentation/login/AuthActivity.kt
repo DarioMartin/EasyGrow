@@ -12,11 +12,8 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityAuthBinding.inflate(layoutInflater)
-
         supportActionBar?.hide()
-
         setContentView(binding.root)
     }
 

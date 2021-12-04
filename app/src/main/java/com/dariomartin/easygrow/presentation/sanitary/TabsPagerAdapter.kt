@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.dariomartin.easygrow.R
-import com.dariomartin.easygrow.presentation.sanitary.drugs.DrugsTabFragment
+import com.dariomartin.easygrow.presentation.sanitary.druglist.DrugsTabFragment
 import com.dariomartin.easygrow.presentation.sanitary.patients.PatientsTabFragment
 
 private val TAB_TITLES = arrayOf(

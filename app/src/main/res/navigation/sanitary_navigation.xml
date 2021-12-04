@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sanitary_navigation"
+    app:startDestination="@id/sanitaryTabsFragment">
+
+
+    <fragment
+        android:id="@+id/sanitaryTabsFragment"
+        android:name="com.dariomartin.easygrow.presentation.sanitary.tabs.SanitaryTabsFragment"
+        android:label="sanitary_tabs_fragment"
+        tools:layout="@layout/sanitary_tabs_fragment">
+        <action
+            android:id="@+id/action_sanitaryTabsFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_ProfileFragment_to_profileUpdateFragment"
+            app:destination="@id/profileUpdateFragment" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_treatmentFragment"
+            app:destination="@id/treatmentUpdateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileUpdateFragment"
+        android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileUpdateFragment"
+        android:label="ProfileUpdateFragment"
+        tools:layout="@layout/fragment_profile_update" />
+    <fragment
+        android:id="@+id/treatmentUpdateFragment"
+        android:name="com.dariomartin.easygrow.presentation.sanitary.treatmentupdate.TreatmentUpdateFragment"
+        android:label="treatment_fragment"
+        tools:layout="@layout/treatment_update_fragment" />
+
+
+</navigation>

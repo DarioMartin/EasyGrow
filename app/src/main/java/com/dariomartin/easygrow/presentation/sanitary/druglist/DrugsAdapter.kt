@@ -1,4 +1,4 @@
-package com.dariomartin.easygrow.presentation.sanitary.drugs
+package com.dariomartin.easygrow.presentation.sanitary.druglist
 
 import android.view.LayoutInflater
 import android.view.View
