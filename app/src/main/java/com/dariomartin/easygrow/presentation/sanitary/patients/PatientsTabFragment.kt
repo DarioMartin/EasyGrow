@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
+import com.dariomartin.easygrow.presentation.utils.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +28,7 @@ class PatientsTabFragment : Fragment() {
     }
 
     private var listener: TabItemListener? = null
-    private lateinit var pageViewModel: PatientsTabViewModel
+    private lateinit var viewModel: PatientsTabViewModel
     private var _binding: FragmentSanitaryBinding? = null
     private val binding get() = _binding!!
 
@@ -34,7 +37,7 @@ class PatientsTabFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pageViewModel = ViewModelProvider(this)[PatientsTabViewModel::class.java]
+        viewModel = ViewModelProvider(this)[PatientsTabViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -47,7 +50,7 @@ class PatientsTabFragment : Fragment() {
 
         setupRecyclerView()
 
-        pageViewModel.getPatients().observe(viewLifecycleOwner, { patients ->
+        viewModel.getPatients().observe(viewLifecycleOwner, { patients ->
             if (patients.isNullOrEmpty()) {
                 showEmptyMessage()
             } else {
@@ -66,6 +69,19 @@ class PatientsTabFragment : Fragment() {
             )
         )
         binding.recyclerView.adapter = adapter
+
+        val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.recyclerView.adapter as PatientsAdapter
+                //adapter.removeAt(viewHolder.adapterPosition)
+                val patient = adapter.getItem(viewHolder.adapterPosition)
+                viewModel.removePatientFromDoctor(patient.id)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
     }
 
     private fun listPatients(patients: List<Patient>) {

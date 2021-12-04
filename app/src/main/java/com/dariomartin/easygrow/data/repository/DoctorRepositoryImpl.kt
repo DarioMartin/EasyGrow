@@ -35,4 +35,10 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
         return firestore.getDrugs().map { Mapper.drugDtoMapper(it) }
     }
 
+    override suspend fun removePatientFromDoctor(patientId: String) {
+        auth.currentUser?.uid?.let { uid ->
+            firestore.removePatientFromDoctor(patientId, uid)
+        }
+    }
+
 }

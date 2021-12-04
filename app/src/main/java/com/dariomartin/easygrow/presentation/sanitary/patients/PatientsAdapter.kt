@@ -9,7 +9,10 @@ import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.PatientItemBinding
 
-class PatientsAdapter(private var patients: List<Patient> = listOf(), private val listener: (Patient) -> Unit) :
+class PatientsAdapter(
+    private var patients: MutableList<Patient> = mutableListOf(),
+    private val listener: (Patient) -> Unit
+) :
     RecyclerView.Adapter<PatientViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientViewHolder {
         return PatientViewHolder(
@@ -26,9 +29,17 @@ class PatientsAdapter(private var patients: List<Patient> = listOf(), private va
     override fun getItemCount() = patients.size
 
     fun setPatients(patients: List<Patient>) {
-        this.patients = patients
+        this.patients.clear()
+        this.patients.addAll(patients)
         notifyDataSetChanged()
     }
+
+    fun removeAt(position: Int) {
+        patients.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun getItem(position: Int) = patients[position]
 }
 
 class PatientViewHolder(view: View) : RecyclerView.ViewHolder(view) {
