@@ -32,6 +32,7 @@ object Mapper {
 
     fun patientMapper(patient: Patient): PatientDTO {
         return PatientDTO(
+            id = patient.id,
             name = patient.name,
             surname = patient.surname,
             email = patient.email,

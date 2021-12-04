@@ -10,19 +10,31 @@
         <entry key="app/src/main/res/drawable/ic_dose.xml" value="0.240625" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.240625" />
         <entry key="app/src/main/res/drawable/ic_kid_doses.xml" value="0.3145833333333333" />
+        <entry key="app/src/main/res/drawable/ic_kid_placeholder.xml" value="0.2796875" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.240625" />
         <entry key="app/src/main/res/drawable/pen_bakground.xml" value="0.2604166666666667" />
         <entry key="app/src/main/res/drawable/pen_button.xml" value="0.3015625" />
         <entry key="app/src/main/res/drawable/pen_empty_dose.xml" value="0.2604166666666667" />
         <entry key="app/src/main/res/drawable/pen_needle.xml" value="0.3015625" />
         <entry key="app/src/main/res/drawable/pen_remaining_dose.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/primary_button_disabled.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/primary_button_selector.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/primary_button_solid.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/primary_button_solid_pressed.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/secondary_button_disabled.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/secondary_button_selector.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/secondary_button_solid.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/secondary_button_solid_pressed.xml" value="0.18703703703703703" />
         <entry key="app/src/main/res/drawable/shadow.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/user_error_placeholder.xml" value="0.2796875" />
+        <entry key="app/src/main/res/drawable/user_error_placeholder_bg.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login2.xml" value="0.408843537414966" />
         <entry key="app/src/main/res/layout-w936dp/activity_login2.xml" value="0.234765625" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/layout/activity_login2.xml" value="0.31302083333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_patient.xml" value="0.22447916666666667" />
+        <entry key="app/src/main/res/layout/activity_patient_search.xml" value="0.2540106951871658" />
         <entry key="app/src/main/res/layout/activity_sanitary.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/app_bar_sanitary.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/content_sanitary.xml" value="0.23125" />
@@ -33,14 +45,21 @@
         <entry key="app/src/main/res/layout/fragment_dose.xml" value="0.125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18309543434171835" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33444697430587206" />
+        <entry key="app/src/main/res/layout/fragment_patient_search.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/fragment_patient_search_item.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/fragment_patient_search_list.xml" value="0.3463541666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.4010590579624603" />
-        <entry key="app/src/main/res/layout/fragment_profile_update.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/fragment_profile_create.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/fragment_profile_update.xml" value="0.28994082840236685" />
         <entry key="app/src/main/res/layout/fragment_sanitary.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_sanitary_tabs.xml" value="0.36041666666666666" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.31302083333333336" />
         <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.31302083333333336" />
         <entry key="app/src/main/res/layout/fragment_type_selection.xml" value="0.36041666666666666" />
         <entry key="app/src/main/res/layout/kid_body.xml" value="0.39317773788150806" />
         <entry key="app/src/main/res/layout/nav_header_sanitary.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/new_patient_activity.xml" value="0.23399014778325122" />
+        <entry key="app/src/main/res/layout/new_patient_fragment.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/patient_header.xml" value="0.39374772158540616" />
         <entry key="app/src/main/res/layout/patient_item.xml" value="0.67" />
         <entry key="app/src/main/res/layout/penview_layout.xml" value="0.1" />

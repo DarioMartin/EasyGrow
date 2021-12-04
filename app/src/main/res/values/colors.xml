@@ -3,8 +3,11 @@
     <color name="eg_purple">#673AB7</color>
     <color name="eg_purple_2">#512DA8</color>
     <color name="eg_purple_3">#D1C4E9</color>
+    <color name="eg_purple_4">#482880</color>
 
     <color name="eg_green">#009688</color>
+    <color name="eg_green_2">#00695f</color>
+
     <color name="eg_orange">#CF804C</color>
 
     <color name="black">#FF000000</color>

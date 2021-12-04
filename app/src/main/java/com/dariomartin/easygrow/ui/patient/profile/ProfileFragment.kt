@@ -91,7 +91,10 @@ class ProfileFragment : Fragment() {
         binding.header.years.text = getString(R.string.years_format, patient.getAge())
         binding.header.weight.text = getString(R.string.weight_format, patient.weight)
 
-        Glide.with(requireContext()).load(patient.photo).circleCrop()
+        Glide.with(requireContext())
+            .load(patient.photo)
+            .error(R.drawable.ic_kid_placeholder)
+            .circleCrop()
             .into(binding.header.patientPicture)
 
         dosesAdapter.treatment = patient.treatment

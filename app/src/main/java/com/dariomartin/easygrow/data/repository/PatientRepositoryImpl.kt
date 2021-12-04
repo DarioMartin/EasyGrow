@@ -16,7 +16,6 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
     private val auth = FirebaseAuth.getInstance()
 
     private val firestore = FirestoreDataSource()
-    private val mock = PatientMockDataSource()
 
     override suspend fun getPatient(): Patient? {
         return auth.currentUser?.uid?.let { uid ->
@@ -32,11 +31,11 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
 
     override suspend fun updatePatient(patientForm: PatientForm) {
         getPatient()?.apply {
-            this.id = auth.currentUser?.uid ?: ""
-            this.name = patientForm.name
-            this.surname = patientForm.surname
+            this.name = patientForm.name ?: ""
+            this.surname = patientForm.surname ?: ""
             this.height = patientForm.height
             this.weight = patientForm.weight
+            this.birthday = patientForm.birthday
         }?.let {
             firestore.updatePatient(Mapper.patientMapper(it))
         }

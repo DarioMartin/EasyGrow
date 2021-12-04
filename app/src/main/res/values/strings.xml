@@ -42,8 +42,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="patient_name">Nombre del paciente</string>
-    <string name="patient_surname">Apellido del paciente</string>
+    <string name="patient_name">Nombre</string>
+    <string name="patient_surname">Apellidos</string>
     <string name="patient_age">Edad</string>
     <string name="patient_height">Altura</string>
     <string name="patient_weight">Peso</string>
@@ -70,4 +70,8 @@
     <string name="dialog_missing_patient_data_body">Es importante que completes todos tus datos. ¿Quieres hacerlo ahora?</string>
     <string name="accept">Aceptar</string>
     <string name="dialog_missing_patient_data_title">Faltan datos por completar</string>
+    <string name="patient_birthday"> día / mes / año</string>
+    <string name="patient_birthday_title">Fecha de nacimiento</string>
+    <string name="patient_measures_title">Medidas</string>
+    <string name="invalid_value">Valor no válido</string>
 </resources>
