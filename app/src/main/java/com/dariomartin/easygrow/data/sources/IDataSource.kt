@@ -40,4 +40,6 @@ interface IDataSource {
 
     fun getLiveDoctor(doctorId: String): LiveData<DoctorDTO>
 
+    fun getAllPatients(): LiveData<List<PatientDTO>>
+
 }

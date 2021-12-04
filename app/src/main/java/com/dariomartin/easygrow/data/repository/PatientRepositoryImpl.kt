@@ -59,10 +59,17 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
         }
     }
 
+    override fun allPatients(): LiveData<List<Patient>> {
+        return firestore.getAllPatients().map { list ->
+            list.map { Mapper.patientDtoMapper(it) }
+        }
+    }
+
     override fun getLivePatient(patientId: String?): LiveData<Patient> {
         return (patientId ?: auth.currentUser?.uid)?.let { uid ->
             firestore.getLivePatient(uid).map { Mapper.patientDtoMapper(it) }
         } ?: MutableLiveData()
     }
+
 
 }

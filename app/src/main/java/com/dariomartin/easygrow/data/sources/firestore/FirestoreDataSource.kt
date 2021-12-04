@@ -180,4 +180,25 @@ class FirestoreDataSource : IDataSource {
 
         return liveData
     }
+
+    override fun getAllPatients(): LiveData<List<PatientDTO>> {
+        val liveData = MutableLiveData<List<PatientDTO>>()
+
+        firestore.collection(PATIENTS).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && !snapshot.isEmpty) {
+                liveData.postValue(
+                    snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(PatientDTO::class.java)
+                            ?.apply { id = doc.id }
+                    }
+                )
+            }
+        }
+
+        return liveData
+    }
 }

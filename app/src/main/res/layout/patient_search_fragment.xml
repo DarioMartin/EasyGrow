@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".presentation.sanitary.patientsearch.PatientSearchFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:listitem="@layout/patient_item" />
 
 </FrameLayout>

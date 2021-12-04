@@ -11,7 +11,7 @@ import com.dariomartin.easygrow.databinding.PatientItemBinding
 
 class PatientsAdapter(
     private var patients: MutableList<Patient> = mutableListOf(),
-    private val listener: (Patient) -> Unit
+    private val listener: (Patient) -> Unit = {}
 ) :
     RecyclerView.Adapter<PatientViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientViewHolder {

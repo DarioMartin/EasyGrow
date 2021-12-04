@@ -171,4 +171,8 @@ class PatientMockDataSource @Inject constructor() : IDataSource {
     override fun getLiveDoctor(doctorId: String): LiveData<DoctorDTO> {
         TODO("Not yet implemented")
     }
+
+    override fun getAllPatients(): LiveData<List<PatientDTO>> {
+        TODO("Not yet implemented")
+    }
 }

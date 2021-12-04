@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.PatientSearchFragmentBinding
+import com.dariomartin.easygrow.presentation.sanitary.patients.PatientsAdapter
 import com.dariomartin.easygrow.presentation.sanitary.tabs.SanitaryTabsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +26,8 @@ class PatientSearchFragment : Fragment() {
 
     private lateinit var viewModel: PatientSearchViewModel
 
+    private val adapter = PatientsAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,10 +35,36 @@ class PatientSearchFragment : Fragment() {
     ): View {
         viewModel = ViewModelProvider(this)[PatientSearchViewModel::class.java]
         _binding = PatientSearchFragmentBinding.inflate(inflater, container, false)
+
+        setupRecyclerView()
+
+        viewModel.getPatients().observe(viewLifecycleOwner, { patients ->
+            if (patients.isNullOrEmpty()) {
+                showEmptyMessage()
+            } else {
+                listPatients(patients)
+            }
+        })
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setupRecyclerView() {
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            )
+        )
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun listPatients(patients: List<Patient>) {
+        adapter.setPatients(patients)
+    }
+
+    private fun showEmptyMessage() {
+        adapter.setPatients(listOf())
     }
 }

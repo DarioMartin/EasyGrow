@@ -35,16 +35,11 @@ class PatientsTabFragment : Fragment() {
     private val adapter =
         PatientsAdapter { patient: Patient -> listener?.onTabItemClicked(patient) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[PatientsTabViewModel::class.java]
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        viewModel = ViewModelProvider(this)[PatientsTabViewModel::class.java]
         _binding = FragmentSanitaryBinding.inflate(inflater, container, false)
         val root = binding.root
 
@@ -73,9 +68,9 @@ class PatientsTabFragment : Fragment() {
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = binding.recyclerView.adapter as PatientsAdapter
-                //adapter.removeAt(viewHolder.adapterPosition)
                 val patient = adapter.getItem(viewHolder.adapterPosition)
                 viewModel.removePatientFromDoctor(patient.id)
+                adapter.removeAt(viewHolder.adapterPosition)
             }
         }
 
@@ -89,8 +84,7 @@ class PatientsTabFragment : Fragment() {
     }
 
     private fun showEmptyMessage() {
-
-
+        adapter.setPatients(listOf())
     }
 
     override fun onDestroyView() {
