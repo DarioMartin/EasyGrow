@@ -33,10 +33,6 @@
             android:name=".presentation.patient.PatientActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".presentation.sanitary.old.SanitaryActivityOld"
-            android:exported="true"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

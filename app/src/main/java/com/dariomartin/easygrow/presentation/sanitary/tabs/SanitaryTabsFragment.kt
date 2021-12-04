@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
+import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.SanitaryTabsFragmentBinding
 import com.dariomartin.easygrow.presentation.sanitary.TabsPagerAdapter
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +21,11 @@ class SanitaryTabsFragment : Fragment() {
     companion object {
         fun newInstance() = SanitaryTabsFragment()
     }
+
+    private val TAB_TITLES = arrayOf(
+        R.string.patients_tab,
+        R.string.drugs_tab
+    )
 
     private var _binding: SanitaryTabsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -40,12 +48,27 @@ class SanitaryTabsFragment : Fragment() {
     }
 
     private fun setUpTabs() {
-        val sectionsPagerAdapter =
-            TabsPagerAdapter(requireContext(), requireActivity().supportFragmentManager)
-        val viewPager: ViewPager = binding.viewPager
+
+        val sectionsPagerAdapter = TabsPagerAdapter(this)
+        val viewPager: ViewPager2 = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
-        tabs.setupWithViewPager(viewPager)
+
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = getString(TAB_TITLES[position])
+        }.attach()
+
+        binding.fab.setOnClickListener {
+            if (viewPager.currentItem == 0) {
+                goToSearchPatient()
+            }
+        }
+    }
+
+    private fun goToSearchPatient() {
+        val action =
+            SanitaryTabsFragmentDirections.actionSanitaryTabsFragmentToPatientSearchFragment()
+        findNavController().navigate(action)
     }
 
 }
