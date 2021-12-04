@@ -41,4 +41,10 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
         }
     }
 
+    override suspend fun assignPatient(patientId: String) {
+        auth.currentUser?.uid?.let { uid ->
+            firestore.assignPatientToDoctor(patientId, uid)
+        }
+    }
+
 }

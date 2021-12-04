@@ -9,4 +9,5 @@ interface IDoctorRepository {
     suspend fun getPatient(): Patient?
     suspend fun getDrugs(): List<Drug>?
     suspend fun removePatientFromDoctor(id: String)
+    suspend fun assignPatient(patientId: String)
 }

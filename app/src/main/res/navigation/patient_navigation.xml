@@ -10,6 +10,11 @@
         android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="patientId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_navigation_profile_to_navigation_profile_update"
             app:destination="@id/navigation_profile_update" />

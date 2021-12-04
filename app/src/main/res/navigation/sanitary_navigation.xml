@@ -26,7 +26,7 @@
         tools:layout="@layout/fragment_profile">
         <argument
             android:name="patientId"
-            android:defaultValue="null"
+            android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
         <action

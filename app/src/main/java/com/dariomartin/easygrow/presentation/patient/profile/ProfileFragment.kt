@@ -25,7 +25,7 @@ class ProfileFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    val args: ProfileFragmentArgs by navArgs()
+    private val args: ProfileFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -26,7 +26,9 @@ class PatientSearchFragment : Fragment() {
 
     private lateinit var viewModel: PatientSearchViewModel
 
-    private val adapter = PatientsAdapter()
+    private val adapter = SearchPatientsAdapter { patient ->
+        viewModel.assignPatient(patient)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
