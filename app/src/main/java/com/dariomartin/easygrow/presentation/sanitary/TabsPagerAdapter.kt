@@ -1,31 +1,18 @@
 package com.dariomartin.easygrow.presentation.sanitary
 
-import android.content.Context
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import com.dariomartin.easygrow.R
-import com.dariomartin.easygrow.presentation.sanitary.drugs.DrugsTabFragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.dariomartin.easygrow.presentation.sanitary.druglist.DrugsTabFragment
 import com.dariomartin.easygrow.presentation.sanitary.patients.PatientsTabFragment
+import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
 
-private val TAB_TITLES = arrayOf(
-    R.string.patients_tab,
-    R.string.drugs_tab
-)
+class TabsPagerAdapter(fragment: Fragment, private val listener: TabItemListener) :
+    FragmentStateAdapter(fragment) {
 
-class TabsPagerAdapter(private val context: Context, fm: FragmentManager) :
-    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    override fun getItemCount() = 2
 
-    override fun getItem(position: Int): Fragment {
-        return if (position == 0) PatientsTabFragment.newInstance()
-        else DrugsTabFragment.newInstance()
-    }
-
-    override fun getPageTitle(position: Int): CharSequence {
-        return context.resources.getString(TAB_TITLES[position])
-    }
-
-    override fun getCount(): Int {
-        return 2
+    override fun createFragment(position: Int): Fragment {
+        return if (position == 0) PatientsTabFragment.newInstance(listener)
+        else DrugsTabFragment.newInstance(listener)
     }
 }

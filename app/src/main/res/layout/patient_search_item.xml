@@ -7,17 +7,6 @@
     android:background="@color/white"
     android:padding="@dimen/spacing_s">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@drawable/ic_kid_placeholder" />
-
     <TextView
         android:id="@+id/name"
         android:layout_width="0dp"
@@ -28,31 +17,13 @@
         android:gravity="start"
         android:maxLines="1"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@id/treatment_name"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/age"
-        app:layout_constraintStart_toEndOf="@id/image"
-        app:layout_constraintTop_toTopOf="@id/image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Nombre del paciente" />
-
-    <TextView
-        android:id="@+id/treatment_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xs"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif-light"
-        android:gravity="start"
-        android:maxLines="1"
-        android:textColor="@color/eg_grey_1"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@id/image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        tools:text="Nombre del tratamiento" />
 
     <TextView
         android:id="@+id/age"

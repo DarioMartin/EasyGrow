@@ -1,4 +1,4 @@
-package com.dariomartin.easygrow.presentation.sanitary.drugs
+package com.dariomartin.easygrow.presentation.sanitary.druglist
 
 import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.model.Drug

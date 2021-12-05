@@ -40,7 +40,7 @@ class ProfileUpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profileViewModel.patient.observe(
+        profileViewModel.getPatient().observe(
             viewLifecycleOwner,
             { patient ->
                 form.name = patient.name

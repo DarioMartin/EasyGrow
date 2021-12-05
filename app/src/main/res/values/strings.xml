@@ -74,4 +74,6 @@
     <string name="patient_birthday_title">Fecha de nacimiento</string>
     <string name="patient_measures_title">Medidas</string>
     <string name="invalid_value">Valor no válido</string>
+    <string name="name_surname">%s %s</string>
+    <string name="search_patient">Buscar paciente</string>
 </resources>

@@ -127,7 +127,7 @@ class PatientMockDataSource @Inject constructor() : IDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getDoctorPatients(doctorId: String): List<PatientDTO> {
+    override fun getDoctorPatients(doctorId: String): LiveData<MutableList<PatientDTO>> {
         TODO("Not yet implemented")
     }
 
@@ -166,5 +166,13 @@ class PatientMockDataSource @Inject constructor() : IDataSource {
 
     override fun getLivePatient(patientId: String): LiveData<PatientDTO> {
         return MutableLiveData()
+    }
+
+    override fun getLiveDoctor(doctorId: String): LiveData<DoctorDTO> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllPatients(): LiveData<List<PatientDTO>> {
+        TODO("Not yet implemented")
     }
 }

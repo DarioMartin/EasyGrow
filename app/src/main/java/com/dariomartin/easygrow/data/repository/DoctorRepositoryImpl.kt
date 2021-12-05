@@ -1,5 +1,8 @@
 package com.dariomartin.easygrow.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.dariomartin.easygrow.data.mapper.Mapper
 import com.dariomartin.easygrow.data.model.Drug
 import com.dariomartin.easygrow.data.model.Patient
@@ -12,12 +15,12 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
 
     private val firestore = FirestoreDataSource()
 
-    override suspend fun getAssignedPatients(): List<Patient> {
+    override fun getAssignedPatients(): LiveData<MutableList<Patient>> {
         return auth.currentUser?.uid?.let { uid ->
-            firestore.getDoctorPatients(uid).map { dto ->
-                Mapper.patientDtoMapper(dto)
+            firestore.getDoctorPatients(uid).map { list ->
+                list.map { item -> Mapper.patientDtoMapper(item) }.toMutableList()
             }
-        } ?: listOf()
+        } ?: MutableLiveData()
     }
 
     override suspend fun getPatient(): Patient? {
@@ -30,6 +33,18 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
 
     override suspend fun getDrugs(): List<Drug> {
         return firestore.getDrugs().map { Mapper.drugDtoMapper(it) }
+    }
+
+    override suspend fun removePatientFromDoctor(patientId: String) {
+        auth.currentUser?.uid?.let { uid ->
+            firestore.removePatientFromDoctor(patientId, uid)
+        }
+    }
+
+    override suspend fun assignPatient(patientId: String) {
+        auth.currentUser?.uid?.let { uid ->
+            firestore.assignPatientToDoctor(patientId, uid)
+        }
     }
 
 }

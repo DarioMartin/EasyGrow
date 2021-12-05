@@ -15,6 +15,7 @@
         android:theme="@style/Theme.EasyGrow"
         tools:ignore="LockedOrientationActivity"
         tools:replace="android:allowBackup">
+
         <activity
             android:name=".presentation.login.AuthActivity"
             android:exported="true"

@@ -1,4 +1,4 @@
-package com.dariomartin.easygrow.presentation.sanitary.drugs
+package com.dariomartin.easygrow.presentation.sanitary.druglist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dariomartin.easygrow.data.model.Drug
 import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
+import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DrugsTabFragment : Fragment() {
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(listener: TabItemListener): Fragment {
             return DrugsTabFragment()
         }
     }

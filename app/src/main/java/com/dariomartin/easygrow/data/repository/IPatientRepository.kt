@@ -9,10 +9,10 @@ import java.util.*
 
 interface IPatientRepository {
     suspend fun getPatient(): Patient?
-    fun getLivePatient(): LiveData<Patient>
+    fun getLivePatient(patientId: String?): LiveData<Patient>
     suspend fun recordAdministration(newBodyPart: BodyPart, date: Calendar)
     suspend fun updatePatient(patientForm: PatientForm)
     suspend fun getAdministrations(): List<Administration>
     suspend fun addAdministration(administration: Administration)
-
+    fun allPatients(): LiveData<List<Patient>>
 }
