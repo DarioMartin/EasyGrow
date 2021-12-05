@@ -12,16 +12,18 @@ class SearchPatientsAdapter(
     private var patients: MutableList<Patient> = mutableListOf(),
     private val listener: (Patient) -> Unit = {}
 ) :
-    RecyclerView.Adapter<PatientViewHolder>() {
+    RecyclerView.Adapter<SearchPatientsAdapter.PatientViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientViewHolder {
         return PatientViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.patient_search_item, parent, false)
         )
     }
 
+    private var assigned: List<Patient> = listOf()
     private var query = ""
     private fun filteredPatients() = patients.filter {
-        it.name.contains(query, true) || it.surname.contains(query, true)
+        (it.name.contains(query, true) || it.surname.contains(query, true))
+                && !assigned.contains(it)
     }
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
@@ -42,14 +44,21 @@ class SearchPatientsAdapter(
         this.query = query
         notifyDataSetChanged()
     }
-}
 
-class PatientViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val binding = PatientSearchItemBinding.bind(view)
+    fun setAssigned(patients: MutableList<Patient>) {
+        assigned = patients
+        notifyDataSetChanged()
+    }
 
-    fun bind(patient: Patient) {
-        binding.name.text =
-            itemView.context.getString(R.string.name_surname, patient.name, patient.surname)
-        binding.age.text = itemView.context.getString(R.string.years_format, patient.getAge())
+    inner class PatientViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = PatientSearchItemBinding.bind(view)
+
+        fun bind(patient: Patient) {
+            binding.name.text =
+                itemView.context.getString(R.string.name_surname, patient.name, patient.surname)
+            binding.age.text = itemView.context.getString(R.string.years_format, patient.getAge())
+        }
     }
 }
+
+

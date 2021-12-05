@@ -17,7 +17,7 @@ class PatientSearchViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    fun getPatients(): LiveData<List<Patient>> {
+    fun getAllPatients(): LiveData<List<Patient>> {
         return patientRepository.allPatients()
     }
 
@@ -25,5 +25,9 @@ class PatientSearchViewModel @Inject constructor(
         viewModelScope.launch {
             doctorRepository.assignPatient(patient.id)
         }
+    }
+
+    fun getDoctorPatients(): LiveData<MutableList<Patient>> {
+        return doctorRepository.getAssignedPatients()
     }
 }
