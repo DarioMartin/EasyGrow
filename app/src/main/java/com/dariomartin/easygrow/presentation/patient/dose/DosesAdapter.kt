@@ -1,4 +1,4 @@
-package com.dariomartin.easygrow.presentation.patient
+package com.dariomartin.easygrow.presentation.patient.dose
 
 import android.view.LayoutInflater
 import android.view.View

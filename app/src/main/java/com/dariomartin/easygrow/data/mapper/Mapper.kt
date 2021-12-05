@@ -83,9 +83,9 @@ object Mapper {
             id = drug.name,
             name = drug.name,
             pharmacy = drug.pharmacy,
-            amountOfDrugMg = drug.concentration.mass.number.toInt(),
-            volumeOfDrugMl = drug.concentration.volume.number.toInt(),
-            cartridgeVolumeMl = drug.cartridgeVolume.number.toInt(),
+            amountOfDrugMg = drug.concentration.mass.number.toFloat(),
+            volumeOfDrugMl = drug.concentration.volume.number.toFloat(),
+            cartridgeVolumeMl = drug.cartridgeVolume.number.toFloat(),
             url = drug.url
         )
     }

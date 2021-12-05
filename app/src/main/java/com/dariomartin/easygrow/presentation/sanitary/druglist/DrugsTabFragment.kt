@@ -57,7 +57,7 @@ class DrugsTabFragment : BaseFragment<FragmentSanitaryBinding, DrugsTabViewModel
     }
 
     private fun showEmptyMessage() {
-        
+
     }
 
     override fun inflateBinding(

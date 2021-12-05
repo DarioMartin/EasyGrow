@@ -3,6 +3,7 @@ package com.dariomartin.easygrow.data.model
 import android.icu.util.Measure
 import android.icu.util.MeasureUnit
 import com.dariomartin.easygrow.utils.Extensions.float
+import com.dariomartin.easygrow.utils.Extensions.niceDecimalNumber
 
 data class Drug(
     val name: String = "",
@@ -16,5 +17,14 @@ data class Drug(
         val dose =
             requiredDoseMg.float() * concentration.volume.float() / concentration.mass.float()
         return Measure(dose, MeasureUnit.MILLILITER)
+    }
+
+    fun getConcentrationString(): String {
+        val mass: String = concentration.mass.niceDecimalNumber()
+        val volume =
+            if (concentration.volume.number == 1F) ""
+            else "${concentration.volume.niceDecimalNumber()} "
+
+        return "$mass mg/${volume}ml"
     }
 }

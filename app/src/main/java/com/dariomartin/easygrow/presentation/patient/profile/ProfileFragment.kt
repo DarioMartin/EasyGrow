@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.FragmentProfileBinding
-import com.dariomartin.easygrow.presentation.patient.DosesAdapter
+import com.dariomartin.easygrow.presentation.patient.dose.DosesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

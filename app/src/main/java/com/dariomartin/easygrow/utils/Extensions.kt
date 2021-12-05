@@ -4,6 +4,7 @@ import android.icu.util.Measure
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import java.text.DecimalFormat
 
 object Extensions {
 
@@ -21,5 +22,9 @@ object Extensions {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
+    }
+
+    fun Measure.niceDecimalNumber(): String {
+        return DecimalFormat("#.##").format(this.number)
     }
 }
