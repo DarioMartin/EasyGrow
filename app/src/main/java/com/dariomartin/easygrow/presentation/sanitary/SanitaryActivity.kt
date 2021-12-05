@@ -21,9 +21,7 @@ class SanitaryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySanitaryBinding.inflate(layoutInflater)
-        supportActionBar?.hide()
         setContentView(binding.root)
-
         viewModel = ViewModelProvider(this)[SanitaryViewModel::class.java]
     }
 

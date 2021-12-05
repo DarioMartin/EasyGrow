@@ -1,18 +1,18 @@
 package com.dariomartin.easygrow.presentation.sanitary.patientsearch
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.PatientSearchFragmentBinding
-import com.dariomartin.easygrow.presentation.sanitary.patients.PatientsAdapter
 import com.dariomartin.easygrow.presentation.sanitary.tabs.SanitaryTabsFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class PatientSearchFragment : Fragment() {
@@ -28,6 +28,11 @@ class PatientSearchFragment : Fragment() {
 
     private val adapter = SearchPatientsAdapter { patient ->
         viewModel.assignPatient(patient)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -69,4 +74,28 @@ class PatientSearchFragment : Fragment() {
     private fun showEmptyMessage() {
         adapter.setPatients(listOf())
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.patient_search_menu, menu)
+        val searchView = SearchView(requireContext())
+        menu.findItem(R.id.action_search).apply {
+            setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            actionView = searchView
+        }
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                adapter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                adapter.filter(newText)
+                return false
+            }
+        })
+        searchView.setOnClickListener { view -> }
+    }
+
 }

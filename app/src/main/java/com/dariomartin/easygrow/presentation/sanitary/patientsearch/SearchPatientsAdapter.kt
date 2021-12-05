@@ -19,17 +19,27 @@ class SearchPatientsAdapter(
         )
     }
 
+    private var query = ""
+    private fun filteredPatients() = patients.filter {
+        it.name.contains(query, true) || it.surname.contains(query, true)
+    }
+
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
-        val patient = patients[position]
+        val patient = filteredPatients()[position]
         holder.itemView.setOnClickListener { listener(patient) }
         holder.bind(patient)
     }
 
-    override fun getItemCount() = patients.size
+    override fun getItemCount() = filteredPatients().size
 
     fun setPatients(patients: List<Patient>) {
         this.patients.clear()
         this.patients.addAll(patients.sortedBy { it.name })
+        notifyDataSetChanged()
+    }
+
+    fun filter(query: String) {
+        this.query = query
         notifyDataSetChanged()
     }
 }
@@ -38,7 +48,8 @@ class PatientViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = PatientSearchItemBinding.bind(view)
 
     fun bind(patient: Patient) {
-        binding.name.text = itemView.context.getString(R.string.name_surname, patient.name, patient.surname)
+        binding.name.text =
+            itemView.context.getString(R.string.name_surname, patient.name, patient.surname)
         binding.age.text = itemView.context.getString(R.string.years_format, patient.getAge())
     }
 }
