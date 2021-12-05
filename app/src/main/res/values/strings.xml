@@ -54,7 +54,7 @@
     <string name="cm">cm</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <string name="patients_tab">Pacientes</string>
+    <string name="patients_tab">Mis pacientes</string>
     <string name="drugs_tab">Fármacos</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -88,4 +88,8 @@
     <string name="cartridge_volume">Volumen del cartucho</string>
     <string name="drug_link">Enlace ficha técnica</string>
     <string name="create_new_drug">Nuevo fármaco</string>
+    <string name="missing_drug_url">Url no disponible.\n\nActualiza la información del fármaco.</string>
+    <string name="update_drug">Modificar fármaco</string>
+    <string name="create">Crear</string>
+    <string name="update">Modificar</string>
 </resources>

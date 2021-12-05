@@ -6,21 +6,44 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.CreateDrugFragmentBinding
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
+import com.dariomartin.easygrow.utils.Extensions.niceDecimalNumber
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateDrugFragment : BaseFragment<CreateDrugFragmentBinding, CreateDrugViewModel>() {
 
+    private val args: CreateDrugFragmentArgs by navArgs()
     private var form: DrugForm = DrugForm()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.drugDataTitle.text = getString(R.string.create_new_drug)
+        val drugId = args.drugId
+
+        binding.drugDataTitle.text =
+            getString(if (drugId == null) R.string.create_new_drug else R.string.update_drug)
+
+        drugId?.let {
+            viewModel.getDrug(it).observe(
+                viewLifecycleOwner,
+                { drug ->
+                    form.apply {
+                        name = drug.name
+                        pharmacy = drug.pharmacy
+                        drugMass = drug.concentration.mass.number.toFloat()
+                        drugVolume = drug.concentration.volume.number.toFloat()
+                        cartridgeVolume = drug.cartridgeVolume.number.toFloat()
+                        url = drug.url
+                    }
+                    updateDrug()
+                })
+        }
+
         viewModel.successfulSaving.observe(viewLifecycleOwner, { successfulUpdate ->
             if (successfulUpdate) {
                 findNavController().popBackStack()
@@ -69,10 +92,21 @@ class CreateDrugFragment : BaseFragment<CreateDrugFragmentBinding, CreateDrugVie
             form.url = it
         }
 
+        binding.submitButton.text =
+            getString(if (drugId == null) R.string.create else R.string.update)
         binding.submitButton.setOnClickListener {
             hideErrors()
             submitForm()
         }
+    }
+
+    private fun updateDrug() {
+        binding.name.setText(form.name)
+        binding.pharmacy.setText(form.pharmacy)
+        binding.mass.setText(form.drugMass.toString())
+        binding.volume.setText(form.drugVolume.toString())
+        binding.cartridgeVolume.setText(form.cartridgeVolume.toString())
+        binding.url.setText(form.url)
     }
 
     private fun submitForm() {

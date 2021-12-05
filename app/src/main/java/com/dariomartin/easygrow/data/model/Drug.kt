@@ -19,6 +19,10 @@ data class Drug(
         return Measure(dose, MeasureUnit.MILLILITER)
     }
 
+    fun getCartridgeVolumeString(): String {
+        return "${cartridgeVolume.niceDecimalNumber()} ml"
+    }
+
     fun getConcentrationString(): String {
         val mass: String = concentration.mass.niceDecimalNumber()
         val volume =

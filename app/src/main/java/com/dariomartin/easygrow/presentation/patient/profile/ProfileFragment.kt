@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,42 +13,26 @@ import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.FragmentProfileBinding
 import com.dariomartin.easygrow.presentation.patient.dose.DosesAdapter
+import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
 
-    private lateinit var profileViewModel: ProfileViewModel
-    private var _binding: FragmentProfileBinding? = null
     private val dosesAdapter: DosesAdapter = DosesAdapter()
 
-    private val binding get() = _binding!!
-
     private val args: ProfileFragmentArgs by navArgs()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        profileViewModel =
-            ViewModelProvider(this)[ProfileViewModel::class.java]
-
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
 
-        profileViewModel.getPatient(args.patientId).observe(
+        viewModel.getPatient(args.patientId).observe(
             viewLifecycleOwner,
             { patient -> patient?.let { paintPatient(patient) } ?: onPatientError() })
 
-        profileViewModel.administrations
+        viewModel.administrations
             .observe(
                 viewLifecycleOwner,
                 { doses -> dosesAdapter.administrations = doses })
@@ -120,9 +103,15 @@ class ProfileFragment : Fragment() {
         dialog?.show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentProfileBinding {
+        return FragmentProfileBinding.inflate(inflater, container, false)
+    }
+
+    override fun provideViewModel(): ProfileViewModel {
+        return ViewModelProvider(this)[ProfileViewModel::class.java]
     }
 
 }

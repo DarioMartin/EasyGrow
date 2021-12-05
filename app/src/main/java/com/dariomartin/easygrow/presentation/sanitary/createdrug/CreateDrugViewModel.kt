@@ -1,8 +1,10 @@
 package com.dariomartin.easygrow.presentation.sanitary.createdrug
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dariomartin.easygrow.data.model.Drug
 import com.dariomartin.easygrow.data.repository.IDrugRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,6 +21,10 @@ class CreateDrugViewModel @Inject constructor(private val drugRepository: IDrugR
             drugRepository.updateDrug(form)
             successfulSaving.postValue(true)
         }
+    }
+
+    fun getDrug(drugId: String): LiveData<Drug> {
+        return drugRepository.getLiveDrug(drugId)
     }
 
 }

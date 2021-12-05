@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_sanitaryTabsFragment_to_createDrugFragment"
             app:destination="@id/createDrugFragment" />
+        <action
+            android:id="@+id/action_sanitaryTabsFragment_to_drugDetailFragment"
+            app:destination="@id/drugDetailFragment" />
     </fragment>
 
     <fragment
@@ -62,7 +65,26 @@
         android:id="@+id/createDrugFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.createdrug.CreateDrugFragment"
         android:label="CreateDrugFragment"
-        tools:layout="@layout/create_drug_fragment"/>
+        tools:layout="@layout/create_drug_fragment">
+        <argument
+            android:name="drugId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/drugDetailFragment"
+        android:name="com.dariomartin.easygrow.presentation.sanitary.drugdetails.DrugDetailFragment"
+        android:label="drug_detail_fragment"
+        tools:layout="@layout/drug_detail_fragment">
+        <action
+            android:id="@+id/action_drugDetailFragment_to_createDrugFragment"
+            app:destination="@id/createDrugFragment" />
+        <argument
+            android:name="drugId"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 
 
 </navigation>

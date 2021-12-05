@@ -75,9 +75,10 @@ class SanitaryTabsFragment : Fragment(), TabItemListener {
         }
     }
 
-
-    private fun goToDrugDetails(selection: Drug) {
-
+    private fun goToDrugDetails(drug: Drug) {
+        val action =
+            SanitaryTabsFragmentDirections.actionSanitaryTabsFragmentToDrugDetailFragment(drug.name)
+        findNavController().navigate(action)
     }
 
     private fun goToPatientDetails(patient: Patient) {
