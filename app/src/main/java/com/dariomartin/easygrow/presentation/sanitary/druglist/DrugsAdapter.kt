@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.R
-import com.dariomartin.easygrow.data.model.Concentration
 import com.dariomartin.easygrow.data.model.Drug
 import com.dariomartin.easygrow.databinding.DrugItemBinding
 
@@ -36,6 +35,11 @@ class DrugsAdapter(
     }
 
     fun getItem(position: Int) = drugs[position]
+
+    fun removeAt(position: Int) {
+        drugs.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
 }
 
