@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.FragmentProfileUpdateBinding
+import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.presentation.utils.DatePickerFragment
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
 import com.dariomartin.easygrow.utils.Utils.dateToString
@@ -17,30 +17,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class ProfileUpdateFragment : Fragment() {
+class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, ProfileViewModel>() {
 
-    private lateinit var profileViewModel: ProfileViewModel
-    private var _binding: FragmentProfileUpdateBinding? = null
-    private val binding get() = _binding!!
     private var form: PatientForm = PatientForm()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        profileViewModel =
-            ViewModelProvider(this)[ProfileViewModel::class.java]
-
-        _binding = FragmentProfileUpdateBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profileViewModel.getPatient().observe(
+        viewModel.getPatient().observe(
             viewLifecycleOwner,
             { patient ->
                 form.name = patient.name
@@ -51,7 +35,7 @@ class ProfileUpdateFragment : Fragment() {
                 updatePatient()
             })
 
-        profileViewModel.successfulUpdate.observe(viewLifecycleOwner, { successfulUpdate ->
+        viewModel.successfulUpdate.observe(viewLifecycleOwner, { successfulUpdate ->
             if (successfulUpdate) {
                 findNavController().popBackStack()
             }
@@ -106,7 +90,7 @@ class ProfileUpdateFragment : Fragment() {
 
     private fun submitForm() {
         if (form.isValid()) {
-            profileViewModel.updatePatient(form)
+            viewModel.updatePatient(form)
         } else {
             showErrors()
         }
@@ -149,9 +133,15 @@ class ProfileUpdateFragment : Fragment() {
             .into(binding.patientPicture)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentProfileUpdateBinding {
+        return FragmentProfileUpdateBinding.inflate(inflater, container, false)
+    }
+
+    override fun provideViewModel(): ProfileViewModel {
+        return ViewModelProvider(this)[ProfileViewModel::class.java]
     }
 }
 

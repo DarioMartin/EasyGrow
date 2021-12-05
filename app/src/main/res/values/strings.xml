@@ -76,4 +76,16 @@
     <string name="invalid_value">Valor no válido</string>
     <string name="name_surname">%s %s</string>
     <string name="search_patient">Buscar paciente</string>
+    <string name="new_drug">Nuevo fármaco</string>
+    <string name="drug_name">Nombre</string>
+    <string name="drug_pharmacy">Framacéutica</string>
+    <string name="drug_concentration_title">Concentración del fármaco</string>
+    <string name="drug_mass">Masa</string>
+    <string name="mg">mg</string>
+    <string name="ml">ml</string>
+    <string name="drug_volume">Volumen</string>
+    <string name="drug_url">Enlace ficha técnica</string>
+    <string name="cartridge_volume">Volumen del cartucho</string>
+    <string name="drug_link">Enlace ficha técnica</string>
+    <string name="create_new_drug">Nuevo fármaco</string>
 </resources>

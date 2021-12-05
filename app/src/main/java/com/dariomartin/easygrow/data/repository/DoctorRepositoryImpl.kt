@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.dariomartin.easygrow.data.mapper.Mapper
-import com.dariomartin.easygrow.data.model.Drug
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.data.sources.firestore.FirestoreDataSource
 import com.google.firebase.auth.FirebaseAuth
@@ -21,18 +20,6 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
                 list.map { item -> Mapper.patientDtoMapper(item) }.toMutableList()
             }
         } ?: MutableLiveData()
-    }
-
-    override suspend fun getPatient(): Patient? {
-        return auth.currentUser?.uid?.let { uid ->
-            firestore.getPatient(uid)?.let { dto ->
-                Mapper.patientDtoMapper(dto)
-            }
-        }
-    }
-
-    override suspend fun getDrugs(): List<Drug> {
-        return firestore.getDrugs().map { Mapper.drugDtoMapper(it) }
     }
 
     override suspend fun removePatientFromDoctor(patientId: String) {

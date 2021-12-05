@@ -1,5 +1,7 @@
 package com.dariomartin.easygrow.data.mapper
 
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
 import com.dariomartin.easygrow.data.dto.AdministrationDTO
 import com.dariomartin.easygrow.data.dto.DrugDTO
 import com.dariomartin.easygrow.data.dto.PatientDTO
@@ -22,12 +24,17 @@ object Mapper {
             height = patientDTO.height,
             birthday = stringToCalendar("dd/MM/yyyy", patientDTO.birthday),
             weight = patientDTO.weight,
-            treatment = treatmentDTO(patientDTO.treatment)
+            treatment = patientDTO.treatment?.let { treatmentDTO(it) }
         )
     }
 
-    private fun treatmentDTO(treatment: TreatmentDTO?): Treatment? {
-        return null
+    private fun treatmentDTO(treatment: TreatmentDTO): Treatment {
+        return Treatment(
+            drug = Drug(name = treatment.drug),
+            totalPens = treatment.totalPens,
+            lastUpdate = stringToCalendar("dd/MM/yyyy hh:mm", treatment.lastReview)
+                ?: Calendar.getInstance()
+        )
     }
 
     fun patientMapper(patient: Patient): PatientDTO {
@@ -62,14 +69,23 @@ object Mapper {
         return Drug(
             name = drug.name,
             pharmacy = drug.pharmacy,
+            concentration = Concentration(
+                mass = Measure(drug.amountOfDrugMg, MeasureUnit.MILLIGRAM),
+                volume = Measure(drug.volumeOfDrugMl, MeasureUnit.MILLILITER)
+            ),
+            cartridgeVolume = Measure(drug.cartridgeVolumeMl, MeasureUnit.MILLILITER),
             url = drug.url
         )
     }
 
     fun drugMapper(drug: Drug): DrugDTO {
         return DrugDTO(
+            id = drug.name,
             name = drug.name,
             pharmacy = drug.pharmacy,
+            amountOfDrugMg = drug.concentration.mass.number.toInt(),
+            volumeOfDrugMl = drug.concentration.volume.number.toInt(),
+            cartridgeVolumeMl = drug.cartridgeVolume.number.toInt(),
             url = drug.url
         )
     }

@@ -41,6 +41,7 @@
         <entry key="app/src/main/res/layout/activity_sanitary_old.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/app_bar_sanitary.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/content_sanitary.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/create_drug_fragment.xml" value="0.25622775800711745" />
         <entry key="app/src/main/res/layout/dose_item.xml" value="0.16184666249192817" />
         <entry key="app/src/main/res/layout/dose_item_empty.xml" value="0.24427083333333333" />
         <entry key="app/src/main/res/layout/dose_vie_header_layout.xml" value="0.1" />

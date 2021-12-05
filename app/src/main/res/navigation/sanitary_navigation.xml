@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_sanitaryTabsFragment_to_patientSearchFragment"
             app:destination="@id/patientSearchFragment" />
+        <action
+            android:id="@+id/action_sanitaryTabsFragment_to_createDrugFragment"
+            app:destination="@id/createDrugFragment" />
     </fragment>
 
     <fragment
@@ -55,6 +58,11 @@
             android:id="@+id/action_patientSearchFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/createDrugFragment"
+        android:name="com.dariomartin.easygrow.presentation.sanitary.createdrug.CreateDrugFragment"
+        android:label="CreateDrugFragment"
+        tools:layout="@layout/create_drug_fragment"/>
 
 
 </navigation>
