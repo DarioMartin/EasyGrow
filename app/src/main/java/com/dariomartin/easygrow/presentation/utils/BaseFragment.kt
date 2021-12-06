@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
+import com.dariomartin.easygrow.data.model.Treatment
 
 abstract class BaseFragment<Binding : ViewBinding, VM : ViewModel> : Fragment() {
 

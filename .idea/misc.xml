@@ -49,6 +49,7 @@
         <entry key="app/src/main/res/layout/drug_detail_fragment.xml" value="0.303125" />
         <entry key="app/src/main/res/layout/drug_header.xml" value="0.2328508029431164" />
         <entry key="app/src/main/res/layout/drug_item.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/drug_sugestion.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_dose.xml" value="0.125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18309543434171835" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33444697430587206" />
@@ -77,7 +78,7 @@
         <entry key="app/src/main/res/layout/treatment_administration.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/treatment_administration_item.xml" value="0.2864583333333333" />
         <entry key="app/src/main/res/layout/treatment_dose.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/treatment_header.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/treatment_header.xml" value="0.2900280747831742" />
         <entry key="app/src/main/res/layout/treatment_update_fragment.xml" value="0.2859375" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.303125" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.22447916666666667" />

@@ -47,7 +47,7 @@ class PatientViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(patient: Patient) {
         binding.name.text = itemView.context.getString(R.string.name_surname, patient.name, patient.surname)
-        binding.treatmentName.text = patient.treatment?.drug?.name
+        binding.treatmentName.text = patient.treatment?.drug
         binding.age.text = itemView.context.getString(R.string.years_format, patient.getAge())
         Glide.with(itemView.context)
             .load(patient.photo)

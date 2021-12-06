@@ -16,17 +16,21 @@ object Utils {
     }
 
     fun dateToString(format: String, date: Long?): String {
-        return SimpleDateFormat(format, Locale.getDefault()).format(date)
+        return try {
+            SimpleDateFormat(format, Locale.getDefault()).format(date)
+        } catch (e: IllegalArgumentException) {
+            ""
+        }
     }
 
     fun stringToCalendar(format: String, date: String): Calendar? {
-        var calendar: Calendar? = Calendar.getInstance()
-        try {
+        return try {
+            val calendar: Calendar? = Calendar.getInstance()
             SimpleDateFormat(format, Locale.getDefault()).parse(date)?.let { calendar?.time = it }
+            calendar
         } catch (e: Exception) {
-            calendar = null
+            null
         }
-        return calendar
     }
 
 }

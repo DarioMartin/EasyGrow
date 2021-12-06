@@ -65,8 +65,7 @@ class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = TreatmentHeaderBinding.bind(view)
 
     fun bind(treatment: Treatment) {
-        binding.treatmentName.text = treatment.drug.name
-        binding.pharmacyName.text = treatment.drug.pharmacy
+        binding.treatmentName.text = treatment.drug
         binding.dose.text = itemView.context.getString(
             R.string.dose_item_dose,
             treatment.dose.number.toFloat(),
@@ -74,7 +73,7 @@ class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         )
         binding.remainingPens.text = itemView.context.getString(
             R.string.dose_item_remaining_pens,
-            treatment.totalPens
+            treatment.pens.size
         )
     }
 

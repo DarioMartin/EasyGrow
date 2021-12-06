@@ -14,7 +14,7 @@
     <string name="years_format">%d años</string>
     <string name="weight_format">%.1f kg</string>
     <string name="dose_item_dose">Dosis: %.2f %s</string>
-    <string name="dose_item_remaining_pens">Plumas restantes: %d</string>
+    <string name="dose_item_remaining_pens">Plumas: %d</string>
     <string name="arm_l">brazo izqd.</string>
     <string name="arm_r">brazo dcho.</string>
     <string name="leg_l">pierna izqd.</string>
@@ -92,4 +92,5 @@
     <string name="update_drug">Modificar fármaco</string>
     <string name="create">Crear</string>
     <string name="update">Modificar</string>
+    <string name="drug">Fármaco</string>
 </resources>

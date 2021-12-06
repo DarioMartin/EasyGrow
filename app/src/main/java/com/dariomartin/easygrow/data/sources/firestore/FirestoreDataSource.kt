@@ -1,10 +1,7 @@
 package com.dariomartin.easygrow.data.sources.firestore
 
 import androidx.lifecycle.*
-import com.dariomartin.easygrow.data.dto.AdministrationDTO
-import com.dariomartin.easygrow.data.dto.DoctorDTO
-import com.dariomartin.easygrow.data.dto.DrugDTO
-import com.dariomartin.easygrow.data.dto.PatientDTO
+import com.dariomartin.easygrow.data.dto.*
 import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.data.sources.IDataSource
 import com.google.firebase.firestore.FieldValue
@@ -20,6 +17,7 @@ class FirestoreDataSource : IDataSource {
         private const val DOCTORS = "doctors"
         private const val DRUGS = "drugs"
         private const val ADMINISTRATIONS = "administrations"
+        private const val PENS = "pens"
     }
 
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -94,17 +92,6 @@ class FirestoreDataSource : IDataSource {
             .add(administration).await()
     }
 
-    override suspend fun getAdministrations(patientId: String): List<AdministrationDTO> {
-        val result = firestore.collection(PATIENTS)
-            .document(patientId)
-            .collection(ADMINISTRATIONS)
-            .get().await()
-
-        return result.documents.map { doc ->
-            doc.toObject(AdministrationDTO::class.java)?.apply { id = doc.id }
-                ?: AdministrationDTO()
-        }
-    }
 
     override suspend fun assignPatientToDoctor(patientId: String, doctorId: String) {
         firestore.collection(DOCTORS).document(doctorId)
@@ -176,6 +163,30 @@ class FirestoreDataSource : IDataSource {
         return liveData
     }
 
+    override fun getAdministrations(patientId: String): LiveData<List<AdministrationDTO>> {
+
+        val liveData = MutableLiveData<List<AdministrationDTO>>()
+
+        firestore.collection(PATIENTS)
+            .document(patientId)
+            .collection(ADMINISTRATIONS).addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && !snapshot.isEmpty) {
+                    liveData.postValue(
+                        snapshot.documents.mapNotNull { doc ->
+                            doc.toObject(AdministrationDTO::class.java)
+                                ?.apply { id = doc.id }
+                        }
+                    )
+                }
+            }
+
+        return liveData
+    }
+
     override fun getAllPatients(): LiveData<List<PatientDTO>> {
         val liveData = MutableLiveData<List<PatientDTO>>()
 
@@ -236,4 +247,47 @@ class FirestoreDataSource : IDataSource {
 
         return liveData
     }
+
+    override suspend fun addPen(patientId: String, pen: PenDTO) {
+        firestore.collection(PATIENTS).document(patientId).collection(PENS).add(pen).await()
+    }
+
+    override suspend fun removePen(patientId: String, penId: String) {
+        firestore.collection(PATIENTS).document(patientId).collection(PENS).document(penId).delete()
+            .await()
+    }
+
+    override suspend fun getPen(patientId: String, penId: String): PenDTO? {
+        val result =
+            firestore.collection(PATIENTS).document(patientId).collection(PENS).document(penId)
+                .get().await()
+        return result.toObject(PenDTO::class.java)?.apply { id = result.id }
+    }
+
+    override suspend fun updatePatient(patientId: String, pen: PenDTO) {
+        firestore.collection(PATIENTS).document(patientId).collection(PENS).document(pen.id)
+            .set(pen).await()
+    }
+
+    override fun getPens(patientId: String): LiveData<List<PenDTO>> {
+        val liveData = MutableLiveData<List<PenDTO>>()
+
+        firestore.collection(PATIENTS).document(patientId).collection(PENS).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && !snapshot.isEmpty) {
+                liveData.postValue(
+                    snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(PenDTO::class.java)
+                            ?.apply { id = doc.id }
+                    }
+                )
+            }
+        }
+
+        return liveData
+    }
+
 }

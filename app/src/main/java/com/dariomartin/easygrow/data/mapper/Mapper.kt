@@ -2,10 +2,7 @@ package com.dariomartin.easygrow.data.mapper
 
 import android.icu.util.Measure
 import android.icu.util.MeasureUnit
-import com.dariomartin.easygrow.data.dto.AdministrationDTO
-import com.dariomartin.easygrow.data.dto.DrugDTO
-import com.dariomartin.easygrow.data.dto.PatientDTO
-import com.dariomartin.easygrow.data.dto.TreatmentDTO
+import com.dariomartin.easygrow.data.dto.*
 import com.dariomartin.easygrow.data.model.*
 import com.dariomartin.easygrow.utils.Utils.dateToString
 import com.dariomartin.easygrow.utils.Utils.stringToCalendar
@@ -24,16 +21,25 @@ object Mapper {
             height = patientDTO.height,
             birthday = stringToCalendar("dd/MM/yyyy", patientDTO.birthday),
             weight = patientDTO.weight,
-            treatment = patientDTO.treatment?.let { treatmentDTO(it) }
+            treatment = patientDTO.treatment?.let { treatmentDTOMapper(it) }
         )
     }
 
-    private fun treatmentDTO(treatment: TreatmentDTO): Treatment {
+    private fun treatmentDTOMapper(treatment: TreatmentDTO): Treatment {
         return Treatment(
-            drug = Drug(name = treatment.drug),
-            totalPens = treatment.totalPens,
+            drug = treatment.drug,
             lastUpdate = stringToCalendar("dd/MM/yyyy hh:mm", treatment.lastReview)
-                ?: Calendar.getInstance()
+                ?: Calendar.getInstance(),
+            dose = Measure(treatment.dose, MeasureUnit.MILLIGRAM),
+        )
+    }
+
+    private fun treatmentMapper(treatment: Treatment?): TreatmentDTO {
+        return if (treatment == null) TreatmentDTO()
+        else TreatmentDTO(
+            drug = treatment.drug ?: "",
+            dose = treatment.dose.number.toFloat(),
+            lastReview = dateToString("dd/MM/yyyy hh:mm", treatment.lastUpdate.timeInMillis)
         )
     }
 
@@ -46,7 +52,8 @@ object Mapper {
             photo = patient.photo,
             height = patient.height,
             birthday = dateToString("dd/MM/yyyy", patient.birthday?.timeInMillis),
-            weight = patient.weight
+            weight = patient.weight,
+            treatment = treatmentMapper(patient.treatment)
         )
     }
 
@@ -87,6 +94,35 @@ object Mapper {
             volumeOfDrugMl = drug.concentration.volume.number.toFloat(),
             cartridgeVolumeMl = drug.cartridgeVolume.number.toFloat(),
             url = drug.url
+        )
+    }
+
+    fun penDtoMapper(penDto: PenDTO): Pen {
+        val startingDate = penDto.startingDate?.let { stringToCalendar("dd/MM/yyyy hh:mm", it) }
+            ?: Calendar.getInstance()
+        val endDate = penDto.endDate?.let { stringToCalendar("dd/MM/yyyy hh:mm", it) }
+            ?: Calendar.getInstance()
+
+        return Pen(
+            id = penDto.id,
+            startingDate = startingDate,
+            endDate = endDate,
+            drug = Drug(name = penDto.drug),
+            volumedConsumed = Measure(penDto.volumedConsumed, MeasureUnit.MILLILITER)
+        )
+    }
+
+    fun penMapper(pen: Pen): PenDTO {
+        return PenDTO(
+            id = pen.id,
+            startingDate = pen.startingDate?.let {
+                dateToString("dd/MM/yyyy", it.timeInMillis)
+            },
+            endDate = pen.endDate?.let {
+                dateToString("dd/MM/yyyy", it.timeInMillis)
+            },
+            drug = pen.drug.name,
+            volumedConsumed = pen.volumedConsumed.number.toFloat()
         )
     }
 }

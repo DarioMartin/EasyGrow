@@ -1,10 +1,7 @@
 package com.dariomartin.easygrow.data.sources
 
 import androidx.lifecycle.LiveData
-import com.dariomartin.easygrow.data.dto.AdministrationDTO
-import com.dariomartin.easygrow.data.dto.DoctorDTO
-import com.dariomartin.easygrow.data.dto.DrugDTO
-import com.dariomartin.easygrow.data.dto.PatientDTO
+import com.dariomartin.easygrow.data.dto.*
 import com.dariomartin.easygrow.data.model.User
 
 interface IDataSource {
@@ -27,7 +24,7 @@ interface IDataSource {
     suspend fun getDrug(drugId: String): DrugDTO?
     suspend fun updateDrug(drug: DrugDTO)
     suspend fun addAdministration(patientId: String, administration: AdministrationDTO)
-    suspend fun getAdministrations(patientId: String): List<AdministrationDTO>
+    fun getAdministrations(patientId: String): LiveData<List<AdministrationDTO>>
 
     suspend fun assignPatientToDoctor(patientId: String, doctorId: String)
     suspend fun removePatientFromDoctor(patientId: String, doctorId: String)
@@ -44,4 +41,9 @@ interface IDataSource {
 
     fun getDrugs(): LiveData<List<DrugDTO>>
 
+    suspend fun removePen(patientId: String, penId: String)
+    suspend fun getPen(patientId: String, penId: String): PenDTO?
+    suspend fun updatePatient(patientId: String, pen: PenDTO)
+    suspend fun addPen(patientId: String, pen: PenDTO)
+    fun getPens(patientId: String): LiveData<List<PenDTO>>
 }

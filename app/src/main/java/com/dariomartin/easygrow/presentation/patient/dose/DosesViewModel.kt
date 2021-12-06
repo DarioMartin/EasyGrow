@@ -38,7 +38,8 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
             val treatment = patientRepository.getPatient(null)?.treatment
 
             val totalAdministrations: List<Administration> =
-                patientRepository.getAdministrations() + newAdministrations
+                //patientRepository.getAdministrations() +
+                        newAdministrations
 
             val last3Administrations =
                 totalAdministrations.sortedBy { it.date }.takeLast(3).map { it.bodyPart to true }
@@ -54,14 +55,14 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
         treatment: Treatment,
         previousAdministrations: List<Administration>
     ) {
-        var currentAdministrations =
+        /*var currentAdministrations =
             previousAdministrations.filter { it.date > treatment.lastUpdate }.size + newAdministrations.size
-        val dosesPerPen = (treatment.drug.concentration.volume.float() / treatment.dose.float()).toInt()
+        //val dosesPerPen = (treatment.drug.concentration.volume.float() / treatment.dose.float()).toInt()
         val consumedPens = currentAdministrations / dosesPerPen
-        val remainingPens = treatment.totalPens - consumedPens
+        //val remainingPens = treatment.totalPens - consumedPens
         val remainingDosesInPen = dosesPerPen - (currentAdministrations % dosesPerPen)
 
-        penDoses.value = Pair(dosesPerPen, remainingDosesInPen)
+        penDoses.value = Pair(dosesPerPen, remainingDosesInPen)*/
     }
 
     fun newAdministration(bodyPart: BodyPart) {
