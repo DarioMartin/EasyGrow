@@ -38,7 +38,8 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
             val treatment = patientRepository.getPatient(null)?.treatment
 
             val totalAdministrations: List<Administration> =
-                patientRepository.getAdministrations() + newAdministrations
+                //patientRepository.getAdministrations() +
+                        newAdministrations
 
             val last3Administrations =
                 totalAdministrations.sortedBy { it.date }.takeLast(3).map { it.bodyPart to true }

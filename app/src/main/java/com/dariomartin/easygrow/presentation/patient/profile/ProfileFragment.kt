@@ -47,10 +47,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             viewLifecycleOwner,
             { patient -> patient?.let { paintPatient(patient) } ?: onPatientError() })
 
-        viewModel.administrations
-            .observe(
+        viewModel.getAdministrations(args.patientId).observe(
                 viewLifecycleOwner,
-                { doses -> dosesAdapter.administrations = doses })
+                { doses ->
+                    dosesAdapter.administrations = doses
+                })
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())

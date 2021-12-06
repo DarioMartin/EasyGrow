@@ -12,7 +12,7 @@ interface IPatientRepository {
     fun getLivePatient(patientId: String?): LiveData<Patient>
     suspend fun recordAdministration(newBodyPart: BodyPart, date: Calendar)
     suspend fun updatePatient(patientId: String, patientForm: PatientForm)
-    suspend fun getAdministrations(): List<Administration>
+    fun getAdministrations(patientId: String?): LiveData<List<Administration>>
     suspend fun addAdministration(administration: Administration)
     fun allPatients(): LiveData<List<Patient>>
 }

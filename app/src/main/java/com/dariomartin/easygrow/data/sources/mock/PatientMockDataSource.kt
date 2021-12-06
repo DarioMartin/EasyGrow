@@ -9,11 +9,13 @@ import com.dariomartin.easygrow.data.dto.DoctorDTO
 import com.dariomartin.easygrow.data.dto.DrugDTO
 import com.dariomartin.easygrow.data.dto.PatientDTO
 import com.dariomartin.easygrow.data.mapper.Mapper
-import com.dariomartin.easygrow.data.model.*
+import com.dariomartin.easygrow.data.model.Drug
+import com.dariomartin.easygrow.data.model.Patient
+import com.dariomartin.easygrow.data.model.Treatment
+import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.data.sources.IDataSource
 import java.util.*
 import javax.inject.Inject
-import kotlin.random.Random.Default.nextInt
 
 class PatientMockDataSource @Inject constructor() : IDataSource {
 
@@ -97,26 +99,8 @@ class PatientMockDataSource @Inject constructor() : IDataSource {
         this.patient.weight = patient.weight
     }
 
-    override suspend fun getAdministrations(patientId: String): List<AdministrationDTO> {
-
-        val numAdministrations = 5000
-
-        val refCal = Calendar.getInstance()
-        refCal.add(Calendar.DATE, -(numAdministrations + 1))
-
-        val doses = mutableListOf<Administration>()
-
-        for (i in 1..numAdministrations) {
-            val cal = Calendar.getInstance()
-            cal.time = refCal.time
-            cal.set(Calendar.HOUR, nextInt(20, 22))
-            cal.set(Calendar.MINUTE, nextInt(0, 59))
-            val part = i % BodyPart.values().size
-            doses.add(Administration(cal, BodyPart.values()[part]))
-            refCal.add(Calendar.DATE, 1)
-        }
-
-        return doses.map { Mapper.administrationMapper(it) }
+    override  fun getAdministrations(patientId: String): LiveData<List<AdministrationDTO>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun assignPatientToDoctor(patientId: String, doctorId: String) {

@@ -94,17 +94,6 @@ class FirestoreDataSource : IDataSource {
             .add(administration).await()
     }
 
-    override suspend fun getAdministrations(patientId: String): List<AdministrationDTO> {
-        val result = firestore.collection(PATIENTS)
-            .document(patientId)
-            .collection(ADMINISTRATIONS)
-            .get().await()
-
-        return result.documents.map { doc ->
-            doc.toObject(AdministrationDTO::class.java)?.apply { id = doc.id }
-                ?: AdministrationDTO()
-        }
-    }
 
     override suspend fun assignPatientToDoctor(patientId: String, doctorId: String) {
         firestore.collection(DOCTORS).document(doctorId)
@@ -172,6 +161,30 @@ class FirestoreDataSource : IDataSource {
                 )
             }
         }
+
+        return liveData
+    }
+
+    override fun getAdministrations(patientId: String): LiveData<List<AdministrationDTO>> {
+
+        val liveData = MutableLiveData<List<AdministrationDTO>>()
+
+        firestore.collection(PATIENTS)
+            .document(patientId)
+            .collection(ADMINISTRATIONS).addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && !snapshot.isEmpty) {
+                    liveData.postValue(
+                        snapshot.documents.mapNotNull { doc ->
+                            doc.toObject(AdministrationDTO::class.java)
+                                ?.apply { id = doc.id }
+                        }
+                    )
+                }
+            }
 
         return liveData
     }

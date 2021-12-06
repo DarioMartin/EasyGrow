@@ -30,13 +30,8 @@ class ProfileViewModel @Inject constructor(
 
     val successfulUpdate: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    val administrations by lazy {
-        val liveData = MutableLiveData<List<Administration>>()
-        viewModelScope.launch {
-            liveData.postValue(
-                patientRepository.getAdministrations().sortedByDescending { it.date })
-        }
-        return@lazy liveData
+    fun getAdministrations(patientId: String?): LiveData<List<Administration>> {
+        return patientRepository.getAdministrations(patientId)
     }
 
 
