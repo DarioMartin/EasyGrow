@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.dariomartin.easygrow.R
+import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.databinding.FragmentProfileUpdateBinding
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.presentation.utils.DatePickerFragment
@@ -19,12 +21,14 @@ import java.util.*
 @AndroidEntryPoint
 class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, ProfileViewModel>() {
 
+    private val args: ProfileUpdateFragmentArgs by navArgs()
     private var form: PatientForm = PatientForm()
+    private var type: User.Type = User.Type.SANITARY
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getPatient().observe(
+        viewModel.getPatient(args.patientId).observe(
             viewLifecycleOwner,
             { patient ->
                 form.name = patient.name
@@ -41,6 +45,13 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
             }
         })
 
+        viewModel.userType.observe(viewLifecycleOwner, {
+            it?.let {
+                type = it
+                updatePatient()
+            }
+        })
+
         binding.name.afterTextChanged {
             hideErrors()
             form.name = it
@@ -49,6 +60,7 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
             hideErrors()
             form.surname = it
         }
+
         binding.weight.afterTextChanged {
             hideErrors()
             form.weight = try {
@@ -57,6 +69,7 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
                 0F
             }
         }
+
         binding.height.afterTextChanged {
             hideErrors()
             form.height = try {
@@ -89,8 +102,8 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
     }
 
     private fun submitForm() {
-        if (form.isValid()) {
-            viewModel.updatePatient(form)
+        if (form.isValid(type)) {
+            viewModel.updatePatient(args.patientId, form)
         } else {
             showErrors()
         }
@@ -101,9 +114,9 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
             requireContext().getString(R.string.invalid_value)
         if (!form.isValidSurname()) binding.surnameInputLayout.error =
             requireContext().getString(R.string.invalid_value)
-        if (!form.isValidWeight()) binding.weightInputLayout.error =
+        if (!form.isValidWeight(type)) binding.weightInputLayout.error =
             requireContext().getString(R.string.invalid_value)
-        if (!form.isValidHeight()) binding.heightInputLayout.error =
+        if (!form.isValidHeight(type)) binding.heightInputLayout.error =
             requireContext().getString(R.string.invalid_value)
         if (!form.isValidBirthday()) binding.birthdayInputLayout.error =
             requireContext().getString(R.string.invalid_value)
@@ -118,12 +131,15 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
     }
 
     private fun updatePatient() {
+        binding.weightInputLayout.isEnabled = type == User.Type.SANITARY
+        binding.heightInputLayout.isEnabled = type == User.Type.SANITARY
+
         binding.name.setText(form.name)
         binding.surname.setText(form.surname)
         binding.height.setText(form.height.toString())
         binding.weight.setText(form.weight.toString())
         form.birthday?.let {
-            binding.birthday.setText(dateToString("dd/MM/yyy", it.timeInMillis))
+            binding.birthday.setText(dateToString("dd/MM/yyyy", it.timeInMillis))
         }
 
         Glide.with(requireContext())

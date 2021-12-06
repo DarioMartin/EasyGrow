@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
+import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.databinding.FragmentProfileBinding
 import com.dariomartin.easygrow.presentation.patient.dose.DosesAdapter
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
@@ -19,16 +20,30 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
 
-    private val dosesAdapter: DosesAdapter = DosesAdapter()
+    private val dosesAdapter: DosesAdapter = DosesAdapter {
+        if (type == User.Type.SANITARY) {
+            goToUpdateTreatment()
+        }
+    }
 
     private val args: ProfileFragmentArgs by navArgs()
+    private var patientId: String? = null
+    private var type: User.Type = User.Type.SANITARY
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
 
-        viewModel.getPatient(args.patientId).observe(
+        patientId = args.patientId
+
+        viewModel.userType.observe(viewLifecycleOwner, {
+            it?.let {
+                type = it
+            }
+        })
+
+        viewModel.getPatient(patientId).observe(
             viewLifecycleOwner,
             { patient -> patient?.let { paintPatient(patient) } ?: onPatientError() })
 
@@ -60,8 +75,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun goToDetails() {
-        val action = ProfileFragmentDirections.actionNavigationProfileToNavigationProfileUpdate()
-        findNavController().navigate(action)
+        patientId?.let {
+            val action =
+                ProfileFragmentDirections.actionProfileFragmentToProfileUpdateFragment(it)
+            findNavController().navigate(action)
+        }
     }
 
     private fun onPatientError() {
@@ -70,6 +88,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     @SuppressLint("SetTextI18n")
     private fun paintPatient(patient: Patient) {
+        patientId = patient.id
         binding.header.name.text =
             getString(R.string.full_name_format, patient.name, patient.surname)
         binding.header.height.text = getString(R.string.height_cm_format, patient.height)
@@ -85,7 +104,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         dosesAdapter.treatment = patient.treatment
 
         if (patient.missingData()) {
-            showCompleteDataDialog()
+            //TODO not showing by now
+            //showCompleteDataDialog()
         }
     }
 
@@ -112,6 +132,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun provideViewModel(): ProfileViewModel {
         return ViewModelProvider(this)[ProfileViewModel::class.java]
+    }
+
+    private fun goToUpdateTreatment() {
+        patientId?.let {
+            val action = ProfileFragmentDirections.actionProfileFragmentToTreatmentUpdateFragment(it)
+            findNavController().navigate(action)
+        }
     }
 
 }

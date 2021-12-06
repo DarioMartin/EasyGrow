@@ -39,19 +39,27 @@
             android:id="@+id/action_ProfileFragment_to_profileUpdateFragment"
             app:destination="@id/profileUpdateFragment" />
         <action
-            android:id="@+id/action_ProfileFragment_to_treatmentFragment"
+            android:id="@+id/action_ProfileFragment_to_treatmentUpdateFragment"
             app:destination="@id/treatmentUpdateFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileUpdateFragment"
         android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileUpdateFragment"
         android:label="ProfileUpdateFragment"
-        tools:layout="@layout/fragment_profile_update" />
+        tools:layout="@layout/fragment_profile_update">
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/treatmentUpdateFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.treatmentupdate.TreatmentUpdateFragment"
         android:label="treatment_fragment"
-        tools:layout="@layout/treatment_update_fragment" />
+        tools:layout="@layout/treatment_update_fragment">
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/patientSearchFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.patientsearch.PatientSearchFragment"

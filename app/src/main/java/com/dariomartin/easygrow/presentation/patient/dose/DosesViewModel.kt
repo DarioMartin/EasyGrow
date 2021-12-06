@@ -35,7 +35,7 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
 
     private fun getPreviousAdministrations() {
         viewModelScope.launch {
-            val treatment = patientRepository.getPatient()?.treatment
+            val treatment = patientRepository.getPatient(null)?.treatment
 
             val totalAdministrations: List<Administration> =
                 patientRepository.getAdministrations() + newAdministrations

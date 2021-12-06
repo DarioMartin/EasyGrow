@@ -8,10 +8,10 @@ import com.dariomartin.easygrow.presentation.patient.profile.PatientForm
 import java.util.*
 
 interface IPatientRepository {
-    suspend fun getPatient(): Patient?
+    suspend fun getPatient(patientId: String?): Patient?
     fun getLivePatient(patientId: String?): LiveData<Patient>
     suspend fun recordAdministration(newBodyPart: BodyPart, date: Calendar)
-    suspend fun updatePatient(patientForm: PatientForm)
+    suspend fun updatePatient(patientId: String, patientForm: PatientForm)
     suspend fun getAdministrations(): List<Administration>
     suspend fun addAdministration(administration: Administration)
     fun allPatients(): LiveData<List<Patient>>

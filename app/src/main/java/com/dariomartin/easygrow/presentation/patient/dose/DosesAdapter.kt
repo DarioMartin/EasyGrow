@@ -5,14 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.R
-import com.dariomartin.easygrow.databinding.TreatmentHeaderBinding
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.Treatment
 import com.dariomartin.easygrow.databinding.TreatmentAdministrationItemBinding
+import com.dariomartin.easygrow.databinding.TreatmentHeaderBinding
 import com.dariomartin.easygrow.utils.Utils
 import com.dariomartin.easygrow.utils.Utils.dateToString
 
-class DosesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DosesAdapter(private val onHeaderClick: () -> Any) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val HEADER: Int = 0
@@ -45,7 +46,10 @@ class DosesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HeaderViewHolder -> treatment?.let { holder.bind(it) }
+            is HeaderViewHolder -> treatment?.let {
+                holder.itemView.setOnClickListener { onHeaderClick() }
+                holder.bind(it)
+            }
             is DoseViewHolder -> holder.bind(administrations[position - 1])
         }
     }

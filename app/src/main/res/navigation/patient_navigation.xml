@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_profile">
+    app:startDestination="@+id/ProfileFragment">
 
     <fragment
-        android:id="@+id/navigation_profile"
+        android:id="@+id/ProfileFragment"
         android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
@@ -16,15 +16,23 @@
             app:argType="string"
             app:nullable="true" />
         <action
-            android:id="@+id/action_navigation_profile_to_navigation_profile_update"
+            android:id="@+id/action_ProfileFragment_to_profileUpdateFragment"
             app:destination="@id/navigation_profile_update" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_treatmentUpdateFragment"
+            app:destination="@id/treatmentUpdateFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/navigation_profile_update"
         android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileUpdateFragment"
         android:label="@string/title_profile_update"
-        tools:layout="@layout/fragment_profile_update" />
+        tools:layout="@layout/fragment_profile_update">
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dose"
@@ -37,4 +45,16 @@
         android:name="com.dariomartin.easygrow.presentation.patient.statistics.StatisticsFragment"
         android:label="@string/title_statistics"
         tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/treatmentUpdateFragment"
+        android:name="com.dariomartin.easygrow.presentation.sanitary.treatmentupdate.TreatmentUpdateFragment"
+        android:label="treatment_update_fragment"
+        tools:layout="@layout/treatment_update_fragment" >
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+    </fragment>
+
+
 </navigation>
