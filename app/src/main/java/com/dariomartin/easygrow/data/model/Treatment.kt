@@ -5,7 +5,7 @@ import android.icu.util.MeasureUnit
 import java.util.*
 
 data class Treatment(
-    var drug: Drug,
+    var drug: Drug = Drug(),
     val totalPens: Int = 0,
     val lastUpdate: Calendar
 ) {

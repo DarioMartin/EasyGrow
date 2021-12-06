@@ -33,4 +33,9 @@ class RepositoryModule {
         return AuthRepositoryImpl()
     }
 
+    @Provides
+    fun provideDrugRepository(): IDrugRepository {
+        return DrugRepositoryImpl()
+    }
+
 }

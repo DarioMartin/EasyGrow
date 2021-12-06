@@ -35,7 +35,7 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
 
     private fun getPreviousAdministrations() {
         viewModelScope.launch {
-            val treatment = patientRepository.getPatient()?.treatment
+            val treatment = patientRepository.getPatient(null)?.treatment
 
             val totalAdministrations: List<Administration> =
                 patientRepository.getAdministrations() + newAdministrations
@@ -56,7 +56,7 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
     ) {
         var currentAdministrations =
             previousAdministrations.filter { it.date > treatment.lastUpdate }.size + newAdministrations.size
-        val dosesPerPen = (treatment.drug.density.volume.float() / treatment.dose.float()).toInt()
+        val dosesPerPen = (treatment.drug.concentration.volume.float() / treatment.dose.float()).toInt()
         val consumedPens = currentAdministrations / dosesPerPen
         val remainingPens = treatment.totalPens - consumedPens
         val remainingDosesInPen = dosesPerPen - (currentAdministrations % dosesPerPen)

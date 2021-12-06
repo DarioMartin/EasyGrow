@@ -7,50 +7,41 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.data.model.Drug
 import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
+import com.dariomartin.easygrow.presentation.utils.BaseFragment
+import com.dariomartin.easygrow.presentation.utils.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DrugsTabFragment : Fragment() {
+class DrugsTabFragment : BaseFragment<FragmentSanitaryBinding, DrugsTabViewModel>() {
 
     companion object {
         fun newInstance(listener: TabItemListener): Fragment {
-            return DrugsTabFragment()
+            val fragment = DrugsTabFragment()
+            fragment.listener = listener
+            return fragment
         }
     }
 
-    private lateinit var pageViewModel: DrugsTabViewModel
-    private var _binding: FragmentSanitaryBinding? = null
-    private val binding get() = _binding!!
+    private var listener: TabItemListener? = null
+    private val adapter = DrugsAdapter { drug -> listener?.onTabItemClicked(drug) }
 
-    private val adapter = DrugsAdapter()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        pageViewModel = ViewModelProvider(this)[DrugsTabViewModel::class.java]
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentSanitaryBinding.inflate(inflater, container, false)
-        val root = binding.root
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
-        pageViewModel.drugs.observe(viewLifecycleOwner, { drugs ->
+        viewModel.getDrugs().observe(viewLifecycleOwner, { drugs ->
             if (drugs.isNullOrEmpty()) {
                 showEmptyMessage()
             } else {
-                listPatients(drugs)
+                listDrugs(drugs)
             }
         })
-        return root
     }
 
     private fun setupRecyclerView() {
@@ -62,19 +53,36 @@ class DrugsTabFragment : Fragment() {
             )
         )
         binding.recyclerView.adapter = adapter
+
+        val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.recyclerView.adapter as DrugsAdapter
+                val drug: Drug = adapter.getItem(viewHolder.adapterPosition)
+                viewModel.removeDrug(drug.name)
+                adapter.removeAt(viewHolder.adapterPosition)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
-    private fun listPatients(drugs: List<Drug>) {
+    private fun listDrugs(drugs: List<Drug>) {
         adapter.setDrugs(drugs)
     }
 
     private fun showEmptyMessage() {
 
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentSanitaryBinding {
+        return FragmentSanitaryBinding.inflate(inflater, container, false)
+    }
+
+    override fun provideViewModel(): DrugsTabViewModel {
+        return ViewModelProvider(this)[DrugsTabViewModel::class.java]
     }
 }

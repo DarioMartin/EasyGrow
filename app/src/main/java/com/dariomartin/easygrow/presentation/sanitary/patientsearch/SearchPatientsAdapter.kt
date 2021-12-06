@@ -19,11 +19,11 @@ class SearchPatientsAdapter(
         )
     }
 
-    private var assigned: List<Patient> = listOf()
+    private var assigned: List<String> = listOf()
     private var query = ""
     private fun filteredPatients() = patients.filter {
         (it.name.contains(query, true) || it.surname.contains(query, true))
-                && !assigned.contains(it)
+                && !assigned.contains(it.id)
     }
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
@@ -46,7 +46,7 @@ class SearchPatientsAdapter(
     }
 
     fun setAssigned(patients: MutableList<Patient>) {
-        assigned = patients
+        assigned = patients.map { it.id }
         notifyDataSetChanged()
     }
 

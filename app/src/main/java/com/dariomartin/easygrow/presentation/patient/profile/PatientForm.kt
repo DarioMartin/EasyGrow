@@ -1,5 +1,6 @@
 package com.dariomartin.easygrow.presentation.patient.profile
 
+import com.dariomartin.easygrow.data.model.User
 import java.util.*
 
 data class PatientForm(
@@ -10,15 +11,15 @@ data class PatientForm(
     var weight: Float = 0F,
     var birthday: Calendar? = null
 ) {
-    fun isValid() = isValidName()
+    fun isValid(type: User.Type) = isValidName()
             && isValidSurname()
-            && isValidWeight()
-            && isValidHeight()
+            && isValidWeight(type)
+            && isValidHeight(type)
             && isValidBirthday()
 
     fun isValidName() = !name.isNullOrEmpty()
     fun isValidSurname() = !surname.isNullOrEmpty()
-    fun isValidWeight() = weight > 0
-    fun isValidHeight() = height > 0
+    fun isValidWeight(type: User.Type) = weight > 0 || type == User.Type.PATIENT
+    fun isValidHeight(type: User.Type) = height > 0 || type == User.Type.PATIENT
     fun isValidBirthday() = birthday != null
 }

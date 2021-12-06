@@ -26,8 +26,6 @@ interface IDataSource {
     suspend fun removeDrug(drugId: String)
     suspend fun getDrug(drugId: String): DrugDTO?
     suspend fun updateDrug(drug: DrugDTO)
-    suspend fun getDrugs(): List<DrugDTO>
-
     suspend fun addAdministration(patientId: String, administration: AdministrationDTO)
     suspend fun getAdministrations(patientId: String): List<AdministrationDTO>
 
@@ -41,5 +39,9 @@ interface IDataSource {
     fun getLiveDoctor(doctorId: String): LiveData<DoctorDTO>
 
     fun getAllPatients(): LiveData<List<PatientDTO>>
+
+    fun getLiveDrug(drugId: String): LiveData<DrugDTO>
+
+    fun getDrugs(): LiveData<List<DrugDTO>>
 
 }

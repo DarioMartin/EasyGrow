@@ -69,12 +69,16 @@ class SanitaryTabsFragment : Fragment(), TabItemListener {
         binding.fab.setOnClickListener {
             if (viewPager.currentItem == 0) {
                 goToSearchPatient()
+            } else {
+                goToAddDrug()
             }
         }
     }
 
-    private fun goToDrugDetails(selection: Drug) {
-
+    private fun goToDrugDetails(drug: Drug) {
+        val action =
+            SanitaryTabsFragmentDirections.actionSanitaryTabsFragmentToDrugDetailFragment(drug.name)
+        findNavController().navigate(action)
     }
 
     private fun goToPatientDetails(patient: Patient) {
@@ -86,6 +90,12 @@ class SanitaryTabsFragment : Fragment(), TabItemListener {
     private fun goToSearchPatient() {
         val action =
             SanitaryTabsFragmentDirections.actionSanitaryTabsFragmentToPatientSearchFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun goToAddDrug() {
+        val action =
+            SanitaryTabsFragmentDirections.actionSanitaryTabsFragmentToCreateDrugFragment()
         findNavController().navigate(action)
     }
 

@@ -73,7 +73,7 @@ class FirestoreDataSource : IDataSource {
     }
 
     override suspend fun addDrug(drug: DrugDTO) {
-        firestore.collection(DRUGS).add(drug).await()
+        firestore.collection(DRUGS).document(drug.id).set(drug).await()
     }
 
     override suspend fun removeDrug(drugId: String) {
@@ -88,11 +88,6 @@ class FirestoreDataSource : IDataSource {
     override suspend fun updateDrug(drug: DrugDTO) {
         addDrug(drug)
     }
-
-    override suspend fun getDrugs(): List<DrugDTO> {
-        return firestore.collection(DRUGS).get().await().toObjects(DrugDTO::class.java)
-    }
-
 
     override suspend fun addAdministration(patientId: String, administration: AdministrationDTO) {
         firestore.collection(PATIENTS).document(patientId).collection(ADMINISTRATIONS)
@@ -193,6 +188,46 @@ class FirestoreDataSource : IDataSource {
                 liveData.postValue(
                     snapshot.documents.mapNotNull { doc ->
                         doc.toObject(PatientDTO::class.java)
+                            ?.apply { id = doc.id }
+                    }
+                )
+            }
+        }
+
+        return liveData
+    }
+
+    override fun getLiveDrug(drugId: String): LiveData<DrugDTO> {
+        val liveData = MutableLiveData<DrugDTO>()
+
+        firestore.collection(DRUGS).document(drugId).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                liveData.postValue(
+                    snapshot.toObject(DrugDTO::class.java)
+                        ?.apply { id = snapshot.id }
+                )
+            }
+        }
+
+        return liveData
+    }
+
+    override fun getDrugs(): LiveData<List<DrugDTO>> {
+        val liveData = MutableLiveData<List<DrugDTO>>()
+
+        firestore.collection(DRUGS).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && !snapshot.isEmpty) {
+                liveData.postValue(
+                    snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(DrugDTO::class.java)
                             ?.apply { id = doc.id }
                     }
                 )

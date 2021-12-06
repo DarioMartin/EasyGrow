@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.dariomartin.easygrow.R
+import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.databinding.FragmentProfileUpdateBinding
+import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.presentation.utils.DatePickerFragment
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
 import com.dariomartin.easygrow.utils.Utils.dateToString
@@ -17,30 +19,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class ProfileUpdateFragment : Fragment() {
+class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, ProfileViewModel>() {
 
-    private lateinit var profileViewModel: ProfileViewModel
-    private var _binding: FragmentProfileUpdateBinding? = null
-    private val binding get() = _binding!!
+    private val args: ProfileUpdateFragmentArgs by navArgs()
     private var form: PatientForm = PatientForm()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        profileViewModel =
-            ViewModelProvider(this)[ProfileViewModel::class.java]
-
-        _binding = FragmentProfileUpdateBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
+    private var type: User.Type = User.Type.SANITARY
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profileViewModel.getPatient().observe(
+        viewModel.getPatient(args.patientId).observe(
             viewLifecycleOwner,
             { patient ->
                 form.name = patient.name
@@ -51,9 +39,16 @@ class ProfileUpdateFragment : Fragment() {
                 updatePatient()
             })
 
-        profileViewModel.successfulUpdate.observe(viewLifecycleOwner, { successfulUpdate ->
+        viewModel.successfulUpdate.observe(viewLifecycleOwner, { successfulUpdate ->
             if (successfulUpdate) {
                 findNavController().popBackStack()
+            }
+        })
+
+        viewModel.userType.observe(viewLifecycleOwner, {
+            it?.let {
+                type = it
+                updatePatient()
             }
         })
 
@@ -65,6 +60,7 @@ class ProfileUpdateFragment : Fragment() {
             hideErrors()
             form.surname = it
         }
+
         binding.weight.afterTextChanged {
             hideErrors()
             form.weight = try {
@@ -73,6 +69,7 @@ class ProfileUpdateFragment : Fragment() {
                 0F
             }
         }
+
         binding.height.afterTextChanged {
             hideErrors()
             form.height = try {
@@ -105,8 +102,8 @@ class ProfileUpdateFragment : Fragment() {
     }
 
     private fun submitForm() {
-        if (form.isValid()) {
-            profileViewModel.updatePatient(form)
+        if (form.isValid(type)) {
+            viewModel.updatePatient(args.patientId, form)
         } else {
             showErrors()
         }
@@ -117,9 +114,9 @@ class ProfileUpdateFragment : Fragment() {
             requireContext().getString(R.string.invalid_value)
         if (!form.isValidSurname()) binding.surnameInputLayout.error =
             requireContext().getString(R.string.invalid_value)
-        if (!form.isValidWeight()) binding.weightInputLayout.error =
+        if (!form.isValidWeight(type)) binding.weightInputLayout.error =
             requireContext().getString(R.string.invalid_value)
-        if (!form.isValidHeight()) binding.heightInputLayout.error =
+        if (!form.isValidHeight(type)) binding.heightInputLayout.error =
             requireContext().getString(R.string.invalid_value)
         if (!form.isValidBirthday()) binding.birthdayInputLayout.error =
             requireContext().getString(R.string.invalid_value)
@@ -134,12 +131,15 @@ class ProfileUpdateFragment : Fragment() {
     }
 
     private fun updatePatient() {
+        binding.weightInputLayout.isEnabled = type == User.Type.SANITARY
+        binding.heightInputLayout.isEnabled = type == User.Type.SANITARY
+
         binding.name.setText(form.name)
         binding.surname.setText(form.surname)
         binding.height.setText(form.height.toString())
         binding.weight.setText(form.weight.toString())
         form.birthday?.let {
-            binding.birthday.setText(dateToString("dd/MM/yyy", it.timeInMillis))
+            binding.birthday.setText(dateToString("dd/MM/yyyy", it.timeInMillis))
         }
 
         Glide.with(requireContext())
@@ -149,9 +149,15 @@ class ProfileUpdateFragment : Fragment() {
             .into(binding.patientPicture)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentProfileUpdateBinding {
+        return FragmentProfileUpdateBinding.inflate(inflater, container, false)
+    }
+
+    override fun provideViewModel(): ProfileViewModel {
+        return ViewModelProvider(this)[ProfileViewModel::class.java]
     }
 }
 

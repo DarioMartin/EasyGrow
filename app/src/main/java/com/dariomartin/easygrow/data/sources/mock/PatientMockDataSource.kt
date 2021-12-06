@@ -86,7 +86,7 @@ class PatientMockDataSource @Inject constructor() : IDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getDrugs(): List<DrugDTO> {
+    override fun getDrugs(): LiveData<List<DrugDTO>> {
         TODO("Not yet implemented")
     }
 
@@ -139,11 +139,7 @@ class PatientMockDataSource @Inject constructor() : IDataSource {
     }
 
     private fun getTreatment(patientWeight: Float): Treatment {
-        val drug = Drug(
-            "Omnitrope", "Sandoz", density = Density(
-                Measure(10f, MeasureUnit.MILLIGRAM), Measure(1.5f, MeasureUnit.MILLILITER)
-            ), ""
-        )
+        val drug = Drug()
 
 
         val lastDate = Calendar.getInstance()
@@ -173,6 +169,10 @@ class PatientMockDataSource @Inject constructor() : IDataSource {
     }
 
     override fun getAllPatients(): LiveData<List<PatientDTO>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLiveDrug(drugId: String): LiveData<DrugDTO> {
         TODO("Not yet implemented")
     }
 }

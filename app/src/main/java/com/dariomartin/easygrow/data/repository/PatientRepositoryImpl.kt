@@ -19,8 +19,8 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
 
     private val firestore = FirestoreDataSource()
 
-    override suspend fun getPatient(): Patient? {
-        return auth.currentUser?.uid?.let { uid ->
+    override suspend fun getPatient(patientId: String?): Patient? {
+        return (patientId ?: auth.currentUser?.uid)?.let { uid ->
             firestore.getPatient(uid)?.let { dto ->
                 Mapper.patientDtoMapper(dto)
             }
@@ -31,8 +31,8 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
 
     }
 
-    override suspend fun updatePatient(patientForm: PatientForm) {
-        getPatient()?.apply {
+    override suspend fun updatePatient(patientId: String, patientForm: PatientForm) {
+        getPatient(patientId)?.apply {
             this.name = patientForm.name ?: ""
             this.surname = patientForm.surname ?: ""
             this.height = patientForm.height

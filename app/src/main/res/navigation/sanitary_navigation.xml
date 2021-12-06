@@ -17,6 +17,12 @@
         <action
             android:id="@+id/action_sanitaryTabsFragment_to_patientSearchFragment"
             app:destination="@id/patientSearchFragment" />
+        <action
+            android:id="@+id/action_sanitaryTabsFragment_to_createDrugFragment"
+            app:destination="@id/createDrugFragment" />
+        <action
+            android:id="@+id/action_sanitaryTabsFragment_to_drugDetailFragment"
+            app:destination="@id/drugDetailFragment" />
     </fragment>
 
     <fragment
@@ -33,19 +39,27 @@
             android:id="@+id/action_ProfileFragment_to_profileUpdateFragment"
             app:destination="@id/profileUpdateFragment" />
         <action
-            android:id="@+id/action_ProfileFragment_to_treatmentFragment"
+            android:id="@+id/action_ProfileFragment_to_treatmentUpdateFragment"
             app:destination="@id/treatmentUpdateFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileUpdateFragment"
         android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileUpdateFragment"
         android:label="ProfileUpdateFragment"
-        tools:layout="@layout/fragment_profile_update" />
+        tools:layout="@layout/fragment_profile_update">
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/treatmentUpdateFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.treatmentupdate.TreatmentUpdateFragment"
         android:label="treatment_fragment"
-        tools:layout="@layout/treatment_update_fragment" />
+        tools:layout="@layout/treatment_update_fragment">
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/patientSearchFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.patientsearch.PatientSearchFragment"
@@ -54,6 +68,30 @@
         <action
             android:id="@+id/action_patientSearchFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createDrugFragment"
+        android:name="com.dariomartin.easygrow.presentation.sanitary.createdrug.CreateDrugFragment"
+        android:label="CreateDrugFragment"
+        tools:layout="@layout/create_drug_fragment">
+        <argument
+            android:name="drugId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/drugDetailFragment"
+        android:name="com.dariomartin.easygrow.presentation.sanitary.drugdetails.DrugDetailFragment"
+        android:label="drug_detail_fragment"
+        tools:layout="@layout/drug_detail_fragment">
+        <action
+            android:id="@+id/action_drugDetailFragment_to_createDrugFragment"
+            app:destination="@id/createDrugFragment" />
+        <argument
+            android:name="drugId"
+            app:argType="string"
+            app:nullable="false" />
     </fragment>
 
 

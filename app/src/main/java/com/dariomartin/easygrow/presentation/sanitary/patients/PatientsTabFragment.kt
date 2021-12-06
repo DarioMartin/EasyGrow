@@ -13,11 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
+import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.presentation.utils.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PatientsTabFragment : Fragment() {
+class PatientsTabFragment : BaseFragment<FragmentSanitaryBinding, PatientsTabViewModel>() {
 
     companion object {
         fun newInstance(listener: TabItemListener?): Fragment {
@@ -28,21 +29,10 @@ class PatientsTabFragment : Fragment() {
     }
 
     private var listener: TabItemListener? = null
-    private lateinit var viewModel: PatientsTabViewModel
-    private var _binding: FragmentSanitaryBinding? = null
-    private val binding get() = _binding!!
+    private val adapter = PatientsAdapter { patient -> listener?.onTabItemClicked(patient) }
 
-    private val adapter =
-        PatientsAdapter { patient: Patient -> listener?.onTabItemClicked(patient) }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewModel = ViewModelProvider(this)[PatientsTabViewModel::class.java]
-        _binding = FragmentSanitaryBinding.inflate(inflater, container, false)
-        val root = binding.root
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
         viewModel.getPatients().observe(viewLifecycleOwner, { patients ->
@@ -52,7 +42,6 @@ class PatientsTabFragment : Fragment() {
                 listPatients(patients)
             }
         })
-        return root
     }
 
     private fun setupRecyclerView() {
@@ -87,8 +76,15 @@ class PatientsTabFragment : Fragment() {
         adapter.setPatients(listOf())
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentSanitaryBinding {
+        return FragmentSanitaryBinding.inflate(inflater, container, false)
+    }
+
+    override fun provideViewModel(): PatientsTabViewModel {
+        return ViewModelProvider(this)[PatientsTabViewModel::class.java]
     }
 }
