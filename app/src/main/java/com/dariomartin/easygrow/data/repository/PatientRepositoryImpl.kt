@@ -1,14 +1,15 @@
 package com.dariomartin.easygrow.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.dariomartin.easygrow.data.mapper.Mapper
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.BodyPart
 import com.dariomartin.easygrow.data.model.Patient
+import com.dariomartin.easygrow.data.model.Pen
 import com.dariomartin.easygrow.data.sources.firestore.FirestoreDataSource
-import com.dariomartin.easygrow.presentation.patient.profile.PatientForm
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import javax.inject.Inject
@@ -31,16 +32,8 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
 
     }
 
-    override suspend fun updatePatient(patientId: String, patientForm: PatientForm) {
-        getPatient(patientId)?.apply {
-            this.name = patientForm.name ?: ""
-            this.surname = patientForm.surname ?: ""
-            this.height = patientForm.height
-            this.weight = patientForm.weight
-            this.birthday = patientForm.birthday
-        }?.let {
-            firestore.updatePatient(Mapper.patientMapper(it))
-        }
+    override suspend fun updatePatient(patientId: String, patient: Patient) {
+        firestore.updatePatient(Mapper.patientMapper(patient))
     }
 
     override fun getAdministrations(patientId: String?): LiveData<List<Administration>> {
@@ -67,10 +60,47 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
     }
 
     override fun getLivePatient(patientId: String?): LiveData<Patient> {
-        return (patientId ?: auth.currentUser?.uid)?.let { uid ->
+
+        val result = MediatorLiveData<Patient>()
+
+        var patient: Patient? = null
+        var pens: MutableList<Pen> = mutableListOf()
+
+        val patientSource = (patientId ?: auth.currentUser?.uid)?.let { uid ->
             firestore.getLivePatient(uid).map { Mapper.patientDtoMapper(it) }
         } ?: MutableLiveData()
+
+        val pensSource = getPens(patientId)
+
+        result.addSource(patientSource) { p ->
+            patient = p
+            patient?.apply {
+                treatment?.pens = pens
+            }
+
+            patient?.let { result.postValue(it) }
+        }
+        result.addSource(pensSource) { p ->
+            pens = p.toMutableList()
+            patient?.apply {
+                treatment?.pens = pens
+            }
+            patient?.let { result.postValue(it) }
+        }
+
+        return result
     }
 
+    override suspend fun addPen(patientId: String, newPen: Pen) {
+        firestore.addPen(patientId, Mapper.penMapper(newPen))
+    }
+
+    override fun getPens(patientId: String?): LiveData<List<Pen>> {
+        return (patientId ?: auth.currentUser?.uid)?.let { uid ->
+            firestore.getPens(uid).map { list ->
+                list.map { Mapper.penDtoMapper(it) }
+            }
+        } ?: MutableLiveData()
+    }
 
 }

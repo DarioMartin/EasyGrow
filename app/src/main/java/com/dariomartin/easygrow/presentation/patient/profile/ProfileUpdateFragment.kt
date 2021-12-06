@@ -36,6 +36,7 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
                 form.height = patient.height
                 form.weight = patient.weight
                 form.birthday = patient.birthday
+                form.image = patient.photo
                 updatePatient()
             })
 

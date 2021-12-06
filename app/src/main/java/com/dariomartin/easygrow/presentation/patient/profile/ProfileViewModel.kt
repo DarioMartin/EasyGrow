@@ -1,9 +1,6 @@
 package com.dariomartin.easygrow.presentation.patient.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.data.model.User
@@ -20,6 +17,8 @@ class ProfileViewModel @Inject constructor(
 ) :
     ViewModel() {
 
+    private var patient: Patient? = null
+
     val userType by lazy {
         val liveData = MutableLiveData<User.Type>()
         viewModelScope.launch {
@@ -34,14 +33,24 @@ class ProfileViewModel @Inject constructor(
         return patientRepository.getAdministrations(patientId)
     }
 
-
     fun getPatient(patientId: String? = null): LiveData<Patient> {
-        return patientRepository.getLivePatient(patientId)
+        return patientRepository.getLivePatient(patientId).map { patient ->
+            this.patient = patient
+            patient
+        }
     }
 
     fun updatePatient(patientId: String, patientForm: PatientForm) {
         viewModelScope.launch {
-            patientRepository.updatePatient(patientId, patientForm)
+            patient?.apply {
+                this.name = patientForm.name ?: ""
+                this.surname = patientForm.surname ?: ""
+                this.height = patientForm.height
+                this.weight = patientForm.weight
+                this.birthday = patientForm.birthday
+            }?.let {
+                patientRepository.updatePatient(patientId, it)
+            }
             successfulUpdate.postValue(true)
         }
     }

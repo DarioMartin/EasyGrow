@@ -48,10 +48,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             { patient -> patient?.let { paintPatient(patient) } ?: onPatientError() })
 
         viewModel.getAdministrations(args.patientId).observe(
-                viewLifecycleOwner,
-                { doses ->
-                    dosesAdapter.administrations = doses
-                })
+            viewLifecycleOwner,
+            { doses ->
+                dosesAdapter.administrations = doses
+            })
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -137,7 +137,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     private fun goToUpdateTreatment() {
         patientId?.let {
-            val action = ProfileFragmentDirections.actionProfileFragmentToTreatmentUpdateFragment(it)
+            val action =
+                ProfileFragmentDirections.actionProfileFragmentToTreatmentUpdateFragment(it)
             findNavController().navigate(action)
         }
     }

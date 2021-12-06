@@ -9,7 +9,7 @@ data class PatientForm(
     var surname: String? = null,
     var height: Int = 0,
     var weight: Float = 0F,
-    var birthday: Calendar? = null
+    var birthday: Calendar? = null,
 ) {
     fun isValid(type: User.Type) = isValidName()
             && isValidSurname()
