@@ -41,7 +41,7 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
             firestore.getAdministrations(uid).map { list ->
                 list.map { dto -> Mapper.administrationDtoMapper(dto) }
             }
-        } ?: MutableLiveData()
+        } ?: MutableLiveData(listOf())
     }
 
     override suspend fun addAdministration(administration: Administration) {
@@ -105,6 +105,16 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
 
     override fun removePens(patientId: String) {
         firestore.removePens(patientId)
+    }
+
+    override suspend fun updatePen(patientId: String?, pen: Pen) {
+        (patientId ?: auth.currentUser?.uid)?.let { uid ->
+            firestore.updatePen(uid, Mapper.penMapper(pen))
+        }
+    }
+
+    override suspend fun removePen(patientId: String, penId: String) {
+        firestore.removePen(patientId, penId)
     }
 
 }

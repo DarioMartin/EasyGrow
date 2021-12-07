@@ -1,109 +1,90 @@
 package com.dariomartin.easygrow.presentation.patient.dose
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.dariomartin.easygrow.data.model.Administration
-import com.dariomartin.easygrow.data.model.BodyPart
-import com.dariomartin.easygrow.data.model.Treatment
+import androidx.lifecycle.*
+import com.dariomartin.easygrow.data.model.*
+import com.dariomartin.easygrow.data.repository.IDrugRepository
 import com.dariomartin.easygrow.data.repository.IPatientRepository
-import com.dariomartin.easygrow.utils.Extensions.float
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class DosesViewModel @Inject constructor(private val patientRepository: IPatientRepository) :
+class DosesViewModel @Inject constructor(
+    private val patientRepository: IPatientRepository,
+    private val drugRepository: IDrugRepository
+) :
     ViewModel() {
 
-    companion object {
-        private const val MULTIPLE_ADMINS = true
-    }
+    private var remainingDoses: Int = 0
+    private var doseVolume: Float = 0F
+    private var currentPen: Pen? = null
+    val penDoses = MediatorLiveData<Pair<Int, Int>>()
+    private var patient: Patient? = null
 
-    val lastAdministrations: MutableLiveData<Map<BodyPart, Boolean>> = MutableLiveData()
-    val penDoses: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
+    private var newAdministration: Administration? = null
 
-    //private var newBodyParts: MutableList<BodyPart>? = null
-    private var newAdministrations: MutableList<Administration> = mutableListOf()
-    private var date: Calendar? = null
-
-    init {
-        getPreviousAdministrations()
-    }
-
-    private fun getPreviousAdministrations() {
-        viewModelScope.launch {
-            val treatment = patientRepository.getPatient(null)?.treatment
-
-            val totalAdministrations: List<Administration> =
-                //patientRepository.getAdministrations() +
-                        newAdministrations
-
-            val last3Administrations =
-                totalAdministrations.sortedBy { it.date }.takeLast(3).map { it.bodyPart to true }
-                    .toMap().toMutableMap()
-
-            lastAdministrations.value = last3Administrations
-
-            treatment?.let { calculateRemainingDoses(it, totalAdministrations) }
+    fun getPatient(): LiveData<Patient> {
+        return patientRepository.getLivePatient().map {
+            patient = it
+            it
         }
     }
 
-    private fun calculateRemainingDoses(
-        treatment: Treatment,
-        previousAdministrations: List<Administration>
-    ) {
-        /*var currentAdministrations =
-            previousAdministrations.filter { it.date > treatment.lastUpdate }.size + newAdministrations.size
-        //val dosesPerPen = (treatment.drug.concentration.volume.float() / treatment.dose.float()).toInt()
-        val consumedPens = currentAdministrations / dosesPerPen
-        //val remainingPens = treatment.totalPens - consumedPens
-        val remainingDosesInPen = dosesPerPen - (currentAdministrations % dosesPerPen)
+    fun calculateDoses() {
+        var pens: List<Pen> = listOf()
+        var drug: Drug? = null
 
-        penDoses.value = Pair(dosesPerPen, remainingDosesInPen)*/
-    }
+        val treatment = patient?.treatment ?: return
 
-    fun newAdministration(bodyPart: BodyPart) {
-        if (MULTIPLE_ADMINS) {
-            newMultipleAdministration(bodyPart)
-        } else {
-            newSingleAdministration(bodyPart)
+        penDoses.addSource(drugRepository.getLiveDrug(patient?.treatment?.drug ?: "")) { d ->
+            drug = d
+            drug?.let {
+                if (pens.isNotEmpty()) {
+                    penDoses.postValue(combine(treatment, it, pens))
+                }
+            }
         }
 
+        penDoses.addSource(patientRepository.getPens()) { p ->
+            drug?.let {
+                pens = p
 
-        getPreviousAdministrations()
-    }
-
-    private fun newMultipleAdministration(bodyPart: BodyPart) {
-        when {
-            newAdministrations.isEmpty() || checkAvailability(bodyPart) -> {
-                newAdministrations.add(Administration(Calendar.getInstance(), bodyPart))
+                penDoses.postValue(
+                    if (pens.isNotEmpty()) {
+                        combine(treatment, it, pens)
+                    } else {
+                        Pair(0, 0)
+                    }
+                )
             }
         }
     }
 
-    private fun newSingleAdministration(bodyPart: BodyPart) {
-        when {
-            newAdministrations.isEmpty() && checkAvailability(bodyPart) -> {
-                newAdministrations.add(Administration(Calendar.getInstance(), bodyPart))
-            }
-            newAdministrations.isNotEmpty() && checkAvailability(bodyPart) -> {
-                newAdministrations.clear()
-                newAdministrations.add(Administration(Calendar.getInstance(), bodyPart))
-            }
-            else -> {
-                newAdministrations.clear()
-            }
-        }
+    private fun combine(treatment: Treatment, drug: Drug, pens: List<Pen>): Pair<Int, Int> {
+        val validPens = pens.filter { it.drug == drug.name }
+        currentPen = validPens.firstOrNull { it.startingDate != null }
+        if (currentPen == null) currentPen = validPens.firstOrNull()
+
+        if (currentPen == null) return Pair(0, 0)
+
+        doseVolume = treatment.dose.number.toFloat()
+
+        val totalDoses =
+            (drug.cartridgeVolume.number.toFloat() / doseVolume).toInt()
+
+        remainingDoses = currentPen?.getRemainingDoses(doseVolume) ?: 0
+
+        return Pair(totalDoses, remainingDoses)
     }
 
-    private fun recordAdministration() {
-        GlobalScope.launch {
-            newAdministrations.forEach {
-                patientRepository.addAdministration(it)
-            }
+    fun newAdministration(administration: Administration?) {
+        this.newAdministration = administration
+    }
+
+    fun getLastNAdministrations(n: Int): LiveData<List<Administration>> {
+        return patientRepository.getAdministrations().map { list ->
+            list.sortedByDescending { it.date }.take(n)
         }
     }
 
@@ -112,9 +93,34 @@ class DosesViewModel @Inject constructor(private val patientRepository: IPatient
         recordAdministration()
     }
 
-    private fun checkAvailability(bodyPart: BodyPart): Boolean {
-        return !(lastAdministrations.value?.get(bodyPart) ?: false) &&
-                newAdministrations.none { it.bodyPart == bodyPart }
+    private fun recordAdministration() {
+        GlobalScope.launch {
+            if (remainingDoses > 0) {
+                newAdministration?.let {
+                    updatePen()
+                    patientRepository.addAdministration(it)
+                }
+            }
+        }
+    }
+
+    private suspend fun updatePen() {
+        currentPen?.apply {
+            subtractDose(doseVolume)
+            patientRepository.updatePen(pen = this)
+        }
+    }
+
+    fun useNewPen() {
+        viewModelScope.launch {
+            val userId = patient?.id
+            val penId = currentPen?.id
+
+            if (userId != null && penId != null) {
+                patientRepository.removePen(userId, penId)
+                calculateDoses()
+            }
+        }
     }
 
 }

@@ -5,5 +5,7 @@ data class PenDTO(
     val startingDate: String? = null,
     val endDate: String? = null,
     val drug: String? = null,
-    val volumedConsumed: Float = 0F
+    val volumedConsumed: Float = 0F,
+    val cartridgeVolume: Float = 0F
+
 )

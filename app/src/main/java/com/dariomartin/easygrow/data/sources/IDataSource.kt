@@ -2,6 +2,7 @@ package com.dariomartin.easygrow.data.sources
 
 import androidx.lifecycle.LiveData
 import com.dariomartin.easygrow.data.dto.*
+import com.dariomartin.easygrow.data.model.Pen
 import com.dariomartin.easygrow.data.model.User
 
 interface IDataSource {
@@ -43,7 +44,7 @@ interface IDataSource {
 
     suspend fun removePen(patientId: String, penId: String)
     suspend fun getPen(patientId: String, penId: String): PenDTO?
-    suspend fun updatePatient(patientId: String, pen: PenDTO)
+    suspend fun updatePen(patientId: String, pen: PenDTO)
     suspend fun addPen(patientId: String, pen: PenDTO)
     fun getPens(patientId: String): LiveData<List<PenDTO>>
     fun removePens(patientId: String)

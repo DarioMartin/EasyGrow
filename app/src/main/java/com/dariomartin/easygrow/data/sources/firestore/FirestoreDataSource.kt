@@ -2,6 +2,7 @@ package com.dariomartin.easygrow.data.sources.firestore
 
 import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.dto.*
+import com.dariomartin.easygrow.data.model.Pen
 import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.data.sources.IDataSource
 import com.google.firebase.firestore.FieldValue
@@ -181,6 +182,8 @@ class FirestoreDataSource : IDataSource {
                                 ?.apply { id = doc.id }
                         }
                     )
+                } else {
+                    liveData.postValue(listOf())
                 }
             }
 
@@ -202,6 +205,8 @@ class FirestoreDataSource : IDataSource {
                             ?.apply { id = doc.id }
                     }
                 )
+            } else {
+                liveData.postValue(listOf())
             }
         }
 
@@ -242,6 +247,8 @@ class FirestoreDataSource : IDataSource {
                             ?.apply { id = doc.id }
                     }
                 )
+            } else {
+                liveData.postValue(listOf())
             }
         }
 
@@ -264,7 +271,7 @@ class FirestoreDataSource : IDataSource {
         return result.toObject(PenDTO::class.java)?.apply { id = result.id }
     }
 
-    override suspend fun updatePatient(patientId: String, pen: PenDTO) {
+    override suspend fun updatePen(patientId: String, pen: PenDTO) {
         firestore.collection(PATIENTS).document(patientId).collection(PENS).document(pen.id)
             .set(pen).await()
     }
@@ -285,6 +292,8 @@ class FirestoreDataSource : IDataSource {
                                 ?.apply { id = doc.id }
                         }
                     )
+                } else {
+                    liveData.postValue(listOf())
                 }
             }
 
