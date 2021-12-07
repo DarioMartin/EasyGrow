@@ -181,6 +181,8 @@ class FirestoreDataSource : IDataSource {
                                 ?.apply { id = doc.id }
                         }
                     )
+                } else {
+                    liveData.postValue(listOf())
                 }
             }
 
@@ -202,6 +204,8 @@ class FirestoreDataSource : IDataSource {
                             ?.apply { id = doc.id }
                     }
                 )
+            } else {
+                liveData.postValue(listOf())
             }
         }
 
@@ -242,6 +246,8 @@ class FirestoreDataSource : IDataSource {
                             ?.apply { id = doc.id }
                     }
                 )
+            } else {
+                liveData.postValue(listOf())
             }
         }
 
@@ -285,6 +291,8 @@ class FirestoreDataSource : IDataSource {
                                 ?.apply { id = doc.id }
                         }
                     )
+                } else {
+                    liveData.postValue(listOf())
                 }
             }
 

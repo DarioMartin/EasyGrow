@@ -6,19 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.dariomartin.easygrow.R
+import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.BodyPart
 import com.dariomartin.easygrow.databinding.FragmentDoseBinding
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
 
+    private var lastAdministrations: List<Administration> = listOf()
+    private var newAdministration: Administration? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.lastAdministrations.observe(viewLifecycleOwner, { dosesMap ->
-            updateBodyMap(dosesMap)
+        viewModel.getLastNAdministrations(3).observe(viewLifecycleOwner, { administrations ->
+            lastAdministrations = administrations
+            updateBodyMap()
         })
 
         viewModel.getPatient().observe(viewLifecycleOwner, { patient ->
@@ -32,22 +38,22 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
         })
 
         binding.body.armL.setOnClickListener {
-            viewModel.newAdministration(BodyPart.ARM_L)
+            newAdministration(BodyPart.ARM_L)
         }
         binding.body.armR.setOnClickListener {
-            viewModel.newAdministration(BodyPart.ARM_R)
+            newAdministration(BodyPart.ARM_R)
         }
         binding.body.absL.setOnClickListener {
-            viewModel.newAdministration(BodyPart.ABS_L)
+            newAdministration(BodyPart.ABS_L)
         }
         binding.body.absR.setOnClickListener {
-            viewModel.newAdministration(BodyPart.ABS_R)
+            newAdministration(BodyPart.ABS_R)
         }
         binding.body.legL.setOnClickListener {
-            viewModel.newAdministration(BodyPart.LEG_L)
+            newAdministration(BodyPart.LEG_L)
         }
         binding.body.legR.setOnClickListener {
-            viewModel.newAdministration(BodyPart.LEG_R)
+            newAdministration(BodyPart.LEG_R)
         }
     }
 
@@ -56,19 +62,38 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
         binding.header.remainingDoses.text = getString(R.string.remaining_doses, penDoses.second)
     }
 
-    private fun updateBodyMap(dosesMap: Map<BodyPart, Boolean>) {
+    private fun updateBodyMap() {
         binding.body.armLCheck.visibility =
-            if (dosesMap[BodyPart.ARM_L] == true) View.VISIBLE else View.GONE
+            if (getTotalAdministrations().any { it.bodyPart == BodyPart.ARM_L }) View.VISIBLE else View.GONE
         binding.body.armRCheck.visibility =
-            if (dosesMap[BodyPart.ARM_R] == true) View.VISIBLE else View.GONE
+            if (getTotalAdministrations().any { it.bodyPart == BodyPart.ARM_R }) View.VISIBLE else View.GONE
         binding.body.absLCheck.visibility =
-            if (dosesMap[BodyPart.ABS_L] == true) View.VISIBLE else View.GONE
+            if (getTotalAdministrations().any { it.bodyPart == BodyPart.ABS_L }) View.VISIBLE else View.GONE
         binding.body.absRCheck.visibility =
-            if (dosesMap[BodyPart.ABS_R] == true) View.VISIBLE else View.GONE
+            if (getTotalAdministrations().any { it.bodyPart == BodyPart.ABS_R }) View.VISIBLE else View.GONE
         binding.body.legLCheck.visibility =
-            if (dosesMap[BodyPart.LEG_L] == true) View.VISIBLE else View.GONE
+            if (getTotalAdministrations().any { it.bodyPart == BodyPart.LEG_L }) View.VISIBLE else View.GONE
         binding.body.legRCheck.visibility =
-            if (dosesMap[BodyPart.LEG_R] == true) View.VISIBLE else View.GONE
+            if (getTotalAdministrations().any { it.bodyPart == BodyPart.LEG_R }) View.VISIBLE else View.GONE
+    }
+
+    private fun getTotalAdministrations(): List<Administration> {
+        return newAdministration?.let { lastAdministrations + it } ?: lastAdministrations
+    }
+
+
+    private fun newAdministration(bodyPart: BodyPart) {
+        if (lastAdministrations.none { it.bodyPart == bodyPart }) {
+            val new = Administration(Calendar.getInstance(), bodyPart)
+            newAdministration = if (new.bodyPart != newAdministration?.bodyPart) {
+                new
+            } else {
+                null
+            }
+            viewModel.newAdministration(newAdministration)
+
+            updateBodyMap()
+        }
     }
 
     override fun inflateBinding(

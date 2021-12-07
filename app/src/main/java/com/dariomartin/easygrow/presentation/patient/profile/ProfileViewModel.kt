@@ -30,7 +30,9 @@ class ProfileViewModel @Inject constructor(
     val successfulUpdate: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun getAdministrations(patientId: String?): LiveData<List<Administration>> {
-        return patientRepository.getAdministrations(patientId)
+        return patientRepository.getAdministrations(patientId).map { list ->
+            list.sortedByDescending { it.date }
+        }
     }
 
     fun getPatient(patientId: String? = null): LiveData<Patient> {
