@@ -1,9 +1,6 @@
 package com.dariomartin.easygrow.presentation.patient.dose
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.model.*
 import com.dariomartin.easygrow.data.repository.IDrugRepository
 import com.dariomartin.easygrow.data.repository.IPatientRepository
@@ -23,30 +20,38 @@ class DosesViewModel @Inject constructor(
     private var doseVolume: Float = 0F
     private var currentPen: Pen? = null
     val penDoses = MediatorLiveData<Pair<Int, Int>>()
+    private var patient: Patient? = null
 
     private var newAdministration: Administration? = null
 
     fun getPatient(): LiveData<Patient> {
-        return patientRepository.getLivePatient()
+        return patientRepository.getLivePatient().map {
+            patient = it
+            it
+        }
     }
 
-    fun calculateDoses(patient: Patient) {
+    fun calculateDoses() {
         var pens: List<Pen> = listOf()
         var drug: Drug? = null
 
-        val treatment = patient.treatment ?: return
+        val treatment = patient?.treatment ?: return
 
-        penDoses.addSource(drugRepository.getLiveDrug(patient.treatment?.drug ?: "")) { d ->
+        penDoses.addSource(drugRepository.getLiveDrug(patient?.treatment?.drug ?: "")) { d ->
             drug = d
             drug?.let {
-                penDoses.postValue(combine(treatment, it, pens))
+                if (pens.isNotEmpty()) {
+                    penDoses.postValue(combine(treatment, it, pens))
+                }
             }
         }
 
         penDoses.addSource(patientRepository.getPens()) { p ->
             pens = p
             drug?.let {
-                penDoses.postValue(combine(treatment, it, pens))
+                if (pens.isNotEmpty()) {
+                    penDoses.postValue(combine(treatment, it, pens))
+                }
             }
         }
     }
@@ -98,6 +103,18 @@ class DosesViewModel @Inject constructor(
         currentPen?.apply {
             subtractDose(doseVolume)
             patientRepository.updatePen(pen = this)
+        }
+    }
+
+    fun useNewPen() {
+        viewModelScope.launch {
+            val userId = patient?.id
+            val penId = currentPen?.id
+
+            if (userId != null && penId != null) {
+                patientRepository.removePen(userId, penId)
+                calculateDoses()
+            }
         }
     }
 

@@ -101,4 +101,6 @@
     <string name="dialog_remove_patient_body">Vas a eliminar a %s de tu lista de pacientes. ¿Quieres continuar?</string>
     <string name="dialog_remove_durg_title">Eliminar fármaco</string>
     <string name="dialog_remove_drug_body">Vas a eliminar %s del listado de fármacos. ¿Quieres continuar?</string>
+    <string name="dialog_no_available_dosis_title">Tu pluma está vacía</string>
+    <string name="dialog_no_available_dosis_body">Para poder continuar debes usar una nueva pluma. ¿Quieres cargar una nueva?</string>
 </resources>

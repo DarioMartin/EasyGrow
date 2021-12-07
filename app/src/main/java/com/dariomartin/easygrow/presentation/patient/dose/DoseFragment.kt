@@ -1,5 +1,6 @@
 package com.dariomartin.easygrow.presentation.patient.dose
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import java.util.*
 @AndroidEntryPoint
 class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
 
+    private var remainingDoses: Int = 0
     private var lastAdministrations: List<Administration> = listOf()
     private var newAdministration: Administration? = null
 
@@ -27,39 +29,63 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
             updateBodyMap()
         })
 
-        viewModel.getPatient().observe(viewLifecycleOwner, { patient ->
-            patient?.let {
-                viewModel.calculateDoses(it)
-            }
+        viewModel.getPatient().observe(viewLifecycleOwner, {
+            viewModel.calculateDoses()
         })
 
         viewModel.penDoses.observe(viewLifecycleOwner, { penDoses ->
-            updatePena(penDoses)
+            updatePen(penDoses)
         })
 
         binding.body.armL.setOnClickListener {
-            newAdministration(BodyPart.ARM_L)
+            if (remainingDoses > 0) newAdministration(BodyPart.ARM_L)
         }
         binding.body.armR.setOnClickListener {
-            newAdministration(BodyPart.ARM_R)
+            if (remainingDoses > 0) newAdministration(BodyPart.ARM_R)
         }
         binding.body.absL.setOnClickListener {
-            newAdministration(BodyPart.ABS_L)
+            if (remainingDoses > 0) newAdministration(BodyPart.ABS_L)
         }
         binding.body.absR.setOnClickListener {
-            newAdministration(BodyPart.ABS_R)
+            if (remainingDoses > 0) newAdministration(BodyPart.ABS_R)
         }
         binding.body.legL.setOnClickListener {
-            newAdministration(BodyPart.LEG_L)
+            if (remainingDoses > 0) newAdministration(BodyPart.LEG_L)
         }
         binding.body.legR.setOnClickListener {
-            newAdministration(BodyPart.LEG_R)
+            if (remainingDoses > 0) newAdministration(BodyPart.LEG_R)
         }
     }
 
-    private fun updatePena(penDoses: Pair<Int, Int>) {
-        binding.header.pen.setDoses(penDoses.first, penDoses.second)
-        binding.header.remainingDoses.text = getString(R.string.remaining_doses, penDoses.second)
+    private fun updatePen(penDoses: Pair<Int, Int>) {
+        val totalDoses = penDoses.first
+        remainingDoses = penDoses.second
+
+        if (remainingDoses == 0) {
+            showNoDosesDialog()
+        } else {
+            binding.header.pen.setDoses(totalDoses, remainingDoses)
+            binding.header.remainingDoses.text =
+                getString(R.string.remaining_doses, penDoses.second)
+        }
+    }
+
+    private fun showNoDosesDialog() {
+        val builder: AlertDialog.Builder? = activity?.let {
+            AlertDialog.Builder(it)
+        }
+
+        builder?.setTitle(R.string.dialog_no_available_dosis_title)
+            ?.setMessage(R.string.dialog_no_available_dosis_body)
+            ?.setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.useNewPen()
+            }
+            ?.setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+        val dialog: AlertDialog? = builder?.create()
+
+        dialog?.show()
     }
 
     private fun updateBodyMap() {

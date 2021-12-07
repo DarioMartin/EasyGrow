@@ -113,4 +113,8 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
         }
     }
 
+    override suspend fun removePen(patientId: String, penId: String) {
+        firestore.removePen(patientId, penId)
+    }
+
 }
