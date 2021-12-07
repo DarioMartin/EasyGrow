@@ -107,4 +107,10 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
         firestore.removePens(patientId)
     }
 
+    override suspend fun updatePen(patientId: String?, pen: Pen) {
+        (patientId ?: auth.currentUser?.uid)?.let { uid ->
+            firestore.updatePen(uid, Mapper.penMapper(pen))
+        }
+    }
+
 }

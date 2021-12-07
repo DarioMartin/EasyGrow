@@ -81,7 +81,6 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
         return newAdministration?.let { lastAdministrations + it } ?: lastAdministrations
     }
 
-
     private fun newAdministration(bodyPart: BodyPart) {
         if (lastAdministrations.none { it.bodyPart == bodyPart }) {
             val new = Administration(Calendar.getInstance(), bodyPart)

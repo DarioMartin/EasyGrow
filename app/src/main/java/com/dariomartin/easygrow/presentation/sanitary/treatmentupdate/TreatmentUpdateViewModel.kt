@@ -21,6 +21,7 @@ class TreatmentUpdateViewModel @Inject constructor(
 ) : ViewModel() {
 
     val successfulUpdate: MutableLiveData<Boolean> = MutableLiveData(false)
+    var availableDrugs: List<Drug> = listOf()
     private var patient: Patient? = null
 
     fun getPatient(patientId: String): LiveData<Patient> {
@@ -31,7 +32,10 @@ class TreatmentUpdateViewModel @Inject constructor(
     }
 
     fun getDrugs(): LiveData<List<Drug>> {
-        return drugRepository.getDrugs()
+        return drugRepository.getDrugs().map {
+            availableDrugs = it
+            it
+        }
     }
 
     fun updateTreatment(patientId: String, form: TreatmentForm) {
@@ -45,11 +49,21 @@ class TreatmentUpdateViewModel @Inject constructor(
             }?.let {
                 patientRepository.updatePatient(patientId, it)
                 for (i in 1..form.pens) {
-                    patientRepository.addPen(it.id, newPen = Pen(drug = it.treatment?.drug))
+                    addPen(patientId, it.treatment?.drug)
                 }
             }
             successfulUpdate.postValue(true)
         }
+    }
+
+    private suspend fun addPen(patientId: String, drug: String?) {
+        val selectedDrug = availableDrugs.find { it.name == drug } ?: return
+
+        val newPen = Pen(
+            drug = selectedDrug.name,
+            cartridgeVolume = selectedDrug.cartridgeVolume
+        )
+        patientRepository.addPen(patientId, newPen)
     }
 
     fun resetPatientPens(id: String) {

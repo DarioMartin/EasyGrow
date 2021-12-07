@@ -10,7 +10,6 @@ import com.dariomartin.easygrow.data.repository.IPatientRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,26 +19,12 @@ class DosesViewModel @Inject constructor(
 ) :
     ViewModel() {
 
+    private var remainingDoses: Int = 0
+    private var doseVolume: Float = 0F
+    private var currentPen: Pen? = null
     val penDoses = MediatorLiveData<Pair<Int, Int>>()
 
     private var newAdministration: Administration? = null
-    private var date: Calendar? = null
-
-
-    fun newAdministration(administration: Administration?) {
-        this.newAdministration = administration
-    }
-
-    private fun recordAdministration() {
-        GlobalScope.launch {
-            newAdministration?.let { patientRepository.addAdministration(it) }
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        recordAdministration()
-    }
 
     fun getPatient(): LiveData<Patient> {
         return patientRepository.getLivePatient()
@@ -68,24 +53,51 @@ class DosesViewModel @Inject constructor(
 
     private fun combine(treatment: Treatment, drug: Drug, pens: List<Pen>): Pair<Int, Int> {
         val validPens = pens.filter { it.drug == drug.name }
-        var currentPen = validPens.firstOrNull { it.startingDate != null }
+        currentPen = validPens.firstOrNull { it.startingDate != null }
         if (currentPen == null) currentPen = validPens.firstOrNull()
 
         if (currentPen == null) return Pair(0, 0)
 
-        val totalDoses =
-            (drug.cartridgeVolume.number.toFloat() / treatment.dose.number.toFloat()).toInt()
+        doseVolume = treatment.dose.number.toFloat()
 
-        val remainingVolume =
-            drug.cartridgeVolume.number.toFloat() - currentPen.volumedConsumed.number.toFloat()
-        val remainingDoses = (remainingVolume / treatment.dose.number.toFloat()).toInt()
+        val totalDoses =
+            (drug.cartridgeVolume.number.toFloat() / doseVolume).toInt()
+
+        remainingDoses = currentPen?.getRemainingDoses(doseVolume) ?: 0
 
         return Pair(totalDoses, remainingDoses)
+    }
+
+    fun newAdministration(administration: Administration?) {
+        this.newAdministration = administration
     }
 
     fun getLastNAdministrations(n: Int): LiveData<List<Administration>> {
         return patientRepository.getAdministrations().map { list ->
             list.sortedByDescending { it.date }.take(n)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        recordAdministration()
+    }
+
+    private fun recordAdministration() {
+        GlobalScope.launch {
+            if (remainingDoses > 0) {
+                newAdministration?.let {
+                    updatePen()
+                    patientRepository.addAdministration(it)
+                }
+            }
+        }
+    }
+
+    private suspend fun updatePen() {
+        currentPen?.apply {
+            subtractDose(doseVolume)
+            patientRepository.updatePen(pen = this)
         }
     }
 
