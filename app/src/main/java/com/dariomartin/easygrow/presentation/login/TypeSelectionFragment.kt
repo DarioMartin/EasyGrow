@@ -43,6 +43,11 @@ class TypeSelectionFragment : Fragment() {
                     User.Type.PATIENT -> goToPatient()
                     User.Type.SANITARY -> goToSanitary()
                 }
+            } ?: kotlin.run {
+                binding.subtitle.visibility = View.VISIBLE
+                binding.patientButton.visibility = View.VISIBLE
+                binding.sanitaryButton.visibility = View.VISIBLE
+                binding.logout.visibility = View.VISIBLE
             }
         })
     }

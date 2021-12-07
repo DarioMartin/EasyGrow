@@ -41,9 +41,11 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/sanitary_button"
@@ -53,11 +55,13 @@
         android:layout_marginEnd="@dimen/spacing_xxl"
         android:layout_marginBottom="@dimen/spacing_s"
         android:text="@string/i_am_a_sanitary"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/patient_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/subtitle"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/patient_button"
@@ -67,11 +71,13 @@
         android:layout_marginTop="@dimen/spacing_s"
         android:layout_marginEnd="@dimen/spacing_xxl"
         android:text="@string/i_am_a_patient"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sanitary_button"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/logout"
@@ -80,9 +86,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_s"
         android:text="@string/logout"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
