@@ -30,7 +30,7 @@ object Mapper {
             drug = treatment.drug,
             lastUpdate = stringToCalendar("dd/MM/yyyy hh:mm", treatment.lastReview)
                 ?: Calendar.getInstance(),
-            dose = Measure(treatment.dose, MeasureUnit.MILLIGRAM),
+            dose = Measure(treatment.dose, MeasureUnit.MILLILITER),
         )
     }
 

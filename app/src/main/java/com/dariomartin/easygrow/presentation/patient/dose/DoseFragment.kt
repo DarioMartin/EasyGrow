@@ -4,41 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.BodyPart
 import com.dariomartin.easygrow.databinding.FragmentDoseBinding
+import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DoseFragment : Fragment() {
-
-    private lateinit var viewModel: DosesViewModel
-    private var _binding: FragmentDoseBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewModel =
-            ViewModelProvider(this)[DosesViewModel::class.java]
-
-        _binding = FragmentDoseBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
+class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.lastAdministrations.observe(viewLifecycleOwner, { dosesMap ->
             updateBodyMap(dosesMap)
+        })
+
+        viewModel.getPatient().observe(viewLifecycleOwner, { patient ->
+            patient?.let {
+                viewModel.calculateDoses(it)
+            }
         })
 
         viewModel.penDoses.observe(viewLifecycleOwner, { penDoses ->
@@ -67,7 +53,7 @@ class DoseFragment : Fragment() {
 
     private fun updatePena(penDoses: Pair<Int, Int>) {
         binding.header.pen.setDoses(penDoses.first, penDoses.second)
-        binding.header.remainingDoses.text =getString(R.string.remaining_doses, penDoses.second)
+        binding.header.remainingDoses.text = getString(R.string.remaining_doses, penDoses.second)
     }
 
     private fun updateBodyMap(dosesMap: Map<BodyPart, Boolean>) {
@@ -85,8 +71,14 @@ class DoseFragment : Fragment() {
             if (dosesMap[BodyPart.LEG_R] == true) View.VISIBLE else View.GONE
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentDoseBinding {
+        return FragmentDoseBinding.inflate(inflater, container, false)
+    }
+
+    override fun provideViewModel(): DosesViewModel {
+        return ViewModelProvider(this)[DosesViewModel::class.java]
     }
 }
