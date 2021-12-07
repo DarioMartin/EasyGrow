@@ -1,5 +1,6 @@
 package com.dariomartin.easygrow.presentation.sanitary.druglist
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Drug
 import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
@@ -56,10 +58,8 @@ class DrugsTabFragment : BaseFragment<FragmentSanitaryBinding, DrugsTabViewModel
 
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = binding.recyclerView.adapter as DrugsAdapter
                 val drug: Drug = adapter.getItem(viewHolder.adapterPosition)
-                viewModel.removeDrug(drug.name)
-                adapter.removeAt(viewHolder.adapterPosition)
+                showRemoveDrugDialog(viewHolder, drug)
             }
         }
 
@@ -84,5 +84,28 @@ class DrugsTabFragment : BaseFragment<FragmentSanitaryBinding, DrugsTabViewModel
 
     override fun provideViewModel(): DrugsTabViewModel {
         return ViewModelProvider(this)[DrugsTabViewModel::class.java]
+    }
+
+    private fun showRemoveDrugDialog(
+        viewHolder: RecyclerView.ViewHolder,
+        drug: Drug
+    ) {
+        val builder: AlertDialog.Builder? = activity?.let {
+            AlertDialog.Builder(it)
+        }
+
+        builder?.setTitle(R.string.dialog_remove_durg_title)
+            ?.setMessage(getString(R.string.dialog_remove_drug_body, drug.name))
+            ?.setPositiveButton(R.string.accept) { _, _ ->
+                adapter.removeAt(viewHolder.adapterPosition)
+                viewModel.removeDrug(drug.name)
+            }
+            ?.setNegativeButton(R.string.cancel) { dialog, _ ->
+                adapter.notifyItemChanged(viewHolder.adapterPosition)
+                dialog.dismiss()
+            }
+        val dialog: AlertDialog? = builder?.create()
+
+        dialog?.show()
     }
 }

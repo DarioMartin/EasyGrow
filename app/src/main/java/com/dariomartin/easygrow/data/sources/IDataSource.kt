@@ -46,4 +46,5 @@ interface IDataSource {
     suspend fun updatePatient(patientId: String, pen: PenDTO)
     suspend fun addPen(patientId: String, pen: PenDTO)
     fun getPens(patientId: String): LiveData<List<PenDTO>>
+    fun removePens(patientId: String)
 }

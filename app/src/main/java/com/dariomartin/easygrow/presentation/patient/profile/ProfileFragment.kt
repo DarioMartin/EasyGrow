@@ -33,13 +33,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setHasOptionsMenu(true)
 
         patientId = args.patientId
 
         viewModel.userType.observe(viewLifecycleOwner, {
             it?.let {
                 type = it
+                if (type == User.Type.SANITARY) {
+                    setHasOptionsMenu(true)
+                }
             }
         })
 

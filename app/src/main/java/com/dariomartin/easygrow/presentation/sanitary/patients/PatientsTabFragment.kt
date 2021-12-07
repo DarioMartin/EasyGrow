@@ -1,5 +1,6 @@
 package com.dariomartin.easygrow.presentation.sanitary.patients
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
@@ -56,10 +58,8 @@ class PatientsTabFragment : BaseFragment<FragmentSanitaryBinding, PatientsTabVie
 
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = binding.recyclerView.adapter as PatientsAdapter
                 val patient = adapter.getItem(viewHolder.adapterPosition)
-                viewModel.removePatientFromDoctor(patient.id)
-                adapter.removeAt(viewHolder.adapterPosition)
+                showRemovePatientDialog(viewHolder, patient)
             }
         }
 
@@ -76,7 +76,6 @@ class PatientsTabFragment : BaseFragment<FragmentSanitaryBinding, PatientsTabVie
         adapter.setPatients(listOf())
     }
 
-
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -86,5 +85,28 @@ class PatientsTabFragment : BaseFragment<FragmentSanitaryBinding, PatientsTabVie
 
     override fun provideViewModel(): PatientsTabViewModel {
         return ViewModelProvider(this)[PatientsTabViewModel::class.java]
+    }
+
+    private fun showRemovePatientDialog(
+        viewHolder: RecyclerView.ViewHolder,
+        patient: Patient
+    ) {
+        val builder: AlertDialog.Builder? = activity?.let {
+            AlertDialog.Builder(it)
+        }
+
+        builder?.setTitle(R.string.dialog_remove_patient_title)
+            ?.setMessage(getString(R.string.dialog_remove_patient_body, patient.name))
+            ?.setPositiveButton(R.string.accept) { _, _ ->
+                adapter.removeAt(viewHolder.adapterPosition)
+                viewModel.removePatientFromDoctor(patient.id)
+            }
+            ?.setNegativeButton(R.string.cancel) { dialog, _ ->
+                adapter.notifyItemChanged(viewHolder.adapterPosition)
+                dialog.dismiss()
+            }
+        val dialog: AlertDialog? = builder?.create()
+
+        dialog?.show()
     }
 }

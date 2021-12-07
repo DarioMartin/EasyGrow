@@ -3,6 +3,7 @@ package com.dariomartin.easygrow.injecton
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.dariomartin.easygrow.data.model.User
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,6 +14,8 @@ class EGPreferences @Inject constructor(@ApplicationContext context: Context) {
     companion object {
         private const val USER_NAME = "USER_NAME"
         private const val USER_SURNAME = "USER_SURNAME"
+        private const val USER_TYPE = "USER_TYPE"
+
     }
 
     private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -32,4 +35,13 @@ class EGPreferences @Inject constructor(@ApplicationContext context: Context) {
     fun saveUserSurname(surname: String) {
         prefs.edit().putString(USER_SURNAME, surname).apply()
     }
+
+    fun getUserType(): User.Type? {
+        return prefs.getString(USER_TYPE, null)?.let { User.Type.valueOf(it) }
+    }
+
+    fun saveUserType(type: User.Type?) {
+        prefs.edit().putString(USER_TYPE, type?.name).apply()
+    }
+
 }

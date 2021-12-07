@@ -7,11 +7,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import javax.inject.Inject
 
-@InstallIn(SingletonComponent::class)
 @Module
-class RepositoryModule {
+@InstallIn(SingletonComponent::class)
+class RepositoryModule @Inject constructor() {
 
     @Provides
     fun providePatientRepository(): IPatientRepository {
@@ -24,13 +24,15 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideUserRepository(): IUserRepository {
-        return UserRepositoryImpl()
+    fun provideUserRepository(@ApplicationContext appContext: Context): IUserRepository {
+        val pref = EGPreferences(appContext)
+        return UserRepositoryImpl(pref)
     }
 
     @Provides
-    fun provideLoginRepository(): IAuthRepository {
-        return AuthRepositoryImpl()
+    fun provideLoginRepository(@ApplicationContext appContext: Context): IAuthRepository {
+        val pref = EGPreferences(appContext)
+        return AuthRepositoryImpl(pref)
     }
 
     @Provides

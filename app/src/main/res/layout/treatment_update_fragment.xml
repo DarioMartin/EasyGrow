@@ -4,18 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/eg_purple_3"
     android:padding="@dimen/spacing_m"
     tools:context=".presentation.sanitary.treatmentupdate.TreatmentUpdateFragment">
+
+    <TextView
+        android:id="@+id/update_treatment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/update_treatment_title"
+        android:textColor="@color/eg_purple_4"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="24dp" />
+
+    <TextView
+        android:id="@+id/update_treatment_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:fontFamily="sans-serif"
+        android:text="@string/update_treatment_body"
+        android:textColor="@color/eg_purple_4"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/update_treatment_title"
+        tools:layout_editor_absoluteX="24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/drugInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_xl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/update_treatment_body">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/drug_autocomplete"
@@ -28,17 +53,30 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/update_treatment_disclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/update_treatment_disclaimer"
+        android:textColor="@color/eg_purple_4"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/drugInputLayout"
+        tools:layout_editor_absoluteX="24dp" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/doseInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_m"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/spacing_xs"
+        app:layout_constraintEnd_toStartOf="@id/pensInputLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/drugInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/update_treatment_disclaimer"
         app:suffixText="@string/ml"
-        app:suffixTextColor="@color/eg_purple_2">
+        app:suffixTextColor="@color/eg_purple_4">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/dose"
@@ -49,43 +87,38 @@
             android:selectAllOnFocus="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <TextView
-        android:id="@+id/available_pens"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pensInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_l"
-        android:fontFamily="sans-serif"
-        android:text="@string/dose_item_remaining_pens"
-        android:textColor="@color/eg_purple_2"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/doseInputLayout" />
+        android:layout_marginStart="@dimen/spacing_xs"
+        android:layout_marginTop="@dimen/spacing_m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/doseInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/update_treatment_disclaimer">
 
-    <ImageView
-        android:id="@+id/add_pen"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="@dimen/spacing_xxs"
-        android:layout_marginStart="@dimen/spacing_m"
-        android:src="@drawable/ic_add"
-        app:layout_constraintStart_toEndOf="@id/available_pens"
-        app:layout_constraintBottom_toBottomOf="@id/available_pens"
-        app:layout_constraintTop_toTopOf="@id/available_pens"
-        app:tint="@color/eg_green" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/pens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_new_pens"
+            android:inputType="number"
+            android:selectAllOnFocus="true" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/submit_button"
         style="@style/EGButton.Secondary"
         android:layout_width="match_parent"
         android:layout_marginStart="@dimen/spacing_xxl"
-        android:layout_marginTop="@dimen/spacing_s"
+        android:layout_marginTop="@dimen/spacing_xxl_6"
         android:layout_marginEnd="@dimen/spacing_xxl"
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/available_pens"
+        app:layout_constraintTop_toBottomOf="@id/pensInputLayout"
         app:layout_constraintVertical_bias="1"
         app:layout_constraintVertical_chainStyle="packed" />
 

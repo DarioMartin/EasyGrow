@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_list_item_2.xml" value="0.3234375" />
         <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.3046875" />
         <entry key="app/src/main/res/drawable/bg_tratment.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.2791666666666667" />
@@ -14,6 +15,10 @@
         <entry key="app/src/main/res/drawable/ic_kid_doses.xml" value="0.3145833333333333" />
         <entry key="app/src/main/res/drawable/ic_kid_placeholder.xml" value="0.2796875" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/orange_button_disabled.xml" value="0.3343589743589744" />
+        <entry key="app/src/main/res/drawable/orange_button_selector.xml" value="0.3343589743589744" />
+        <entry key="app/src/main/res/drawable/orange_button_solid.xml" value="0.3343589743589744" />
+        <entry key="app/src/main/res/drawable/orange_button_solid_pressed.xml" value="0.3343589743589744" />
         <entry key="app/src/main/res/drawable/pen_bakground.xml" value="0.2604166666666667" />
         <entry key="app/src/main/res/drawable/pen_button.xml" value="0.3015625" />
         <entry key="app/src/main/res/drawable/pen_empty_dose.xml" value="0.2604166666666667" />
@@ -79,7 +84,7 @@
         <entry key="app/src/main/res/layout/treatment_administration_item.xml" value="0.2864583333333333" />
         <entry key="app/src/main/res/layout/treatment_dose.xml" value="0.5" />
         <entry key="app/src/main/res/layout/treatment_header.xml" value="0.2900280747831742" />
-        <entry key="app/src/main/res/layout/treatment_update_fragment.xml" value="0.2859375" />
+        <entry key="app/src/main/res/layout/treatment_update_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.303125" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.22447916666666667" />
         <entry key="app/src/main/res/menu/drug_details_menu.xml" value="0.303125" />

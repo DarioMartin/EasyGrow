@@ -93,4 +93,12 @@
     <string name="create">Crear</string>
     <string name="update">Modificar</string>
     <string name="drug">Fármaco</string>
+    <string name="title_new_pens">Nuevas plumas</string>
+    <string name="update_treatment_disclaimer">Atención: SI modificas el fármaco se resetearán las plumas del paciente.</string>
+    <string name="update_treatment_title">Ajuste del tratamiento</string>
+    <string name="update_treatment_body">A continuacón podrás ajustar el tratamiento del paciente y asignarle nuevas plumas.</string>
+    <string name="dialog_remove_patient_title">Desasignar paciente</string>
+    <string name="dialog_remove_patient_body">Vas a eliminar a %s de tu lista de pacientes. ¿Quieres continuar?</string>
+    <string name="dialog_remove_durg_title">Eliminar fármaco</string>
+    <string name="dialog_remove_drug_body">Vas a eliminar %s del listado de fármacos. ¿Quieres continuar?</string>
 </resources>

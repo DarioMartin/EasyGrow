@@ -103,4 +103,8 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
         } ?: MutableLiveData()
     }
 
+    override fun removePens(patientId: String) {
+        firestore.removePens(patientId)
+    }
+
 }

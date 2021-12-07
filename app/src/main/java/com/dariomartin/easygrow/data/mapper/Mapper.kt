@@ -107,7 +107,7 @@ object Mapper {
             id = penDto.id,
             startingDate = startingDate,
             endDate = endDate,
-            drug = Drug(name = penDto.drug),
+            drug = penDto.drug,
             volumedConsumed = Measure(penDto.volumedConsumed, MeasureUnit.MILLILITER)
         )
     }
@@ -121,7 +121,7 @@ object Mapper {
             endDate = pen.endDate?.let {
                 dateToString("dd/MM/yyyy", it.timeInMillis)
             },
-            drug = pen.drug.name,
+            drug = pen.drug,
             volumedConsumed = pen.volumedConsumed.number.toFloat()
         )
     }

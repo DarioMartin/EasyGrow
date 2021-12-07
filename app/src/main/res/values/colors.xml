@@ -8,7 +8,9 @@
     <color name="eg_green">#009688</color>
     <color name="eg_green_2">#00695f</color>
 
-    <color name="eg_orange">#CF804C</color>
+    <color name="eg_orange">#db6e26</color>
+    <color name="eg_orange_2">#b04e0f</color>
+    <color name="eg_orange_3">#ecb692</color>
 
     <color name="eg_red">#CF4C4C</color>
 

@@ -34,13 +34,6 @@ class TreatmentUpdateViewModel @Inject constructor(
         return drugRepository.getDrugs()
     }
 
-    fun addPen(patientId: String, drug: Drug) {
-        viewModelScope.launch {
-            val newPen = Pen(drug = drug)
-            patientRepository.addPen(patientId, newPen)
-        }
-    }
-
     fun updateTreatment(patientId: String, form: TreatmentForm) {
         viewModelScope.launch {
             patient?.apply {
@@ -51,8 +44,15 @@ class TreatmentUpdateViewModel @Inject constructor(
                 )
             }?.let {
                 patientRepository.updatePatient(patientId, it)
+                for (i in 1..form.pens) {
+                    patientRepository.addPen(it.id, newPen = Pen(drug = it.treatment?.drug))
+                }
             }
             successfulUpdate.postValue(true)
         }
+    }
+
+    fun resetPatientPens(id: String) {
+        patientRepository.removePens(id)
     }
 }

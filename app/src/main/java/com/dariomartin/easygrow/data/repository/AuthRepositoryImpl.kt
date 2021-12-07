@@ -3,9 +3,10 @@ package com.dariomartin.easygrow.data.repository
 import com.dariomartin.easygrow.data.Result
 import com.dariomartin.easygrow.data.sources.IAuth
 import com.dariomartin.easygrow.data.sources.firestore.FirebaseAuthSource
+import com.dariomartin.easygrow.injecton.EGPreferences
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor() : IAuthRepository {
+class AuthRepositoryImpl @Inject constructor(private val pref: EGPreferences) : IAuthRepository {
 
     private val auth: IAuth = FirebaseAuthSource()
 
@@ -20,6 +21,7 @@ class AuthRepositoryImpl @Inject constructor() : IAuthRepository {
     }
 
     override fun logout() {
+        pref.saveUserType(null)
         auth.logout()
     }
 

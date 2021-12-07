@@ -5,8 +5,6 @@ import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.BodyPart
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.data.model.Pen
-import com.dariomartin.easygrow.presentation.patient.profile.PatientForm
-import com.dariomartin.easygrow.presentation.sanitary.treatmentupdate.TreatmentForm
 import java.util.*
 
 interface IPatientRepository {
@@ -19,4 +17,5 @@ interface IPatientRepository {
     fun allPatients(): LiveData<List<Patient>>
     suspend fun addPen(patientId: String, newPen: Pen)
     fun getPens(patientId: String?): LiveData<List<Pen>>
+    fun removePens(patientId: String)
 }

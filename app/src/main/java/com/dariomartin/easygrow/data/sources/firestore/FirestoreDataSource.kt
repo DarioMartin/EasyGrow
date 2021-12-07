@@ -272,22 +272,47 @@ class FirestoreDataSource : IDataSource {
     override fun getPens(patientId: String): LiveData<List<PenDTO>> {
         val liveData = MutableLiveData<List<PenDTO>>()
 
-        firestore.collection(PATIENTS).document(patientId).collection(PENS).addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                return@addSnapshotListener
-            }
+        firestore.collection(PATIENTS).document(patientId).collection(PENS)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
 
-            if (snapshot != null && !snapshot.isEmpty) {
-                liveData.postValue(
-                    snapshot.documents.mapNotNull { doc ->
-                        doc.toObject(PenDTO::class.java)
-                            ?.apply { id = doc.id }
-                    }
-                )
+                if (snapshot != null && !snapshot.isEmpty) {
+                    liveData.postValue(
+                        snapshot.documents.mapNotNull { doc ->
+                            doc.toObject(PenDTO::class.java)
+                                ?.apply { id = doc.id }
+                        }
+                    )
+                }
             }
-        }
 
         return liveData
+    }
+
+    override fun removePens(patientId: String) {
+        val collection = firestore.collection(PATIENTS).document(patientId).collection(PENS)
+        val batchSize = 20L
+        try {
+            // Retrieve a small batch of documents to avoid out-of-memory errors/
+            var deleted = 0
+            collection
+                .limit(batchSize)
+                .get()
+                .addOnCompleteListener {
+                    for (document in it.result?.documents ?: listOf()) {
+                        document.reference.delete()
+                        ++deleted
+                    }
+                    if (deleted >= batchSize) {
+                        // retrieve and delete another batch
+                        removePens(patientId)
+                    }
+                }
+        } catch (e: Exception) {
+            System.err.println("Error deleting collection : " + e.message)
+        }
     }
 
 }

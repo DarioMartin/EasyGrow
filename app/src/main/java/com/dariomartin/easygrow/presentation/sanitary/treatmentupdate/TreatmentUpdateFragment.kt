@@ -1,6 +1,5 @@
 package com.dariomartin.easygrow.presentation.sanitary.treatmentupdate
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,7 @@ class TreatmentUpdateFragment :
     BaseFragment<TreatmentUpdateFragmentBinding, TreatmentUpdateViewModel>() {
 
     private val args: TreatmentUpdateFragmentArgs by navArgs()
-    private var form: TreatmentForm? = null
+    private var form: TreatmentForm = TreatmentForm()
     private var patient: Patient? = null
     private var drugs: List<Drug> = listOf()
 
@@ -31,11 +30,9 @@ class TreatmentUpdateFragment :
         viewModel.getPatient(args.patientId).observe(viewLifecycleOwner, {
             it?.let { patient ->
                 this.patient = patient
-                if (form == null) {
-                    form = TreatmentForm(
-                        drug = patient.treatment?.drug,
-                        dose = patient.treatment?.dose?.number?.toFloat() ?: 0F
-                    )
+                form.apply {
+                    drug = patient.treatment?.drug
+                    dose = patient.treatment?.dose?.number?.toFloat() ?: 0F
                 }
                 updateTreatment()
             }
@@ -54,24 +51,24 @@ class TreatmentUpdateFragment :
 
         binding.drugAutocomplete.afterTextChanged {
             hideErrors()
-            form?.drug = it
+            form.drug = it
         }
 
         binding.dose.afterTextChanged {
             hideErrors()
-            form?.dose = try {
+            form.dose = try {
                 it.toFloat()
             } catch (e: NumberFormatException) {
                 0F
             }
         }
 
-        binding.addPen.setOnClickListener {
-            val drug = drugs.find { it.name == form?.drug }
-            if (drug == null) {
-                showErrors()
-            } else {
-                viewModel.addPen(args.patientId, drug)
+        binding.pens.afterTextChanged {
+            hideErrors()
+            form.pens = try {
+                it.toInt()
+            } catch (e: NumberFormatException) {
+                0
             }
         }
 
@@ -84,7 +81,7 @@ class TreatmentUpdateFragment :
     private fun setupAutocompleteField(drugs: List<Drug>) {
         ArrayAdapter(
             requireContext(),
-            R.layout.simple_list_item_1,
+            android.R.layout.simple_list_item_1,
             drugs.map { it.name }
         ).also { adapter ->
             binding.drugAutocomplete.setAdapter(adapter)
@@ -92,18 +89,13 @@ class TreatmentUpdateFragment :
 
         binding.drugAutocomplete.setOnItemClickListener { parent, _, position, _ ->
             val drugSelected = parent.adapter.getItem(position) as String
-            form?.drug = drugSelected
-            patient?.treatment?.drug = drugSelected
+            form.drug = drugSelected
         }
     }
 
     private fun updateTreatment() {
-        binding.drugAutocomplete.setText(form?.drug)
-        binding.dose.setText(form?.dose.toString())
-        binding.availablePens.text = requireContext().getString(
-            com.dariomartin.easygrow.R.string.dose_item_remaining_pens,
-            patient?.treatment?.pens?.size
-        )
+        binding.drugAutocomplete.setText(form.drug)
+        binding.dose.setText(form.dose.toString())
     }
 
     override fun inflateBinding(
@@ -120,23 +112,28 @@ class TreatmentUpdateFragment :
     private fun hideErrors() {
         binding.drugInputLayout.error = null
         binding.doseInputLayout.error = null
+        binding.pensInputLayout.error = null
     }
 
     private fun showErrors() {
-        if (form?.isValidDrug(drugs) == true) binding.drugInputLayout.error =
+        if (!form.isValidDrug(drugs)) binding.drugInputLayout.error =
             requireContext().getString(com.dariomartin.easygrow.R.string.invalid_value)
-        if (form?.isValidDose() == true) binding.doseInputLayout.error =
+
+        if (!form.isValidDose()) binding.doseInputLayout.error =
+            requireContext().getString(com.dariomartin.easygrow.R.string.invalid_value)
+
+        if (!form.isValidPens()) binding.pensInputLayout.error =
             requireContext().getString(com.dariomartin.easygrow.R.string.invalid_value)
     }
 
-
     private fun submitForm() {
-        form?.let {
-            if (form?.isValid(drugs) == true && form != null) {
-                viewModel.updateTreatment(args.patientId, it)
-            } else {
-                showErrors()
+        if (form.isValid(drugs)) {
+            if (form.drug != patient?.treatment?.drug) {
+                patient?.id?.let { viewModel.resetPatientPens(it) }
             }
+            viewModel.updateTreatment(args.patientId, form)
+        } else {
+            showErrors()
         }
     }
 
