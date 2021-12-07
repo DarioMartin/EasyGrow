@@ -55,18 +55,31 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
         binding.body.legR.setOnClickListener {
             if (remainingDoses > 0) newAdministration(BodyPart.LEG_R)
         }
+
+        binding.header.loadButton.setOnClickListener {
+            viewModel.useNewPen()
+        }
     }
 
     private fun updatePen(penDoses: Pair<Int, Int>) {
         val totalDoses = penDoses.first
         remainingDoses = penDoses.second
 
-        if (remainingDoses == 0) {
-            showNoDosesDialog()
-        } else {
-            binding.header.pen.setDoses(totalDoses, remainingDoses)
-            binding.header.remainingDoses.text =
-                getString(R.string.remaining_doses, penDoses.second)
+        when {
+            totalDoses == 0 -> {
+                showNoPensDialog()
+                binding.header.loadButton.visibility = View.GONE
+            }
+            remainingDoses == 0 -> {
+                binding.header.loadButton.visibility = View.VISIBLE
+                showNoDosesDialog()
+            }
+            else -> {
+                binding.header.loadButton.visibility = View.GONE
+                binding.header.pen.setDoses(totalDoses, remainingDoses)
+                binding.header.remainingDoses.text =
+                    getString(R.string.remaining_doses, penDoses.second)
+            }
         }
     }
 
@@ -83,6 +96,22 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
             ?.setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
+        val dialog: AlertDialog? = builder?.create()
+
+        dialog?.show()
+    }
+
+    private fun showNoPensDialog() {
+        val builder: AlertDialog.Builder? = activity?.let {
+            AlertDialog.Builder(it)
+        }
+
+        builder?.setTitle(R.string.dialog_no_pens_title)
+            ?.setMessage(R.string.dialog_no_pens_body)
+            ?.setPositiveButton(R.string.accept) { dialog, _ ->
+                dialog.dismiss()
+            }
+
         val dialog: AlertDialog? = builder?.create()
 
         dialog?.show()

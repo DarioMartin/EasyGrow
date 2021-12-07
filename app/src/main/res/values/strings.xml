@@ -103,4 +103,7 @@
     <string name="dialog_remove_drug_body">Vas a eliminar %s del listado de fármacos. ¿Quieres continuar?</string>
     <string name="dialog_no_available_dosis_title">Tu pluma está vacía</string>
     <string name="dialog_no_available_dosis_body">Para poder continuar debes usar una nueva pluma. ¿Quieres cargar una nueva?</string>
+    <string name="load_new_pens">Cargar nueva pluma</string>
+    <string name="dialog_no_pens_title">No tienes más plumas disponibles</string>
+    <string name="dialog_no_pens_body">Acude a tu doctor para que te haga entrega de nuevas plumas para tu tratamiento.</string>
 </resources>

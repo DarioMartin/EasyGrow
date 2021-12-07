@@ -47,11 +47,16 @@ class DosesViewModel @Inject constructor(
         }
 
         penDoses.addSource(patientRepository.getPens()) { p ->
-            pens = p
             drug?.let {
-                if (pens.isNotEmpty()) {
-                    penDoses.postValue(combine(treatment, it, pens))
-                }
+                pens = p
+
+                penDoses.postValue(
+                    if (pens.isNotEmpty()) {
+                        combine(treatment, it, pens)
+                    } else {
+                        Pair(0, 0)
+                    }
+                )
             }
         }
     }
