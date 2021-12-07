@@ -21,25 +21,21 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
 
     private val dosesAdapter: DosesAdapter = DosesAdapter {
-        if (type == User.Type.SANITARY) {
-            goToUpdateTreatment()
-        }
+        goToUpdateTreatment()
     }
 
     private val args: ProfileFragmentArgs by navArgs()
     private var patientId: String? = null
-    private var type: User.Type = User.Type.SANITARY
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         patientId = args.patientId
 
         viewModel.userType.observe(viewLifecycleOwner, {
             it?.let {
-                type = it
-                if (type == User.Type.SANITARY) {
+                dosesAdapter.type = it
+                if (it == User.Type.SANITARY) {
                     setHasOptionsMenu(true)
                 }
             }

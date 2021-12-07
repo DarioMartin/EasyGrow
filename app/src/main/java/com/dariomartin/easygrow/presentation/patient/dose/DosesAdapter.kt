@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.Treatment
+import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.databinding.TreatmentAdministrationItemBinding
 import com.dariomartin.easygrow.databinding.TreatmentHeaderBinding
 import com.dariomartin.easygrow.utils.Utils
@@ -19,6 +20,12 @@ class DosesAdapter(private val onHeaderClick: () -> Any) :
         private const val HEADER: Int = 0
         private const val DOSE: Int = 1
     }
+
+    var type: User.Type = User.Type.PATIENT
+        set(value) {
+            field = value
+            notifyItemChanged(0)
+        }
 
     var treatment: Treatment? = null
         set(value) {
@@ -47,8 +54,10 @@ class DosesAdapter(private val onHeaderClick: () -> Any) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> treatment?.let {
-                holder.itemView.setOnClickListener { onHeaderClick() }
-                holder.bind(it)
+                if (type == User.Type.SANITARY) {
+                    holder.itemView.setOnClickListener { onHeaderClick() }
+                }
+                holder.bind(type, it)
             }
             is DoseViewHolder -> holder.bind(administrations[position - 1])
         }
@@ -64,7 +73,7 @@ class DosesAdapter(private val onHeaderClick: () -> Any) :
 class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = TreatmentHeaderBinding.bind(view)
 
-    fun bind(treatment: Treatment) {
+    fun bind(type: User.Type, treatment: Treatment) {
         binding.treatmentName.text = treatment.drug
         binding.dose.text = itemView.context.getString(
             R.string.dose_item_dose,
@@ -75,6 +84,7 @@ class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             R.string.dose_item_remaining_pens,
             treatment.pens.size
         )
+        binding.arrow.visibility = if (type == User.Type.SANITARY) View.VISIBLE else View.GONE
     }
 
 }

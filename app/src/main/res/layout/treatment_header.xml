@@ -7,6 +7,7 @@
     android:background="@drawable/bg_tratment">
 
     <ImageView
+        android:id="@+id/arrow"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:adjustViewBounds="true"

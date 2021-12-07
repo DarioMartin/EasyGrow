@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/menu_icon_profile_selector"
         android:title="@string/title_profile" />
 
     <item
         android:id="@+id/navigation_dose"
-        android:icon="@drawable/ic_dose"
+        android:icon="@drawable/menu_icon_dose_selector"
         android:title="@string/title_dose" />
 
     <item
         android:id="@+id/navigation_statistics"
-        android:icon="@drawable/ic_stats"
+        android:icon="@drawable/menu_icon_stats_selector"
         android:title="@string/title_statistics" />
 
 </menu>
