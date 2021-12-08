@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/sanitaryTabsFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.tabs.SanitaryTabsFragment"
-        android:label="sanitary_tabs_fragment"
+        android:label="@string/title_sanitary_tabs"
         tools:layout="@layout/sanitary_tabs_fragment">
         <action
             android:id="@+id/action_sanitaryTabsFragment_to_ProfileFragment"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/ProfileFragment"
         android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileFragment"
-        android:label="ProfileFragment"
+        android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
         <argument
             android:name="patientId"
@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/profileUpdateFragment"
         android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileUpdateFragment"
-        android:label="ProfileUpdateFragment"
+        android:label="@string/title_profile_update"
         tools:layout="@layout/fragment_profile_update">
         <argument
             android:name="patientId"
@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/treatmentUpdateFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.treatmentupdate.TreatmentUpdateFragment"
-        android:label="treatment_fragment"
+        android:label="@string/title_treatment_update"
         tools:layout="@layout/treatment_update_fragment">
         <argument
             android:name="patientId"
@@ -63,7 +63,7 @@
     <fragment
         android:id="@+id/patientSearchFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.patientsearch.PatientSearchFragment"
-        android:label="patient_search_fragment"
+        android:label="@string/title_patient_search"
         tools:layout="@layout/patient_search_fragment">
         <action
             android:id="@+id/action_patientSearchFragment_to_ProfileFragment"
@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/createDrugFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.createdrug.CreateDrugFragment"
-        android:label="CreateDrugFragment"
+        android:label="@string/title_drug_update"
         tools:layout="@layout/create_drug_fragment">
         <argument
             android:name="drugId"
@@ -83,7 +83,7 @@
     <fragment
         android:id="@+id/drugDetailFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.drugdetails.DrugDetailFragment"
-        android:label="drug_detail_fragment"
+        android:label="@string/title_drug_details"
         tools:layout="@layout/drug_detail_fragment">
         <action
             android:id="@+id/action_drugDetailFragment_to_createDrugFragment"

@@ -94,7 +94,7 @@ class DoseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(administration: Administration) {
         binding.date.text = dateToString("dd MMM yyyy", administration.date.timeInMillis)
-        binding.hour.text = dateToString("HH:mm", administration.date.timeInMillis)
+        binding.time.text = dateToString("HH:mm", administration.date.timeInMillis)
         binding.part.text = administration.bodyPart.getFullName(itemView.context)
     }
 }

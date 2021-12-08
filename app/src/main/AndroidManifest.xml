@@ -35,6 +35,8 @@
             android:name=".presentation.sanitary.SanitaryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+
+        <receiver android:name=".presentation.patient.reminder.AlarmReceiver" />
     </application>
 
 </manifest>

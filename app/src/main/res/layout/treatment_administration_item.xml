@@ -23,13 +23,13 @@
         android:textStyle="italic"
         android:layout_marginEnd="@dimen/spacing_xs"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/hour"
+        app:layout_constraintEnd_toStartOf="@id/time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="16 octubre 2021" />
 
     <TextView
-        android:id="@+id/hour"
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_s"
@@ -61,7 +61,7 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/hour"
+        app:layout_constraintStart_toEndOf="@id/time"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="pierna derecha" />
 

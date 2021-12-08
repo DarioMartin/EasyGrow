@@ -2,10 +2,9 @@ package com.dariomartin.easygrow.presentation.patient.dose
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Administration
 import com.dariomartin.easygrow.data.model.BodyPart
@@ -20,6 +19,11 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
     private var remainingDoses: Int = 0
     private var lastAdministrations: List<Administration> = listOf()
     private var newAdministration: Administration? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -159,5 +163,25 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
 
     override fun provideViewModel(): DosesViewModel {
         return ViewModelProvider(this)[DosesViewModel::class.java]
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.patient_dose_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.reminder -> {
+                goToReminders()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun goToReminders() {
+        val action = DoseFragmentDirections.actionNavigationDoseToReminderFragment()
+        findNavController().navigate(action)
     }
 }

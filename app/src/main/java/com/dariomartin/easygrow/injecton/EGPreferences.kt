@@ -15,6 +15,8 @@ class EGPreferences @Inject constructor(@ApplicationContext context: Context) {
         private const val USER_NAME = "USER_NAME"
         private const val USER_SURNAME = "USER_SURNAME"
         private const val USER_TYPE = "USER_TYPE"
+        private const val HOUR = "HOUR"
+        private const val MINUTES = "MINUTES"
 
     }
 
@@ -42,6 +44,23 @@ class EGPreferences @Inject constructor(@ApplicationContext context: Context) {
 
     fun saveUserType(type: User.Type?) {
         prefs.edit().putString(USER_TYPE, type?.name).apply()
+    }
+
+    fun saveHour(hour: Int) {
+        prefs.edit().putInt(HOUR, hour).apply()
+    }
+
+    fun getHour(): Int {
+        return prefs.getInt(HOUR, 0)
+    }
+
+
+    fun saveMinutes(minutes: Int) {
+        prefs.edit().putInt(MINUTES, minutes).apply()
+    }
+
+    fun getMinutes(): Int {
+        return prefs.getInt(MINUTES, 0)
     }
 
 }

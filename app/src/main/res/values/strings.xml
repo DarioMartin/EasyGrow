@@ -48,7 +48,7 @@
     <string name="patient_height">Altura</string>
     <string name="patient_weight">Peso</string>
     <string name="submit">Enviar</string>
-    <string name="title_profile_update">Profile update</string>
+    <string name="title_profile_update">Datos del paciente</string>
     <string name="edit">Editar</string>
     <string name="kg">kg</string>
     <string name="cm">cm</string>
@@ -106,4 +106,17 @@
     <string name="load_new_pens">Cargar nueva pluma</string>
     <string name="dialog_no_pens_title">No tienes más plumas disponibles</string>
     <string name="dialog_no_pens_body">Acude a tu doctor para que te haga entrega de nuevas plumas para tu tratamiento.</string>
+    <string name="reminder">Recordatorio</string>
+    <string name="title_reminder">Recordatorio</string>
+    <string name="title_treatment_update">Tratamiento</string>
+    <string name="title_sanitary_tabs">Sanitario</string>
+    <string name="title_patient_search">Búsqueda de pacientes</string>
+    <string name="title_drug_update">Datos del fármaco</string>
+    <string name="title_drug_details">Fármaco</string>
+    <string name="hour_format">%02d : %02d</string>
+    <string name="activate_reminder">Activar recordatorio</string>
+    <string name="choose_reminder_time">Elige la hora del recordatorio</string>
+    <string name="channel_description">Channel for administration reminders</string>
+    <string name="notification_title">Es hora de tu medicación</string>
+    <string name="notification_text">No olvides administrar tu dosis diaria</string>
 </resources>
