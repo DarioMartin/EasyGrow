@@ -71,7 +71,7 @@ class DosesViewModel @Inject constructor(
         doseVolume = treatment.dose.number.toFloat()
 
         val totalDoses =
-            (drug.cartridgeVolume.number.toFloat() / doseVolume).toInt()
+            (drug.cartridgeVolume/ doseVolume).toInt()
 
         remainingDoses = currentPen?.getRemainingDoses(doseVolume) ?: 0
 

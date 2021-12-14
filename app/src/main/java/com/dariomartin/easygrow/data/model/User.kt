@@ -1,7 +1,7 @@
 package com.dariomartin.easygrow.data.model
 
 abstract class User {
-    abstract fun missingData(): Boolean
+    abstract fun missingRelevantData(): Boolean
 
     enum class Type { PATIENT, SANITARY }
 

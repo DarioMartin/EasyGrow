@@ -11,7 +11,6 @@ import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.CreateDrugFragmentBinding
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
-import com.dariomartin.easygrow.utils.Extensions.niceDecimalNumber
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,9 +34,9 @@ class CreateDrugFragment : BaseFragment<CreateDrugFragmentBinding, CreateDrugVie
                     form.apply {
                         name = drug.name
                         pharmacy = drug.pharmacy
-                        drugMass = drug.concentration.mass.number.toFloat()
-                        drugVolume = drug.concentration.volume.number.toFloat()
-                        cartridgeVolume = drug.cartridgeVolume.number.toFloat()
+                        drugMass = drug.concentration.mass
+                        drugVolume = drug.concentration.volume
+                        cartridgeVolume = drug.cartridgeVolume
                         url = drug.url
                     }
                     updateDrug()

@@ -11,6 +11,8 @@ import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.databinding.TreatmentAdministrationItemBinding
 import com.dariomartin.easygrow.databinding.TreatmentHeaderBinding
 import com.dariomartin.easygrow.utils.Utils
+import com.dariomartin.easygrow.utils.Utils.DateFormat.DD_MMM_YYYY
+import com.dariomartin.easygrow.utils.Utils.DateFormat.HH_MM
 import com.dariomartin.easygrow.utils.Utils.dateToString
 
 class DosesAdapter(private val onHeaderClick: () -> Any) :
@@ -93,8 +95,8 @@ class DoseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = TreatmentAdministrationItemBinding.bind(view)
 
     fun bind(administration: Administration) {
-        binding.date.text = dateToString("dd MMM yyyy", administration.date.timeInMillis)
-        binding.time.text = dateToString("HH:mm", administration.date.timeInMillis)
+        binding.date.text = dateToString(DD_MMM_YYYY, administration.date.timeInMillis)
+        binding.time.text = dateToString(HH_MM, administration.date.timeInMillis)
         binding.part.text = administration.bodyPart.getFullName(itemView.context)
     }
 }

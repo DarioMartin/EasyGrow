@@ -14,6 +14,7 @@ import com.dariomartin.easygrow.databinding.FragmentProfileUpdateBinding
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.presentation.utils.DatePickerFragment
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
+import com.dariomartin.easygrow.utils.Utils.DateFormat.*
 import com.dariomartin.easygrow.utils.Utils.dateToString
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -103,7 +104,7 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
     }
 
     private fun submitForm() {
-        if (form.isValid(type)) {
+        if (form.isValid()) {
             viewModel.updatePatient(args.patientId, form)
         } else {
             showErrors()
@@ -115,9 +116,9 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
             requireContext().getString(R.string.invalid_value)
         if (!form.isValidSurname()) binding.surnameInputLayout.error =
             requireContext().getString(R.string.invalid_value)
-        if (!form.isValidWeight(type)) binding.weightInputLayout.error =
+        if (!form.isValidWeight()) binding.weightInputLayout.error =
             requireContext().getString(R.string.invalid_value)
-        if (!form.isValidHeight(type)) binding.heightInputLayout.error =
+        if (!form.isValidHeight()) binding.heightInputLayout.error =
             requireContext().getString(R.string.invalid_value)
         if (!form.isValidBirthday()) binding.birthdayInputLayout.error =
             requireContext().getString(R.string.invalid_value)
@@ -140,7 +141,7 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding, Profile
         binding.height.setText(form.height.toString())
         binding.weight.setText(form.weight.toString())
         form.birthday?.let {
-            binding.birthday.setText(dateToString("dd/MM/yyyy", it.timeInMillis))
+            binding.birthday.setText(dateToString(DD_MM_YYYY, it.timeInMillis))
         }
 
         Glide.with(requireContext())

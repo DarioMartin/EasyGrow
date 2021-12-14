@@ -102,7 +102,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
         dosesAdapter.treatment = patient.treatment
 
-        if (patient.missingData()) {
+        if (patient.missingRelevantData()) {
             //TODO not showing by now
             //showCompleteDataDialog()
         }
