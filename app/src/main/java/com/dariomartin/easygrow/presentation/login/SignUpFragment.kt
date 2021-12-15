@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.FragmentSignUpBinding
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class SignUpFragment : Fragment() {
     private lateinit var loginViewModel: AuthViewModel
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
+    private var form: SignUpForm = SignUpForm()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,18 +49,7 @@ class SignUpFragment : Fragment() {
 
         loginViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
-        loginViewModel.signUpFormState.observe(viewLifecycleOwner, Observer {
-            val signUpState = it ?: return@Observer
-
-            signUp.isEnabled = signUpState.isDataValid
-
-            if (signUpState.usernameError != null) {
-                email.error = getString(signUpState.usernameError)
-            }
-            if (signUpState.passwordError != null) {
-                password.error = getString(signUpState.passwordError)
-            }
-        })
+        signUp.isEnabled = false
 
         loginViewModel.signUpResult.observe(viewLifecycleOwner, Observer {
             val signUpResult = it ?: return@Observer
@@ -91,16 +82,14 @@ class SignUpFragment : Fragment() {
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        signUp(name, surname, email, password)
+                    EditorInfo.IME_ACTION_DONE -> signUp()
                 }
                 false
             }
+        }
 
-            signUp.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                signUp(name, surname, email, password)
-            }
+        signUp.setOnClickListener {
+            signUp()
         }
 
         login.setOnClickListener {
@@ -110,18 +99,18 @@ class SignUpFragment : Fragment() {
 
     }
 
-    private fun signUp(
-        name: AppCompatEditText,
-        surname: AppCompatEditText,
-        email: AppCompatEditText,
-        password: AppCompatEditText
-    ) {
-        loginViewModel.signUp(
-            name.text.toString(),
-            surname.text.toString(),
-            email.text.toString(),
-            password.text.toString()
-        )
+    private fun signUp() {
+        if (form.isValid()) {
+            binding.loading.visibility = View.VISIBLE
+            loginViewModel.signUp(
+                form.name!!,
+                form.surname!!,
+                form.email!!,
+                form.password!!
+            )
+        } else {
+            showErrors()
+        }
     }
 
     private fun onDataChanged(
@@ -130,12 +119,32 @@ class SignUpFragment : Fragment() {
         email: AppCompatEditText,
         password: AppCompatEditText
     ) {
-        loginViewModel.signUpDataChanged(
+        binding.signUp.isEnabled = form.isValid()
+        hideErrors()
+        form = SignUpForm(
             name.text.toString(),
             surname.text.toString(),
             email.text.toString(),
             password.text.toString()
         )
+    }
+
+    private fun showErrors() {
+        if (!form.isValidEmail()) binding.emailInput.error =
+            requireContext().getString(R.string.invalid_value)
+        if (!form.isValidPassword()) binding.passwordInput.error =
+            requireContext().getString(R.string.invalid_value)
+        if (!form.isValidEmail()) binding.emailInput.error =
+            requireContext().getString(R.string.invalid_value)
+        if (!form.isValidPassword()) binding.passwordInput.error =
+            requireContext().getString(R.string.invalid_value)
+    }
+
+    private fun hideErrors() {
+        binding.nameInput.error = null
+        binding.surnameInput.error = null
+        binding.emailInput.error = null
+        binding.passwordInput.error = null
     }
 
     private fun onSighUpSuccess() {
