@@ -117,6 +117,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             ?.setMessage(R.string.dialog_missing_patient_data_body)
             ?.setPositiveButton(R.string.accept) { _, _ -> goToDetails() }
             ?.setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+            ?.setCancelable(false)
+
         val dialog: AlertDialog? = builder?.create()
 
         dialog?.show()

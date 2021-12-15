@@ -2,7 +2,7 @@ package com.dariomartin.easygrow.data.sources.firestore
 
 import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.dto.*
-import com.dariomartin.easygrow.data.model.Pen
+import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.data.sources.IDataSource
 import com.google.firebase.firestore.FieldValue
@@ -114,6 +114,11 @@ class FirestoreDataSource : IDataSource {
 
         result.addSource(doctorLiveData) { patients ->
             val list = mutableListOf<PatientDTO>()
+
+            if(patients.isEmpty()){
+                result.value = mutableListOf()
+            }
+
             patients.map {
                 result.addSource(getLivePatient(it)) { patientDTO ->
                     list.add(patientDTO)

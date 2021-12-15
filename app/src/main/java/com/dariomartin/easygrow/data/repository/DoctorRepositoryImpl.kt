@@ -18,8 +18,8 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
         return auth.currentUser?.uid?.let { uid ->
             firestore.getDoctorPatients(uid).map { list ->
                 list.map { item -> Mapper.patientDtoMapper(item) }.toMutableList()
-            }
-        } ?: MutableLiveData()
+            } ?: MutableLiveData(mutableListOf())
+        } ?: MutableLiveData(mutableListOf())
     }
 
     override suspend fun removePatientFromDoctor(patientId: String) {

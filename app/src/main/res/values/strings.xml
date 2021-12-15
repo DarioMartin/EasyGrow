@@ -119,4 +119,9 @@
     <string name="channel_description">Channel for administration reminders</string>
     <string name="notification_title">Es hora de tu medicación</string>
     <string name="notification_text">No olvides administrar tu dosis diaria</string>
+    <string name="no_patients_message_title">Aún no has agregado ningún paciente.</string>
+    <string name="no_patients_message_subtitle">Usa el botón + para agregar nuevos pacientes.</string>
+    <string name="sanitary">Sanitario</string>
+    <string name="no_drugs_message_title">Aún no has agregado ningún fármaco.</string>
+    <string name="no_drugs_message_subtitle">Usa el botón +  para dar de alta nuevos fármacos.</string>
 </resources>

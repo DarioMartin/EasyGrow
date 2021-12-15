@@ -8,7 +8,12 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/eg_purple"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorColor="@color/eg_green"
+        app:tabIndicatorHeight="3dp"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/eg_purple_3" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
