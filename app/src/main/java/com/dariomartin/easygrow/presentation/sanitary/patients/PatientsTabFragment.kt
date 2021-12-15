@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -13,14 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
-import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
+import com.dariomartin.easygrow.databinding.FragmentPatientsTabBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.presentation.utils.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PatientsTabFragment : BaseFragment<FragmentSanitaryBinding, PatientsTabViewModel>() {
+class PatientsTabFragment : BaseFragment<FragmentPatientsTabBinding, PatientsTabViewModel>() {
 
     companion object {
         fun newInstance(listener: TabItemListener?): Fragment {
@@ -69,18 +70,20 @@ class PatientsTabFragment : BaseFragment<FragmentSanitaryBinding, PatientsTabVie
     }
 
     private fun listPatients(patients: List<Patient>) {
+        binding.emptyMessage.layout.isVisible = false
         adapter.setPatients(patients)
     }
 
     private fun showEmptyMessage() {
+        binding.emptyMessage.layout.isVisible = true
         adapter.setPatients(listOf())
     }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentSanitaryBinding {
-        return FragmentSanitaryBinding.inflate(inflater, container, false)
+    ): FragmentPatientsTabBinding {
+        return FragmentPatientsTabBinding.inflate(inflater, container, false)
     }
 
     override fun provideViewModel(): PatientsTabViewModel {
@@ -105,6 +108,7 @@ class PatientsTabFragment : BaseFragment<FragmentSanitaryBinding, PatientsTabVie
                 adapter.notifyItemChanged(viewHolder.adapterPosition)
                 dialog.dismiss()
             }
+            ?.setCancelable(false)
         val dialog: AlertDialog? = builder?.create()
 
         dialog?.show()

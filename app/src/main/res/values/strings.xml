@@ -107,4 +107,9 @@
     <string name="invalid_email">Introduce un correo electrónico válido.</string>
     <string name="invalid_surname">Intorduce un apellido</string>
     <string name="invalid_name">Introduce un nombre</string>
+    <string name="no_patients_message_title">Aún no has agregado ningún paciente.</string>
+    <string name="no_patients_message_subtitle">Usa el botón + para agregar nuevos pacientes.</string>
+    <string name="sanitary">Sanitario</string>
+    <string name="no_drugs_message_title">Aún no has agregado ningún fármaco.</string>
+    <string name="no_drugs_message_subtitle">Usa el botón +  para dar de alta nuevos fármacos.</string>
 </resources>

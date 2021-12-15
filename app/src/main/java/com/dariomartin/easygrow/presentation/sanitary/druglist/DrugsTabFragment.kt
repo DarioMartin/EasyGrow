@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -13,14 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Drug
-import com.dariomartin.easygrow.databinding.FragmentSanitaryBinding
+import com.dariomartin.easygrow.databinding.FragmentDrugsTabBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.TabItemListener
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.presentation.utils.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DrugsTabFragment : BaseFragment<FragmentSanitaryBinding, DrugsTabViewModel>() {
+class DrugsTabFragment : BaseFragment<FragmentDrugsTabBinding, DrugsTabViewModel>() {
 
     companion object {
         fun newInstance(listener: TabItemListener): Fragment {
@@ -68,18 +69,20 @@ class DrugsTabFragment : BaseFragment<FragmentSanitaryBinding, DrugsTabViewModel
     }
 
     private fun listDrugs(drugs: List<Drug>) {
+        binding.emptyMessage.layout.isVisible = false
         adapter.setDrugs(drugs)
     }
 
     private fun showEmptyMessage() {
-
+        binding.emptyMessage.layout.isVisible = true
+        adapter.setDrugs(listOf())
     }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentSanitaryBinding {
-        return FragmentSanitaryBinding.inflate(inflater, container, false)
+    ): FragmentDrugsTabBinding {
+        return FragmentDrugsTabBinding.inflate(inflater, container, false)
     }
 
     override fun provideViewModel(): DrugsTabViewModel {
@@ -104,6 +107,8 @@ class DrugsTabFragment : BaseFragment<FragmentSanitaryBinding, DrugsTabViewModel
                 adapter.notifyItemChanged(viewHolder.adapterPosition)
                 dialog.dismiss()
             }
+            ?.setCancelable(false)
+
         val dialog: AlertDialog? = builder?.create()
 
         dialog?.show()

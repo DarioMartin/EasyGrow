@@ -5,7 +5,6 @@
     android:id="@+id/sanitary_navigation"
     app:startDestination="@id/sanitaryTabsFragment">
 
-
     <fragment
         android:id="@+id/sanitaryTabsFragment"
         android:name="com.dariomartin.easygrow.presentation.sanitary.tabs.SanitaryTabsFragment"

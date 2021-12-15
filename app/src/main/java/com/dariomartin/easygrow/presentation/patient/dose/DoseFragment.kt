@@ -100,6 +100,8 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
             ?.setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
+            ?.setCancelable(false)
+
         val dialog: AlertDialog? = builder?.create()
 
         dialog?.show()
@@ -115,6 +117,7 @@ class DoseFragment : BaseFragment<FragmentDoseBinding, DosesViewModel>() {
             ?.setPositiveButton(R.string.accept) { dialog, _ ->
                 dialog.dismiss()
             }
+            ?.setCancelable(false)
 
         val dialog: AlertDialog? = builder?.create()
 

@@ -22,6 +22,7 @@ class SanitaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySanitaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = getString(R.string.sanitary)
         viewModel = ViewModelProvider(this)[SanitaryViewModel::class.java]
     }
 
