@@ -12,7 +12,9 @@
     <color name="eg_orange_2">#b04e0f</color>
     <color name="eg_orange_3">#ecb692</color>
 
-    <color name="eg_red">#CF4C4C</color>
+    <color name="eg_red">#fb3a5a</color>
+
+    <color name="error">@color/eg_red</color>
 
     <color name="black">#FF000000</color>
     <color name="eg_grey_1">#757575</color>

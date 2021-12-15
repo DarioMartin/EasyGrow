@@ -9,19 +9,20 @@ data class SignUpForm(
 
     fun isValid() = isValidName() && isValidSurname() && isValidEmail() && isValidPassword()
 
-    private fun isValidName(): Boolean {
+    fun isValidName(): Boolean {
         return !name.isNullOrEmpty()
     }
 
-    private fun isValidSurname(): Boolean {
+    fun isValidSurname(): Boolean {
         return !surname.isNullOrEmpty()
     }
 
     fun isValidEmail(): Boolean {
-        return !email.isNullOrEmpty()
+        return !email.isNullOrEmpty() &&
+                android.util.Patterns.EMAIL_ADDRESS.matcher(email!!).matches()
     }
 
     fun isValidPassword(): Boolean {
-        return !password.isNullOrEmpty()
+        return !password.isNullOrEmpty() && password?.length!! > 7
     }
 }

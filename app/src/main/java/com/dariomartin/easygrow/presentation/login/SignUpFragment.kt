@@ -130,14 +130,14 @@ class SignUpFragment : Fragment() {
     }
 
     private fun showErrors() {
+        if (!form.isValidName()) binding.nameInput.error =
+            requireContext().getString(R.string.invalid_name)
+        if (!form.isValidSurname()) binding.surnameInput.error =
+            requireContext().getString(R.string.invalid_surname)
         if (!form.isValidEmail()) binding.emailInput.error =
-            requireContext().getString(R.string.invalid_value)
+            requireContext().getString(R.string.invalid_email)
         if (!form.isValidPassword()) binding.passwordInput.error =
-            requireContext().getString(R.string.invalid_value)
-        if (!form.isValidEmail()) binding.emailInput.error =
-            requireContext().getString(R.string.invalid_value)
-        if (!form.isValidPassword()) binding.passwordInput.error =
-            requireContext().getString(R.string.invalid_value)
+            requireContext().getString(R.string.invalid_password)
     }
 
     private fun hideErrors() {

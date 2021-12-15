@@ -105,4 +105,6 @@
     <string name="notification_title">Es hora de tu medicación</string>
     <string name="notification_text">No olvides administrar tu dosis diaria</string>
     <string name="invalid_email">Introduce un correo electrónico válido.</string>
+    <string name="invalid_surname">Intorduce un apellido</string>
+    <string name="invalid_name">Introduce un nombre</string>
 </resources>
