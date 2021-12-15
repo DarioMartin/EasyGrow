@@ -14,6 +14,7 @@ import com.dariomartin.easygrow.databinding.TreatmentUpdateFragmentBinding
 import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class TreatmentUpdateFragment :
@@ -127,6 +128,7 @@ class TreatmentUpdateFragment :
     }
 
     private fun submitForm() {
+        form.date = Calendar.getInstance()
         if (form.isValid(drugs)) {
             if (form.drug != patient?.treatment?.drug) {
                 patient?.id?.let { viewModel.resetPatientPens(it) }

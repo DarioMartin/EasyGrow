@@ -29,8 +29,8 @@
         <item name="android:textColor">@color/eg_purple</item>
         <item name="android:textColorHint">@color/eg_purple</item>
         <item name="boxStrokeErrorColor">@color/eg_purple</item>
-        <item name="errorIconTint">@color/eg_purple</item>
-        <item name="errorTextColor">@color/eg_orange</item>
+        <item name="errorIconTint">@color/error</item>
+        <item name="errorTextColor">@color/error</item>
         <item name="hintTextColor">@color/eg_purple</item>
         <item name="boxStrokeColor">@color/eg_purple</item>
         <item name="boxStrokeWidth">0.5dp</item>
@@ -41,8 +41,8 @@
         <item name="android:textColor">@color/eg_orange</item>
         <item name="android:textColorHint">@color/eg_orange</item>
         <item name="boxStrokeErrorColor">@color/eg_orange</item>
-        <item name="errorIconTint">@color/eg_orange</item>
-        <item name="errorTextColor">@color/eg_red</item>
+        <item name="errorIconTint">@color/error</item>
+        <item name="errorTextColor">@color/error</item>
         <item name="hintTextColor">@color/eg_orange</item>
         <item name="boxStrokeColor">@color/eg_orange</item>
         <item name="boxStrokeWidth">0.5dp</item>

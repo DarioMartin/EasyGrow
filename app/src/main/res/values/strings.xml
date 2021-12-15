@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">EasyGrow</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_sanitary">SanitaryActivity</string>
+    <string name="title_type_selection">Type Selection</string>
+
     <string name="title_profile">Perfil</string>
     <string name="title_dose">Dosis</string>
     <string name="title_statistics">Estadísticas</string>
@@ -7,7 +12,7 @@
     <string name="i_am_a_patient">Soy paciente</string>
     <string name="welcome_title">Bienvenido a EasyGrow</string>
     <string name="welcome_subtitle">¿Cómo vas a usar la aplicación?</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Salir</string>
     <string name="patient_picture">Foto del paciente</string>
     <string name="full_name_format" translatable="false">%s %s</string>
     <string name="height_cm_format">%d cm</string>
@@ -22,26 +27,12 @@
     <string name="abd_l">abdomen izqd.</string>
     <string name="abd_r">abdomen dcho.</string>
     <string name="remaining_doses">Dosis restantes: %d</string>
-    <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_sanitary">SanitaryActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="action_sign_in_short">Login</string>
+    <string name="invalid_password">La contraseña debe tener al menos 8 caracteres</string>
+    <string name="login_failed">"Login incorrecto"</string>
     <string name="patient_name">Nombre</string>
     <string name="patient_surname">Apellidos</string>
     <string name="patient_age">Edad</string>
@@ -52,19 +43,13 @@
     <string name="edit">Editar</string>
     <string name="kg">kg</string>
     <string name="cm">cm</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
     <string name="patients_tab">Mis pacientes</string>
     <string name="drugs_tab">Fármacos</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_login">Login</string>
-    <string name="title_sign_up">SignUp</string>
-    <string name="sign_up">Registrarme</string>
     <string name="login">Login</string>
+    <string name="title_sign_up">Registro</string>
+    <string name="sign_up">Registrarme</string>
     <string name="prompt_surname">Apellidos</string>
     <string name="prompt_name">Nombre</string>
-    <string name="title_type_selection">Type Selection</string>
     <string name="sign_up_failed">Registro fallido</string>
     <string name="cancel">Cancelar</string>
     <string name="dialog_missing_patient_data_body">Es importante que completes todos tus datos. ¿Quieres hacerlo ahora?</string>
@@ -73,7 +58,7 @@
     <string name="patient_birthday"> día / mes / año</string>
     <string name="patient_birthday_title">Fecha de nacimiento</string>
     <string name="patient_measures_title">Medidas</string>
-    <string name="invalid_value">Valor no válido</string>
+    <string name="invalid_value">Valor incorrecto</string>
     <string name="name_surname">%s %s</string>
     <string name="search_patient">Buscar paciente</string>
     <string name="new_drug">Nuevo fármaco</string>
@@ -116,9 +101,12 @@
     <string name="hour_format">%02d : %02d</string>
     <string name="activate_reminder">Activar recordatorio</string>
     <string name="choose_reminder_time">Elige la hora del recordatorio</string>
-    <string name="channel_description">Channel for administration reminders</string>
+    <string name="channel_description">Canal para administrar recordatorios</string>
     <string name="notification_title">Es hora de tu medicación</string>
     <string name="notification_text">No olvides administrar tu dosis diaria</string>
+    <string name="invalid_email">Introduce un correo electrónico válido.</string>
+    <string name="invalid_surname">Intorduce un apellido</string>
+    <string name="invalid_name">Introduce un nombre</string>
     <string name="no_patients_message_title">Aún no has agregado ningún paciente.</string>
     <string name="no_patients_message_subtitle">Usa el botón + para agregar nuevos pacientes.</string>
     <string name="sanitary">Sanitario</string>

@@ -1,7 +1,5 @@
 package com.dariomartin.easygrow.data.repository
 
-import android.icu.util.Measure
-import android.icu.util.MeasureUnit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.dariomartin.easygrow.data.mapper.Mapper
@@ -32,10 +30,10 @@ class DrugRepositoryImpl @Inject constructor() : IDrugRepository {
                 pharmacy = drugForm.pharmacy ?: "",
                 url = drugForm.url ?: "",
                 concentration = Concentration(
-                    mass = Measure(drugForm.drugMass, MeasureUnit.MILLIGRAM),
-                    volume = Measure(drugForm.drugVolume, MeasureUnit.MILLILITER)
+                    mass = drugForm.drugMass,
+                    volume = drugForm.drugVolume
                 ),
-                cartridgeVolume = Measure(drugForm.cartridgeVolume, MeasureUnit.MILLILITER)
+                cartridgeVolume = drugForm.cartridgeVolume
             )
         )
         firestore.updateDrug(drugDTO)

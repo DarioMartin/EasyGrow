@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.databinding.FragmentLoginBinding
 import com.dariomartin.easygrow.utils.Extensions.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class LoginFragment : Fragment() {
     private lateinit var loginViewModel: AuthViewModel
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private var form: LoginForm = LoginForm()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,19 +47,7 @@ class LoginFragment : Fragment() {
 
         loginViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
-        loginViewModel.signUpFormState.observe(viewLifecycleOwner, Observer {
-            val loginState = it ?: return@Observer
-
-            // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
-
-            if (loginState.usernameError != null) {
-                binding.emailInput.error = getString(loginState.usernameError)
-            }
-            if (loginState.passwordError != null) {
-                binding.passwordInput.error = getString(loginState.passwordError)
-            }
-        })
+        login.isEnabled = false
 
         loginViewModel.authResult.observe(viewLifecycleOwner, Observer {
             val loginResult = it ?: return@Observer
@@ -73,32 +63,24 @@ class LoginFragment : Fragment() {
         })
 
         email.afterTextChanged {
-            loginViewModel.loginDataChanged(
-                email.text.toString(),
-                password.text.toString()
-            )
+            onDataChanged(email, password)
         }
 
         password.apply {
             afterTextChanged {
-                loginViewModel.loginDataChanged(
-                    email.text.toString(),
-                    password.text.toString()
-                )
+                onDataChanged(email, password)
             }
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE -> login(email, password)
+                    EditorInfo.IME_ACTION_DONE -> login()
                 }
                 false
             }
+        }
 
-            login.setOnClickListener {
-                login(email, password)
-            }
-
-
+        login.setOnClickListener {
+            login()
         }
 
         signUp.setOnClickListener {
@@ -107,12 +89,37 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun login(
+    private fun login() {
+        if (form.isValid()) {
+            binding.loading.visibility = View.VISIBLE
+            loginViewModel.login(form.email!!, form.password!!)
+        } else {
+            showErrors()
+        }
+    }
+
+    private fun onDataChanged(
         email: AppCompatEditText,
         password: AppCompatEditText
     ) {
-        binding.loading.visibility = View.VISIBLE
-        loginViewModel.login(email.text.toString(), password.text.toString())
+        binding.login.isEnabled = form.isValid()
+        hideErrors()
+        form = LoginForm(
+            email.text.toString(),
+            password.text.toString()
+        )
+    }
+
+    private fun showErrors() {
+        if (!form.isValidEmail()) binding.emailInput.error =
+            requireContext().getString(R.string.invalid_email)
+        if (!form.isValidPassword()) binding.passwordInput.error =
+            requireContext().getString(R.string.invalid_password)
+    }
+
+    private fun hideErrors() {
+        binding.emailInput.error = null
+        binding.passwordInput.error = null
     }
 
     private fun onLoginSuccess() {

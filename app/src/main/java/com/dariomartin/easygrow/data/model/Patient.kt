@@ -1,33 +1,36 @@
 package com.dariomartin.easygrow.data.model
 
+import java.time.LocalDate
+import java.time.Period
 import java.util.*
 
 data class Patient(
-    override var id: String,
-    override var type: Type,
-    override var email: String,
-    var name: String,
-    var surname: String,
-    var photo: String,
-    var height: Int,
-    var birthday: Calendar?,
-    var weight: Float,
+    override var id: String = "",
+    override var type: Type = Type.PATIENT,
+    override var email: String = "",
+    var name: String = "",
+    var surname: String = "",
+    var photo: String = "",
+    var height: Int = 0,
+    var birthday: Calendar? = null,
+    var weight: Float = 0F,
     var treatment: Treatment? = null
 ) : User() {
 
     fun getAge(): Int {
-        val today = Calendar.getInstance()
-        var age = 0
-        birthday?.let {
-            age = today[Calendar.YEAR] - it.get(Calendar.YEAR)
-            if (today[Calendar.DAY_OF_YEAR] < it.get(Calendar.DAY_OF_YEAR)) {
-                age--
-            }
-        }
-        return age
+        return birthday?.let {
+            Period.between(
+                LocalDate.of(
+                    it.get(Calendar.YEAR),
+                    it.get(Calendar.MONTH),
+                    it.get(Calendar.DAY_OF_MONTH)
+                ),
+                LocalDate.now()
+            ).years
+        } ?: 0
     }
 
-    override fun missingData(): Boolean {
+    override fun missingRelevantData(): Boolean {
         return name.isEmpty() || surname.isEmpty() || height <= 0 || birthday == null || weight <= 0
     }
 

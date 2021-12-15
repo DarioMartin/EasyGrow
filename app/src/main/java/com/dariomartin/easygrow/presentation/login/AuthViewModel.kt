@@ -20,9 +20,6 @@ class AuthViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _signUpForm = MutableLiveData<LoginFormState>()
-    val signUpFormState: LiveData<LoginFormState> = _signUpForm
-
     private val _loginResult = MutableLiveData<AuthResult>()
     val authResult: LiveData<AuthResult> = _loginResult
 
@@ -62,30 +59,6 @@ class AuthViewModel @Inject constructor(
             } else {
                 _signUpResult.postValue(AuthResult(error = R.string.sign_up_failed))
             }
-        }
-    }
-
-    fun loginDataChanged(email: String, password: String) {
-        if (!isUserNameValid(email)) {
-            _signUpForm.value = LoginFormState(usernameError = R.string.invalid_username)
-        } else if (!isPasswordValid(password)) {
-            _signUpForm.value = LoginFormState(passwordError = R.string.invalid_password)
-        } else {
-            _signUpForm.value = LoginFormState(isDataValid = true)
-        }
-    }
-
-    fun signUpDataChanged(name: String, surname: String, email: String, password: String) {
-        if (!isUserNameValid(email)) {
-
-        } else if (!isUserNameValid(surname)) {
-
-        } else if (!isUserNameValid(email)) {
-            _signUpForm.value = LoginFormState(usernameError = R.string.invalid_username)
-        } else if (!isPasswordValid(password)) {
-            _signUpForm.value = LoginFormState(passwordError = R.string.invalid_password)
-        } else {
-            _signUpForm.value = LoginFormState(isDataValid = true)
         }
     }
 
