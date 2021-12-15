@@ -18,7 +18,7 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
         return auth.currentUser?.uid?.let { uid ->
             firestore.getDoctorPatients(uid).map { list ->
                 list.map { item -> Mapper.patientDtoMapper(item) }.toMutableList()
-            } ?: MutableLiveData(mutableListOf())
+            }
         } ?: MutableLiveData(mutableListOf())
     }
 

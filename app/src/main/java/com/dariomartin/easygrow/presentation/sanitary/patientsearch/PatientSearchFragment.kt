@@ -3,6 +3,7 @@ package com.dariomartin.easygrow.presentation.sanitary.patientsearch
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -11,6 +12,7 @@ import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.PatientSearchFragmentBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.SanitaryTabsFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -28,6 +30,7 @@ class PatientSearchFragment : Fragment() {
 
     private val adapter = SearchPatientsAdapter { patient ->
         viewModel.assignPatient(patient)
+        displaySnackBar(patient)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,11 +75,23 @@ class PatientSearchFragment : Fragment() {
     }
 
     private fun listPatients(patients: List<Patient>) {
+        binding.emptyMessage.layout.isVisible = false
         adapter.setPatients(patients)
     }
 
     private fun showEmptyMessage() {
+        binding.emptyMessage.layout.isVisible = true
         adapter.setPatients(listOf())
+    }
+
+    private fun displaySnackBar(patient: Patient) {
+        val snackBar =
+            Snackbar.make(
+                binding.recyclerView,
+                getString(R.string.patient_added_correctly, patient.name),
+                Snackbar.LENGTH_LONG
+            )
+        snackBar.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
