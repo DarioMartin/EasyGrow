@@ -2,7 +2,6 @@ package com.dariomartin.easygrow.data.sources
 
 import androidx.lifecycle.LiveData
 import com.dariomartin.easygrow.data.dto.*
-import com.dariomartin.easygrow.data.model.Pen
 import com.dariomartin.easygrow.data.model.User
 
 interface IDataSource {
@@ -31,6 +30,8 @@ interface IDataSource {
     suspend fun removePatientFromDoctor(patientId: String, doctorId: String)
 
     fun getDoctorPatients(doctorId: String): LiveData<MutableList<PatientDTO>>
+
+    fun getNotAssignedPatients(doctorId: String): LiveData<MutableList<PatientDTO>>
 
     fun getLivePatient(patientId: String): LiveData<PatientDTO>
 

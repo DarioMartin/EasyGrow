@@ -112,4 +112,6 @@
     <string name="sanitary">Sanitario</string>
     <string name="no_drugs_message_title">Aún no has agregado ningún fármaco.</string>
     <string name="no_drugs_message_subtitle">Usa el botón +  para dar de alta nuevos fármacos.</string>
+    <string name="patient_added_correctly">%s se ha agregado correctamente</string>
+    <string name="no_patients_for_search_message_title">Actualmente no hay más usuarios disponibles o no complen el patrón de búsqueda.</string>
 </resources>

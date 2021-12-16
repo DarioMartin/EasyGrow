@@ -18,7 +18,7 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
         return auth.currentUser?.uid?.let { uid ->
             firestore.getDoctorPatients(uid).map { list ->
                 list.map { item -> Mapper.patientDtoMapper(item) }.toMutableList()
-            } ?: MutableLiveData(mutableListOf())
+            }
         } ?: MutableLiveData(mutableListOf())
     }
 
@@ -32,6 +32,14 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
         auth.currentUser?.uid?.let { uid ->
             firestore.assignPatientToDoctor(patientId, uid)
         }
+    }
+
+    override fun getNotAssignedPatients(): LiveData<List<Patient>> {
+        return auth.currentUser?.uid?.let { uid ->
+            firestore.getNotAssignedPatients(uid).map { list ->
+                list.map { item -> Mapper.patientDtoMapper(item) }
+            }
+        } ?: MutableLiveData(listOf())
     }
 
 }

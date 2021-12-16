@@ -2,7 +2,6 @@ package com.dariomartin.easygrow.data.sources.firestore
 
 import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.dto.*
-import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.data.sources.IDataSource
 import com.google.firebase.firestore.FieldValue
@@ -93,7 +92,6 @@ class FirestoreDataSource : IDataSource {
             .add(administration).await()
     }
 
-
     override suspend fun assignPatientToDoctor(patientId: String, doctorId: String) {
         firestore.collection(DOCTORS).document(doctorId)
             .update(PATIENTS, FieldValue.arrayUnion(patientId)).await()
@@ -103,7 +101,6 @@ class FirestoreDataSource : IDataSource {
         firestore.collection(DOCTORS).document(doctorId)
             .update(PATIENTS, FieldValue.arrayRemove(patientId)).await()
     }
-
 
     override fun getDoctorPatients(doctorId: String): LiveData<MutableList<PatientDTO>> {
         val result = MediatorLiveData<MutableList<PatientDTO>>()
@@ -115,7 +112,7 @@ class FirestoreDataSource : IDataSource {
         result.addSource(doctorLiveData) { patients ->
             val list = mutableListOf<PatientDTO>()
 
-            if(patients.isEmpty()){
+            if (patients.isEmpty()) {
                 result.value = mutableListOf()
             }
 
@@ -130,6 +127,31 @@ class FirestoreDataSource : IDataSource {
         return result
     }
 
+    override fun getNotAssignedPatients(doctorId: String): LiveData<MutableList<PatientDTO>> {
+        val result = MediatorLiveData<MutableList<PatientDTO>>()
+
+        var all: MutableList<PatientDTO>? = null
+        var assigned: MutableList<PatientDTO>? = null
+
+        result.addSource(getDoctorPatients(doctorId)) { assignedSource ->
+            assigned = assignedSource
+            all?.let {
+                it.removeIf { p -> p.id in assignedSource.map { a -> a.id } }
+                result.postValue(it)
+            }
+        }
+
+        result.addSource(getAllPatients()) { allSource ->
+            val allSourceMut = allSource.toMutableList()
+            all = allSourceMut
+            assigned?.let {
+                allSourceMut.removeIf { p -> p.id in it.map { a -> a.id } }
+                result.postValue(allSourceMut)
+            }
+        }
+
+        return result
+    }
 
     override fun getLivePatient(patientId: String): LiveData<PatientDTO> {
         val liveData = MutableLiveData<PatientDTO>()

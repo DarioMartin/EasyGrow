@@ -22,7 +22,7 @@ data class Patient(
             Period.between(
                 LocalDate.of(
                     it.get(Calendar.YEAR),
-                    it.get(Calendar.MONTH),
+                    it.get(Calendar.MONTH) + 1,
                     it.get(Calendar.DAY_OF_MONTH)
                 ),
                 LocalDate.now()
