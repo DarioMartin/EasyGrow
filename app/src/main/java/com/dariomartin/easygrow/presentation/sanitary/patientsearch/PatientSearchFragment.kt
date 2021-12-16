@@ -48,11 +48,7 @@ class PatientSearchFragment : Fragment() {
 
         setupRecyclerView()
 
-        viewModel.getDoctorPatients().observe(viewLifecycleOwner, { patients ->
-            adapter.setAssigned(patients ?: mutableListOf())
-        })
-
-        viewModel.getAllPatients().observe(viewLifecycleOwner, { patients ->
+        viewModel.getNotAssignedPatients().observe(viewLifecycleOwner, { patients ->
             if (patients.isNullOrEmpty()) {
                 showEmptyMessage()
             } else {

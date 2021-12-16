@@ -7,4 +7,5 @@ interface IDoctorRepository {
     fun getAssignedPatients(): LiveData<MutableList<Patient>>
     suspend fun removePatientFromDoctor(id: String)
     suspend fun assignPatient(patientId: String)
+    fun getNotAssignedPatients(): LiveData<List<Patient>>
 }

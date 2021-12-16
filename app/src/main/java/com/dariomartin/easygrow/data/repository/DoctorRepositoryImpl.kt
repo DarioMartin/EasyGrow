@@ -34,4 +34,12 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
         }
     }
 
+    override fun getNotAssignedPatients(): LiveData<List<Patient>> {
+        return auth.currentUser?.uid?.let { uid ->
+            firestore.getNotAssignedPatients(uid).map { list ->
+                list.map { item -> Mapper.patientDtoMapper(item) }
+            }
+        } ?: MutableLiveData(listOf())
+    }
+
 }
