@@ -13,7 +13,7 @@ import javax.inject.Inject
 class PatientsTabViewModel @Inject constructor(private val doctorRepository: IDoctorRepository) :
     ViewModel() {
 
-    fun getPatients(): LiveData<MutableList<Patient>> {
+    fun getPatients(): LiveData<List<Patient>> {
         return doctorRepository.getAssignedPatients()
     }
 

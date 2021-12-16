@@ -29,9 +29,9 @@ interface IDataSource {
     suspend fun assignPatientToDoctor(patientId: String, doctorId: String)
     suspend fun removePatientFromDoctor(patientId: String, doctorId: String)
 
-    fun getDoctorPatients(doctorId: String): LiveData<MutableList<PatientDTO>>
+    fun getDoctorPatients(doctorId: String): LiveData<List<PatientDTO>>
 
-    fun getNotAssignedPatients(doctorId: String): LiveData<MutableList<PatientDTO>>
+    fun getNotAssignedPatients(doctorId: String): LiveData<List<PatientDTO>>
 
     fun getLivePatient(patientId: String): LiveData<PatientDTO>
 

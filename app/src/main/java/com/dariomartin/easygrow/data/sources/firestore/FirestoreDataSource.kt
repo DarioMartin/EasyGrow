@@ -102,39 +102,43 @@ class FirestoreDataSource : IDataSource {
             .update(PATIENTS, FieldValue.arrayRemove(patientId)).await()
     }
 
-    override fun getDoctorPatients(doctorId: String): LiveData<MutableList<PatientDTO>> {
-        val result = MediatorLiveData<MutableList<PatientDTO>>()
+    override fun getDoctorPatients(doctorId: String): LiveData<List<PatientDTO>> {
+        val result = MediatorLiveData<List<PatientDTO>>()
 
-        val doctorLiveData = getLiveDoctor(doctorId).map { doctorDto ->
-            doctorDto.patients
+        var doctorPatients: List<String>? = null
+        var allPatients: List<PatientDTO>? = null
+
+        result.addSource(getLiveDoctor(doctorId)) { doctor ->
+            doctorPatients = doctor.patients
+
+            if (doctorPatients.isNullOrEmpty()) {
+                result.postValue(listOf())
+            } else if (allPatients != null) {
+                result.postValue(allPatients?.filter { it.id in (doctorPatients ?: listOf()) })
+            }
         }
 
-        result.addSource(doctorLiveData) { patients ->
-            val list = mutableListOf<PatientDTO>()
+        result.addSource(getAllPatients()) { source ->
+            allPatients = source
 
-            if (patients.isEmpty()) {
-                result.value = mutableListOf()
-            }
-
-            patients.map {
-                result.addSource(getLivePatient(it)) { patientDTO ->
-                    list.add(patientDTO)
-                    result.value = list
-                }
+            if (allPatients.isNullOrEmpty()) {
+                result.postValue(listOf())
+            } else if (doctorPatients != null) {
+                result.postValue(allPatients?.filter { it.id in (doctorPatients ?: listOf()) })
             }
         }
 
         return result
     }
 
-    override fun getNotAssignedPatients(doctorId: String): LiveData<MutableList<PatientDTO>> {
-        val result = MediatorLiveData<MutableList<PatientDTO>>()
+    override fun getNotAssignedPatients(doctorId: String): LiveData<List<PatientDTO>> {
+        val result = MediatorLiveData<List<PatientDTO>>()
 
         var all: MutableList<PatientDTO>? = null
         var assigned: MutableList<PatientDTO>? = null
 
         result.addSource(getDoctorPatients(doctorId)) { assignedSource ->
-            assigned = assignedSource
+            assigned = assignedSource.toMutableList()
             all?.let {
                 it.removeIf { p -> p.id in assignedSource.map { a -> a.id } }
                 result.postValue(it)

@@ -14,12 +14,12 @@ class DoctorRepositoryImpl @Inject constructor() : IDoctorRepository {
 
     private val firestore = FirestoreDataSource()
 
-    override fun getAssignedPatients(): LiveData<MutableList<Patient>> {
+    override fun getAssignedPatients(): LiveData<List<Patient>> {
         return auth.currentUser?.uid?.let { uid ->
             firestore.getDoctorPatients(uid).map { list ->
                 list.map { item -> Mapper.patientDtoMapper(item) }.toMutableList()
             }
-        } ?: MutableLiveData(mutableListOf())
+        } ?: MutableLiveData(listOf())
     }
 
     override suspend fun removePatientFromDoctor(patientId: String) {
