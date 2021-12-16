@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,21 +11,17 @@ import com.dariomartin.easygrow.R
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.databinding.PatientSearchFragmentBinding
 import com.dariomartin.easygrow.presentation.sanitary.tabs.SanitaryTabsFragment
+import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class PatientSearchFragment : Fragment() {
+class PatientSearchFragment : BaseFragment<PatientSearchFragmentBinding, PatientSearchViewModel>() {
 
     companion object {
         fun newInstance() = SanitaryTabsFragment()
     }
-
-    private var _binding: PatientSearchFragmentBinding? = null
-    private val binding get() = _binding!!
-
-    private lateinit var viewModel: PatientSearchViewModel
 
     private val adapter = SearchPatientsAdapter { patient ->
         viewModel.assignPatient(patient)
@@ -38,13 +33,8 @@ class PatientSearchFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewModel = ViewModelProvider(this)[PatientSearchViewModel::class.java]
-        _binding = PatientSearchFragmentBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
 
@@ -55,8 +45,6 @@ class PatientSearchFragment : Fragment() {
                 listPatients(patients)
             }
         })
-
-        return binding.root
     }
 
     private fun setupRecyclerView() {
@@ -110,7 +98,17 @@ class PatientSearchFragment : Fragment() {
                 return false
             }
         })
-        searchView.setOnClickListener { view -> }
+    }
+
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): PatientSearchFragmentBinding {
+        return PatientSearchFragmentBinding.inflate(inflater, container, false)
+    }
+
+    override fun provideViewModel(): PatientSearchViewModel {
+        return ViewModelProvider(this)[PatientSearchViewModel::class.java]
     }
 
 }
