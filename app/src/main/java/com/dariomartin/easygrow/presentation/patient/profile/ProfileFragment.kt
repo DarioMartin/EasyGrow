@@ -26,7 +26,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private val args: ProfileFragmentArgs by navArgs()
-    private var patientId: String? = nullR
+    private var patientId: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
