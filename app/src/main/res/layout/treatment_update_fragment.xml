@@ -114,7 +114,7 @@
         android:layout_marginStart="@dimen/spacing_xxl"
         android:layout_marginTop="@dimen/spacing_xxl_6"
         android:layout_marginEnd="@dimen/spacing_xxl"
-        android:text="@string/submit"
+        android:text="@string/modify"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -76,7 +76,10 @@ class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = TreatmentHeaderBinding.bind(view)
 
     fun bind(type: User.Type, treatment: Treatment) {
-        binding.treatmentName.text = treatment.drug
+        binding.treatmentName.text =
+            if (treatment.drug.isNullOrEmpty()) itemView.context.getString(R.string.without_treatment)
+            else treatment.drug
+        
         binding.dose.text = itemView.context.getString(
             R.string.dose_item_dose,
             treatment.dose.number.toFloat(),

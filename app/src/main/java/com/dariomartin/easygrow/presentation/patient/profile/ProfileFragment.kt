@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -25,7 +26,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private val args: ProfileFragmentArgs by navArgs()
-    private var patientId: String? = null
+    private var patientId: String? = nullR
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,15 +42,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             }
         })
 
-        viewModel.getPatient(patientId).observe(
-            viewLifecycleOwner,
-            { patient -> patient?.let { paintPatient(patient) } ?: onPatientError() })
+        viewModel.getPatient(patientId).observe(viewLifecycleOwner, { patient ->
+            patient?.let { paintPatient(patient) } ?: onPatientError()
+        })
 
-        viewModel.getAdministrations(args.patientId).observe(
-            viewLifecycleOwner,
-            { doses ->
-                dosesAdapter.administrations = doses
-            })
+        viewModel.getAdministrations(args.patientId).observe(viewLifecycleOwner, { doses ->
+            binding.noAdministrationsMessage.layout.isVisible = doses.isEmpty()
+            dosesAdapter.administrations = doses
+        })
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())

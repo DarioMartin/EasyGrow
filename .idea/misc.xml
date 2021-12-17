@@ -83,6 +83,8 @@
         <entry key="app/src/main/res/layout/nav_header_sanitary.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/new_patient_activity.xml" value="0.23399014778325122" />
         <entry key="app/src/main/res/layout/new_patient_fragment.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/no_administrations_message.xml" value="0.3255208333333333" />
+        <entry key="app/src/main/res/layout/no_doses_message.xml" value="0.3255208333333333" />
         <entry key="app/src/main/res/layout/no_drugs_message.xml" value="0.3255208333333333" />
         <entry key="app/src/main/res/layout/no_patients_for_search_message.xml" value="0.3255208333333333" />
         <entry key="app/src/main/res/layout/no_patients_message.xml" value="0.2640625" />

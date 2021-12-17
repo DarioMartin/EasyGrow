@@ -39,6 +39,8 @@
     <string name="patient_height">Altura</string>
     <string name="patient_weight">Peso</string>
     <string name="submit">Enviar</string>
+    <string name="modify">Modificar</string>
+    <string name="create">Crear</string>
     <string name="title_profile_update">Datos del paciente</string>
     <string name="edit">Editar</string>
     <string name="kg">kg</string>
@@ -75,7 +77,6 @@
     <string name="create_new_drug">Nuevo fármaco</string>
     <string name="missing_drug_url">Url no disponible.\n\nActualiza la información del fármaco.</string>
     <string name="update_drug">Modificar fármaco</string>
-    <string name="create">Crear</string>
     <string name="update">Modificar</string>
     <string name="drug">Fármaco</string>
     <string name="title_new_pens">Nuevas plumas</string>
@@ -114,4 +115,6 @@
     <string name="no_drugs_message_subtitle">Usa el botón +  para dar de alta nuevos fármacos.</string>
     <string name="patient_added_correctly">%s se ha agregado correctamente</string>
     <string name="no_patients_for_search_message_title">Actualmente no hay más usuarios disponibles o no complen el patrón de búsqueda.</string>
+    <string name="without_treatment">Sin tratamiento</string>
+    <string name="no_administrations_message_title">Aún no hay administraciones registradas.</string>
 </resources>

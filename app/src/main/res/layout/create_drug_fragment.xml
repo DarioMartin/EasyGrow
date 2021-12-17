@@ -190,7 +190,7 @@
             android:layout_marginTop="@dimen/spacing_xl"
             android:layout_marginEnd="@dimen/spacing_xxl"
             android:layout_marginBottom="@dimen/spacing_m"
-            android:text="@string/submit"
+            android:text="@string/create"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
