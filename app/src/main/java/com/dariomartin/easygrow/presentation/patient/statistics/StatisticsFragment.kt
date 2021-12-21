@@ -4,43 +4,39 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dariomartin.easygrow.databinding.FragmentStatisticsBinding
+import com.dariomartin.easygrow.presentation.utils.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StatisticsFragment : Fragment() {
+class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsViewModel>() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
-    private var _binding: FragmentStatisticsBinding? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+        viewModel.heightStatistics.observe(viewLifecycleOwner) { currentHeightData ->
+            if (currentHeightData != null) {
+                binding.heightStats.updateCurrentHeightData(currentHeightData)
+            }
+        }
 
-    override fun onCreateView(
+        viewModel.generalStatistics.observe(viewLifecycleOwner) { generalStatistics ->
+            if (generalStatistics != null) {
+                binding.generalStats.updateGeneralStatistics(generalStatistics)
+            }
+        }
+    }
+
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        notificationsViewModel =
-            ViewModelProvider(this)[NotificationsViewModel::class.java]
-
-        _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        container: ViewGroup?
+    ): FragmentStatisticsBinding {
+        return FragmentStatisticsBinding.inflate(inflater, container, false)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun provideViewModel(): StatisticsViewModel {
+        return ViewModelProvider(this)[StatisticsViewModel::class.java]
     }
+
 }

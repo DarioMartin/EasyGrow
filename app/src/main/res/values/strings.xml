@@ -100,6 +100,7 @@
     <string name="title_drug_update">Datos del fármaco</string>
     <string name="title_drug_details">Fármaco</string>
     <string name="hour_format">%02d : %02d</string>
+    <string name="single_hour_format">%02d</string>
     <string name="activate_reminder">Activar recordatorio</string>
     <string name="choose_reminder_time">Elige la hora del recordatorio</string>
     <string name="channel_description">Canal para administrar recordatorios</string>
@@ -117,4 +118,11 @@
     <string name="no_patients_for_search_message_title">Actualmente no hay más usuarios disponibles o no complen el patrón de búsqueda.</string>
     <string name="without_treatment">Sin tratamiento</string>
     <string name="no_administrations_message_title">Aún no hay administraciones registradas.</string>
+    <string name="current_height_title">Tu estatura actual es</string>
+    <string name="general_stats_title">Estadísticas generales</string>
+    <string name="used_pens">Pluma usadas</string>
+    <string name="h">h</string>
+    <string name="administration_average_time">Hora media de adminsitración</string>
+    <string name="total_growth_stat_title">Estatura total ganada</string>
+    <string name="last_30_days_height">Has crecido %d cm. el último mes.</string>
 </resources>
