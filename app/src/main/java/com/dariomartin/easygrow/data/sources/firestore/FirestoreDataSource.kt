@@ -18,6 +18,8 @@ class FirestoreDataSource : IDataSource {
         private const val DRUGS = "drugs"
         private const val ADMINISTRATIONS = "administrations"
         private const val PENS = "pens"
+        private const val USED_PENS = "used_pens"
+
     }
 
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -290,8 +292,11 @@ class FirestoreDataSource : IDataSource {
         firestore.collection(PATIENTS).document(patientId).collection(PENS).add(pen).await()
     }
 
-    override suspend fun removePen(patientId: String, penId: String) {
-        firestore.collection(PATIENTS).document(patientId).collection(PENS).document(penId).delete()
+    override suspend fun removePen(patientId: String, pen: PenDTO) {
+        firestore.collection(PATIENTS).document(patientId).collection(PENS).document(pen.id)
+            .delete()
+            .await()
+        firestore.collection(PATIENTS).document(patientId).collection(USED_PENS).add(pen)
             .await()
     }
 
@@ -353,6 +358,30 @@ class FirestoreDataSource : IDataSource {
         } catch (e: Exception) {
             System.err.println("Error deleting collection : " + e.message)
         }
+    }
+
+    override fun getUsedPens(patientId: String): LiveData<List<PenDTO>> {
+        val liveData = MutableLiveData<List<PenDTO>>()
+
+        firestore.collection(PATIENTS).document(patientId).collection(USED_PENS)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && !snapshot.isEmpty) {
+                    liveData.postValue(
+                        snapshot.documents.mapNotNull { doc ->
+                            doc.toObject(PenDTO::class.java)
+                                ?.apply { id = doc.id }
+                        }
+                    )
+                } else {
+                    liveData.postValue(listOf())
+                }
+            }
+
+        return liveData
     }
 
 }

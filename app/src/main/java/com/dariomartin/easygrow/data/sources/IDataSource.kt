@@ -13,7 +13,6 @@ interface IDataSource {
     suspend fun getPatient(patientId: String): PatientDTO?
     suspend fun updatePatient(patient: PatientDTO)
 
-
     suspend fun addDoctor(doctor: DoctorDTO)
     suspend fun removeDoctor(doctorId: String)
     suspend fun getDoctor(doctorId: String): DoctorDTO?
@@ -43,10 +42,11 @@ interface IDataSource {
 
     fun getDrugs(): LiveData<List<DrugDTO>>
 
-    suspend fun removePen(patientId: String, penId: String)
+    suspend fun removePen(patientId: String, pen: PenDTO)
     suspend fun getPen(patientId: String, penId: String): PenDTO?
     suspend fun updatePen(patientId: String, pen: PenDTO)
     suspend fun addPen(patientId: String, pen: PenDTO)
     fun getPens(patientId: String): LiveData<List<PenDTO>>
     fun removePens(patientId: String)
+    fun getUsedPens(patientId: String): LiveData<List<PenDTO>>
 }

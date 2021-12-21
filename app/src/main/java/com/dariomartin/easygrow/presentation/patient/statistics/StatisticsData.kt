@@ -1,15 +1,10 @@
 package com.dariomartin.easygrow.presentation.patient.statistics
 
-data class StatisticsData(
-    val currentHeight: CurrentHeightData,
-    val generalStatistics: GeneralStatistics
-)
-
 data class GeneralStatistics(
-    val averageTimeHour: Int = 0,
-    val averageTimeMinute: Int = 0,
-    val usedPens: Int = 0,
-    val totalGrowth: Int = 0
+    var averageTimeHour: Int? = null,
+    var averageTimeMinute: Int? = null,
+    var usedPens: Int = 0,
+    var totalGrowth: Int = 0
 )
 
 data class CurrentHeightData(

@@ -1,21 +1,52 @@
 package com.dariomartin.easygrow.presentation.patient.statistics
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.dariomartin.easygrow.data.repository.IPatientRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class StatisticsViewModel @Inject constructor() : ViewModel() {
+class StatisticsViewModel @Inject constructor(
+    patientRepository: IPatientRepository,
+) : ViewModel() {
 
-    val generalStatistics by lazy {
-        val liveData = MutableLiveData<GeneralStatistics>()
+    private val usedPensSource = patientRepository.getUsedPens()
+    private val administrations = patientRepository.getAdministrations()
+
+    var mGeneralStatistics = GeneralStatistics()
+
+    init {
+        loadGeneralStatistics()
+    }
+
+    fun loadGeneralStatistics(): LiveData<GeneralStatistics> {
+        val generalStatistics = MediatorLiveData<GeneralStatistics>()
         viewModelScope.launch {
-            liveData.value = GeneralStatistics()
+            generalStatistics.addSource(usedPensSource) { list ->
+                mGeneralStatistics.usedPens = list.size
+                generalStatistics.postValue(mGeneralStatistics)
+            }
+
+            generalStatistics.addSource(administrations) { list ->
+                if (list.isNotEmpty()) {
+                    val times: List<Long> = list.map {
+                        val calendar = Calendar.getInstance()
+                        calendar.time = it.date.time
+                        calendar.set(0, 0, 0)
+                        calendar.timeInMillis
+                    }
+
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = times.average().toLong()
+                    mGeneralStatistics.averageTimeHour = calendar.get(Calendar.HOUR_OF_DAY)
+                    mGeneralStatistics.averageTimeMinute = calendar.get(Calendar.MINUTE)
+                    generalStatistics.postValue(mGeneralStatistics)
+                }
+            }
         }
-        return@lazy liveData
+        return generalStatistics
     }
 
     val heightStatistics by lazy {

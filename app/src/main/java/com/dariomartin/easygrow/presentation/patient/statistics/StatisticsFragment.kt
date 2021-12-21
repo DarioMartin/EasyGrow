@@ -21,7 +21,7 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
             }
         }
 
-        viewModel.generalStatistics.observe(viewLifecycleOwner) { generalStatistics ->
+        viewModel.loadGeneralStatistics().observe(viewLifecycleOwner) { generalStatistics ->
             if (generalStatistics != null) {
                 binding.generalStats.updateGeneralStatistics(generalStatistics)
             }

@@ -19,5 +19,6 @@ interface IPatientRepository {
     fun getPens(patientId: String? = null): LiveData<List<Pen>>
     fun removePens(patientId: String)
     suspend fun updatePen(patientId: String? = null, pen: Pen)
-    suspend fun removePen(patientId: String, pen: String)
+    suspend fun removePen(patientId: String, pen: Pen)
+    fun getUsedPens(patientId: String? = null): LiveData<List<Pen>>
 }

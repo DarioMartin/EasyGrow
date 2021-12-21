@@ -19,9 +19,14 @@ class GeneralStatsCard @JvmOverloads constructor(
 
     fun updateGeneralStatistics(generalStatistics: GeneralStatistics) {
         binding.averageTimeStat.timeHour.text =
-            context.getString(R.string.single_hour_format, generalStatistics.averageTimeHour)
+            generalStatistics.averageTimeHour?.let {
+                context.getString(R.string.single_hour_format, it)
+            } ?: "--"
+
         binding.averageTimeStat.timeMinute.text =
-            context.getString(R.string.single_hour_format, generalStatistics.averageTimeMinute)
+            generalStatistics.averageTimeMinute?.let {
+                context.getString(R.string.single_hour_format, it)
+            } ?: "--"
 
         binding.usedPens.text = generalStatistics.usedPens.toString()
 

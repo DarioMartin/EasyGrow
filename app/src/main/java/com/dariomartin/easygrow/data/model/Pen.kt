@@ -32,4 +32,9 @@ data class Pen(
 
         return ((cartridgeVolume - volumedConsumed) / doseVolume).toInt()
     }
+
+    fun complete() {
+        volumedConsumed = cartridgeVolume
+        endDate = Calendar.getInstance()
+    }
 }

@@ -113,8 +113,16 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
         }
     }
 
-    override suspend fun removePen(patientId: String, penId: String) {
-        firestore.removePen(patientId, penId)
+    override suspend fun removePen(patientId: String, pen: Pen) {
+        firestore.removePen(patientId, Mapper.penMapper(pen))
+    }
+
+    override fun getUsedPens(patientId: String?): LiveData<List<Pen>> {
+        return (patientId ?: auth.currentUser?.uid)?.let { uid ->
+            firestore.getUsedPens(uid).map { list ->
+                list.map { dto -> Mapper.penDtoMapper(dto) }
+            }
+        } ?: MutableLiveData(listOf())
     }
 
 }
