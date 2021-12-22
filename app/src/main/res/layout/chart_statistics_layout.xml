@@ -19,21 +19,43 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2021" />
 
-    <com.db.williamchart.view.BarChartView
+    <LinearLayout
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_xxl"
         android:layout_marginTop="@dimen/spacing_s"
         android:layout_marginEnd="@dimen/spacing_xxl"
         android:layout_marginBottom="@dimen/spacing_xxl"
-        app:chart_barsBackgroundColor="@color/white"
-        app:chart_barsColor="@color/eg_purple"
-        app:chart_barsRadius="4dp"
-        app:chart_spacing="@dimen/spacing_xxs"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/spacing_xxs"
+        android:paddingEnd="@dimen/spacing_xxs"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:layout_height="120dp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:background="@drawable/dotted"
+        app:layout_constraintBottom_toBottomOf="@id/chart"
+        app:layout_constraintEnd_toEndOf="@id/chart"
+        app:layout_constraintStart_toStartOf="@id/chart"
+        app:layout_constraintTop_toTopOf="@id/chart"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-6dp"
+        android:textColor="@color/eg_green"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@id/line"
+        app:layout_constraintEnd_toStartOf="@id/line"
+        tools:text="120 cm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

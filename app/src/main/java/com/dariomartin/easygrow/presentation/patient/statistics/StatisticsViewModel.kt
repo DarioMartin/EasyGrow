@@ -80,7 +80,7 @@ class StatisticsViewModel @Inject constructor(
                 mHeightStatistics.last30Days = list.last().height - first.height
             }
 
-            mHeightStatistics.height = list.last().height
+            mHeightStatistics.height = list.lastOrNull()?.height
 
             heightStatistics.postValue(mHeightStatistics)
         }
