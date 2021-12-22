@@ -29,19 +29,40 @@ class ChartStatsCard @JvmOverloads constructor(
         binding.title.text =
             context.getString(R.string.year_progress_title, thisYear.get(Calendar.YEAR))
 
-        val yearData = getYearData(heightChartData, thisYear)
+        val yearData = getYearData(heightChartData, thisYear.get(Calendar.YEAR))
 
         binding.line.isVisible = yearData.isNotEmpty()
         binding.medium.isVisible = yearData.isNotEmpty()
+
+
+        val maxHeight = yearData.maxOf { d -> d.second }
+        val maxValue = maxHeight + 5
+        val minHeight = yearData.minOf { d -> d.second }
+        val minValue = minHeight - 10
+        val refValue = (minHeight + maxHeight) / 2
+
+        val ref = normalise(refValue, minValue, maxValue)+0.05F
+        val params = binding.line.layoutParams as LayoutParams
+        params.verticalBias = 1 - ref
+        binding.line.layoutParams = params
         binding.medium.text =
             context.getString(
                 R.string.height_cm_format,
-                (yearData.maxOf { d -> d.second } / 2).toInt()
+                refValue.toInt()
             )
 
         yearData.forEach {
             val column = ChartMonthColumnView(context)
-            column.setData(it.second.toInt(), yearData.maxOf { d -> d.second }.toInt(), it.first)
+
+            val value = it.second
+
+
+            if (maxHeight <= 0) {
+                column.setData(0, 0, it.first)
+            } else {
+                val normalised: Float = normalise(value, minValue, maxValue)
+                column.setData((normalised * 100).toInt(), 100, it.first)
+            }
 
             val param = LinearLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT,
@@ -55,21 +76,31 @@ class ChartStatsCard @JvmOverloads constructor(
         }
     }
 
+    private fun normalise(value: Float, min: Float, max: Float): Float {
+        val normalised: Float = (value - min) / (max - min)
+        return normalised
+    }
+
     private fun getYearData(
         heightChartData: List<HeightMeasure>,
-        thisYear: Calendar
+        year: Int
     ): List<Pair<String, Float>> {
         val data = mutableListOf<Pair<String, Float>>()
         var last = 0F
 
-        for (month in 0..11) {
-            val value: Float = heightChartData.filter {
-                it.date?.get(Calendar.YEAR) == thisYear.get(Calendar.YEAR) &&
-                        it.date?.get(Calendar.MONTH) == month
-            }.map { it.height }.average().toFloat()
+        val today = Calendar.getInstance()
 
-            val monthValue = if (value.isNaN()) last else value
-            last = monthValue
+        for (month in 0..11) {
+            var monthValue = 0F
+
+            if (today.get(Calendar.YEAR) != year || today.get(Calendar.MONTH) >= month) {
+                val monthMeasures: List<Int> = heightChartData.filter {
+                    it.date?.get(Calendar.YEAR) == year && it.date?.get(Calendar.MONTH) == month
+                }.map { it.height }
+                val monthAverage = monthMeasures.average().toFloat()
+                monthValue = if (monthAverage.isNaN()) last else monthAverage
+                last = monthValue
+            }
 
             data.add(Pair(Utils.getMonthName(month).first().toString(), monthValue))
         }

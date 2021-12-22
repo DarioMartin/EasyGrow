@@ -124,6 +124,6 @@
     <string name="h">h</string>
     <string name="administration_average_time">Hora media de adminsitración</string>
     <string name="total_growth_stat_title">Estatura total ganada</string>
-    <string name="last_30_days_height">Has crecido %d cm. el último mes.</string>
+    <string name="last_12_months_height">Has crecido %d cm. en los últimos 12 meses.</string>
     <string name="year_progress_title">Progreso en el %d</string>
 </resources>

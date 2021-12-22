@@ -21,6 +21,6 @@ class HeightStatsCard @JvmOverloads constructor(
             context.getString(R.string.height_cm_format, it)
         } ?: "-"
         binding.subtitle.text =
-            context.getString(R.string.last_30_days_height, heightStatistics.last30Days)
+            context.getString(R.string.last_12_months_height, heightStatistics.last12Months)
     }
 }

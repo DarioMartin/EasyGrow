@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.patient.statistics.StatisticsFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.dariomartin.easygrow.presentation.customviews.HeightStatsCard
-            android:id="@+id/height_stats"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical">
 
-        <com.dariomartin.easygrow.presentation.customviews.ChartStatsCard
-            android:id="@+id/chart_stats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.dariomartin.easygrow.presentation.customviews.HeightStatsCard
+                android:id="@+id/height_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <com.dariomartin.easygrow.presentation.customviews.GeneralStatsCard
-            android:id="@+id/general_stats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.dariomartin.easygrow.presentation.customviews.ChartStatsCard
+                android:id="@+id/chart_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
+            <com.dariomartin.easygrow.presentation.customviews.GeneralStatsCard
+                android:id="@+id/general_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-</ScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/shadow"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

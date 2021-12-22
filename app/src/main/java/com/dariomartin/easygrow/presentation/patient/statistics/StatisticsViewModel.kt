@@ -73,11 +73,11 @@ class StatisticsViewModel @Inject constructor(
 
         heightStatistics.addSource(heightMeasures) { list ->
             val oneMonthAgo = Calendar.getInstance()
-            oneMonthAgo.add(Calendar.MONTH, -1)
+            oneMonthAgo.add(Calendar.YEAR, -1)
             val first = list.firstOrNull { it.date != null && it.date!! > oneMonthAgo }
 
             if (first != null) {
-                mHeightStatistics.last30Days = list.last().height - first.height
+                mHeightStatistics.last12Months = list.last().height - first.height
             }
 
             mHeightStatistics.height = list.lastOrNull()?.height
