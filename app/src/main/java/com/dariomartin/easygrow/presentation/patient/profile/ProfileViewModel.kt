@@ -2,12 +2,14 @@ package com.dariomartin.easygrow.presentation.patient.profile
 
 import androidx.lifecycle.*
 import com.dariomartin.easygrow.data.model.Administration
+import com.dariomartin.easygrow.data.model.HeightMeasure
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.data.model.User
 import com.dariomartin.easygrow.data.repository.IPatientRepository
 import com.dariomartin.easygrow.data.repository.IUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,6 +54,10 @@ class ProfileViewModel @Inject constructor(
                 this.birthday = patientForm.birthday
             }?.let {
                 patientRepository.updatePatient(patientId, it)
+                patientRepository.addHeightMeasure(
+                    patientId,
+                    HeightMeasure(Calendar.getInstance(), patientForm.height)
+                )
             }
             successfulUpdate.postValue(true)
         }

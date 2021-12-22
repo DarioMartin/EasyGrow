@@ -8,21 +8,13 @@ interface IDataSource {
     suspend fun getType(userId: String): User.Type?
     suspend fun setType(userId: String, type: User.Type)
 
-    suspend fun addPatient(patient: PatientDTO)
-    suspend fun removePatient(patientId: String)
-    suspend fun getPatient(patientId: String): PatientDTO?
-    suspend fun updatePatient(patient: PatientDTO)
-
 
     suspend fun addDoctor(doctor: DoctorDTO)
     suspend fun removeDoctor(doctorId: String)
     suspend fun getDoctor(doctorId: String): DoctorDTO?
     suspend fun updateDoctor(doctor: DoctorDTO)
 
-    suspend fun addDrug(drug: DrugDTO)
-    suspend fun removeDrug(drugId: String)
-    suspend fun getDrug(drugId: String): DrugDTO?
-    suspend fun updateDrug(drug: DrugDTO)
+
     suspend fun addAdministration(patientId: String, administration: AdministrationDTO)
     fun getAdministrations(patientId: String): LiveData<List<AdministrationDTO>>
 
@@ -33,20 +25,39 @@ interface IDataSource {
 
     fun getNotAssignedPatients(doctorId: String): LiveData<List<PatientDTO>>
 
-    fun getLivePatient(patientId: String): LiveData<PatientDTO>
 
     fun getLiveDoctor(doctorId: String): LiveData<DoctorDTO>
 
+    /**
+     * Patient Methods
+     */
+
+    suspend fun addPatient(patient: PatientDTO)
+    suspend fun updatePatient(patient: PatientDTO)
+    suspend fun removePatient(patientId: String)
+    fun getPatient(patientId: String): LiveData<PatientDTO>
     fun getAllPatients(): LiveData<List<PatientDTO>>
+    suspend fun addHeightMeasure(patientId: String, heightMeasure: HeightMeasureDTO)
+    fun getPatientHeightMeasures(patientId: String): LiveData<List<HeightMeasureDTO>>
 
-    fun getLiveDrug(drugId: String): LiveData<DrugDTO>
+    /**
+     * Drug Methods
+     */
 
+    suspend fun addDrug(drug: DrugDTO)
+    suspend fun updateDrug(drug: DrugDTO)
+    suspend fun removeDrug(drugId: String)
+    fun getDrug(drugId: String): LiveData<DrugDTO>
     fun getDrugs(): LiveData<List<DrugDTO>>
 
-    suspend fun removePen(patientId: String, penId: String)
-    suspend fun getPen(patientId: String, penId: String): PenDTO?
-    suspend fun updatePen(patientId: String, pen: PenDTO)
+    /**
+     * Pen Methods
+     */
+
     suspend fun addPen(patientId: String, pen: PenDTO)
-    fun getPens(patientId: String): LiveData<List<PenDTO>>
+    suspend fun updatePen(patientId: String, pen: PenDTO)
+    suspend fun removePen(patientId: String, pen: PenDTO)
     fun removePens(patientId: String)
+    fun getPens(patientId: String): LiveData<List<PenDTO>>
+    fun getUsedPens(patientId: String): LiveData<List<PenDTO>>
 }

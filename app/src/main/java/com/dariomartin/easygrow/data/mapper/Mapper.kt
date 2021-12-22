@@ -129,4 +129,21 @@ object Mapper {
             cartridgeVolume = pen.cartridgeVolume
         )
     }
+
+    fun heightMeasureMapper(heightMeasure: HeightMeasure): HeightMeasureDTO {
+        return HeightMeasureDTO(
+            height = heightMeasure.height,
+            date = heightMeasure.date?.timeInMillis ?: 0
+        )
+    }
+
+    fun heightMeasureDtoMapper(dto: HeightMeasureDTO): HeightMeasure {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(dto.date)
+
+        return HeightMeasure(
+            height = dto.height,
+            date = calendar
+        )
+    }
 }

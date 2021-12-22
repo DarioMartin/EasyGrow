@@ -18,6 +18,8 @@ class FirestoreDataSource : IDataSource {
         private const val DRUGS = "drugs"
         private const val ADMINISTRATIONS = "administrations"
         private const val PENS = "pens"
+        private const val USED_PENS = "used_pens"
+        private const val HEIGHT_MEASURES = "height_measures"
     }
 
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -42,11 +44,6 @@ class FirestoreDataSource : IDataSource {
 
     override suspend fun removePatient(patientId: String) {
         firestore.collection(PATIENTS).document(patientId).delete().await()
-    }
-
-    override suspend fun getPatient(patientId: String): PatientDTO? {
-        val result = firestore.collection(PATIENTS).document(patientId).get().await()
-        return result.toObject(PatientDTO::class.java)?.apply { id = result.id }
     }
 
     override suspend fun updatePatient(patient: PatientDTO) {
@@ -76,11 +73,6 @@ class FirestoreDataSource : IDataSource {
 
     override suspend fun removeDrug(drugId: String) {
         firestore.collection(DRUGS).document(drugId).delete().await()
-    }
-
-    override suspend fun getDrug(drugId: String): DrugDTO? {
-        val result = firestore.collection(DRUGS).document(drugId).get().await()
-        return result.toObject(DrugDTO::class.java)?.apply { id = result.id }
     }
 
     override suspend fun updateDrug(drug: DrugDTO) {
@@ -157,7 +149,7 @@ class FirestoreDataSource : IDataSource {
         return result
     }
 
-    override fun getLivePatient(patientId: String): LiveData<PatientDTO> {
+    override fun getPatient(patientId: String): LiveData<PatientDTO> {
         val liveData = MutableLiveData<PatientDTO>()
 
         firestore.collection(PATIENTS).document(patientId).addSnapshotListener { snapshot, e ->
@@ -244,7 +236,36 @@ class FirestoreDataSource : IDataSource {
         return liveData
     }
 
-    override fun getLiveDrug(drugId: String): LiveData<DrugDTO> {
+    override suspend fun addHeightMeasure(patientId: String, heightMeasure: HeightMeasureDTO) {
+        firestore.collection(PATIENTS).document(patientId).collection(HEIGHT_MEASURES)
+            .add(heightMeasure).await()
+    }
+
+    override fun getPatientHeightMeasures(patientId: String): LiveData<List<HeightMeasureDTO>> {
+        val liveData = MutableLiveData<List<HeightMeasureDTO>>()
+
+        firestore.collection(PATIENTS)
+            .document(patientId)
+            .collection(HEIGHT_MEASURES).addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && !snapshot.isEmpty) {
+                    liveData.postValue(
+                        snapshot.documents.mapNotNull { doc ->
+                            doc.toObject(HeightMeasureDTO::class.java)
+                        }.sortedBy { it.date }
+                    )
+                } else {
+                    liveData.postValue(listOf())
+                }
+            }
+
+        return liveData
+    }
+
+    override fun getDrug(drugId: String): LiveData<DrugDTO> {
         val liveData = MutableLiveData<DrugDTO>()
 
         firestore.collection(DRUGS).document(drugId).addSnapshotListener { snapshot, e ->
@@ -290,16 +311,12 @@ class FirestoreDataSource : IDataSource {
         firestore.collection(PATIENTS).document(patientId).collection(PENS).add(pen).await()
     }
 
-    override suspend fun removePen(patientId: String, penId: String) {
-        firestore.collection(PATIENTS).document(patientId).collection(PENS).document(penId).delete()
+    override suspend fun removePen(patientId: String, pen: PenDTO) {
+        firestore.collection(PATIENTS).document(patientId).collection(PENS).document(pen.id)
+            .delete()
             .await()
-    }
-
-    override suspend fun getPen(patientId: String, penId: String): PenDTO? {
-        val result =
-            firestore.collection(PATIENTS).document(patientId).collection(PENS).document(penId)
-                .get().await()
-        return result.toObject(PenDTO::class.java)?.apply { id = result.id }
+        firestore.collection(PATIENTS).document(patientId).collection(USED_PENS).add(pen)
+            .await()
     }
 
     override suspend fun updatePen(patientId: String, pen: PenDTO) {
@@ -353,6 +370,30 @@ class FirestoreDataSource : IDataSource {
         } catch (e: Exception) {
             System.err.println("Error deleting collection : " + e.message)
         }
+    }
+
+    override fun getUsedPens(patientId: String): LiveData<List<PenDTO>> {
+        val liveData = MutableLiveData<List<PenDTO>>()
+
+        firestore.collection(PATIENTS).document(patientId).collection(USED_PENS)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && !snapshot.isEmpty) {
+                    liveData.postValue(
+                        snapshot.documents.mapNotNull { doc ->
+                            doc.toObject(PenDTO::class.java)
+                                ?.apply { id = doc.id }
+                        }
+                    )
+                } else {
+                    liveData.postValue(listOf())
+                }
+            }
+
+        return liveData
     }
 
 }

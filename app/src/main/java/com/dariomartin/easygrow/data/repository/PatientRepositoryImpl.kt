@@ -6,12 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.dariomartin.easygrow.data.mapper.Mapper
 import com.dariomartin.easygrow.data.model.Administration
-import com.dariomartin.easygrow.data.model.BodyPart
+import com.dariomartin.easygrow.data.model.HeightMeasure
 import com.dariomartin.easygrow.data.model.Patient
 import com.dariomartin.easygrow.data.model.Pen
 import com.dariomartin.easygrow.data.sources.firestore.FirestoreDataSource
 import com.google.firebase.auth.FirebaseAuth
-import java.util.*
 import javax.inject.Inject
 
 class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
@@ -19,18 +18,6 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
     private val auth = FirebaseAuth.getInstance()
 
     private val firestore = FirestoreDataSource()
-
-    override suspend fun getPatient(patientId: String?): Patient? {
-        return (patientId ?: auth.currentUser?.uid)?.let { uid ->
-            firestore.getPatient(uid)?.let { dto ->
-                Mapper.patientDtoMapper(dto)
-            }
-        }
-    }
-
-    override suspend fun recordAdministration(newBodyPart: BodyPart, date: Calendar) {
-
-    }
 
     override suspend fun updatePatient(patientId: String, patient: Patient) {
         firestore.updatePatient(Mapper.patientMapper(patient))
@@ -67,7 +54,7 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
         var pens: MutableList<Pen> = mutableListOf()
 
         val patientSource = (patientId ?: auth.currentUser?.uid)?.let { uid ->
-            firestore.getLivePatient(uid).map { Mapper.patientDtoMapper(it) }
+            firestore.getPatient(uid).map { Mapper.patientDtoMapper(it) }
         } ?: MutableLiveData()
 
         val pensSource = getPens(patientId)
@@ -113,8 +100,28 @@ class PatientRepositoryImpl @Inject constructor() : IPatientRepository {
         }
     }
 
-    override suspend fun removePen(patientId: String, penId: String) {
-        firestore.removePen(patientId, penId)
+    override suspend fun removePen(patientId: String, pen: Pen) {
+        firestore.removePen(patientId, Mapper.penMapper(pen))
+    }
+
+    override fun getUsedPens(patientId: String?): LiveData<List<Pen>> {
+        return (patientId ?: auth.currentUser?.uid)?.let { uid ->
+            firestore.getUsedPens(uid).map { list ->
+                list.map { dto -> Mapper.penDtoMapper(dto) }
+            }
+        } ?: MutableLiveData(listOf())
+    }
+
+    override suspend fun addHeightMeasure(patientId: String, heightMeasure: HeightMeasure) {
+        firestore.addHeightMeasure(patientId, Mapper.heightMeasureMapper(heightMeasure))
+    }
+
+    override fun getHeightMeasures(patientId: String?): LiveData<List<HeightMeasure>> {
+        return (patientId ?: auth.currentUser?.uid)?.let { uid ->
+            firestore.getPatientHeightMeasures(uid).map { list ->
+                list.map { Mapper.heightMeasureDtoMapper(it) }
+            }
+        } ?: MutableLiveData()
     }
 
 }

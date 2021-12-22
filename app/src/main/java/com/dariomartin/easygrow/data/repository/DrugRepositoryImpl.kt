@@ -13,14 +13,8 @@ class DrugRepositoryImpl @Inject constructor() : IDrugRepository {
 
     private val firestore = FirestoreDataSource()
 
-    override suspend fun getDrug(drugId: String): Drug? {
-        return firestore.getDrug(drugId)?.let { dto ->
-            Mapper.drugDtoMapper(dto)
-        }
-    }
-
     override fun getLiveDrug(drugId: String): LiveData<Drug> {
-        return firestore.getLiveDrug(drugId).map { Mapper.drugDtoMapper(it) }
+        return firestore.getDrug(drugId).map { Mapper.drugDtoMapper(it) }
     }
 
     override suspend fun updateDrug(drugForm: DrugForm) {

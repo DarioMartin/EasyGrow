@@ -71,7 +71,7 @@ class DosesViewModel @Inject constructor(
         doseVolume = treatment.dose.number.toFloat()
 
         val totalDoses =
-            (drug.cartridgeVolume/ doseVolume).toInt()
+            (drug.cartridgeVolume / doseVolume).toInt()
 
         remainingDoses = currentPen?.getRemainingDoses(doseVolume) ?: 0
 
@@ -114,10 +114,11 @@ class DosesViewModel @Inject constructor(
     fun useNewPen() {
         viewModelScope.launch {
             val userId = patient?.id
-            val penId = currentPen?.id
+            val pen = currentPen
 
-            if (userId != null && penId != null) {
-                patientRepository.removePen(userId, penId)
+            if (userId != null && pen != null) {
+                pen.complete()
+                patientRepository.removePen(userId, pen)
                 calculateDoses()
             }
         }
