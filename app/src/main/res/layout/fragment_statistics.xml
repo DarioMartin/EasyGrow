@@ -9,11 +9,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/eg_red"
         android:orientation="vertical">
 
         <com.dariomartin.easygrow.presentation.customviews.HeightStatsCard
             android:id="@+id/height_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.dariomartin.easygrow.presentation.customviews.ChartStatsCard
+            android:id="@+id/chart_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" />

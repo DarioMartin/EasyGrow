@@ -1,6 +1,9 @@
 package com.dariomartin.easygrow.presentation.patient.statistics
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.dariomartin.easygrow.data.repository.IPatientRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,18 +17,22 @@ class StatisticsViewModel @Inject constructor(
 
     private val usedPensSource = patientRepository.getUsedPens()
     private val administrations = patientRepository.getAdministrations()
+    val heightMeasures = patientRepository.getHeightMeasures()
 
-    var mGeneralStatistics = GeneralStatistics()
+
+    private var mGeneralStatistics = GeneralStatistics()
+    private var mHeightStatistics = HeightStatistics()
 
     init {
-        loadGeneralStatistics()
+        getGeneralStatistics()
     }
 
-    fun loadGeneralStatistics(): LiveData<GeneralStatistics> {
+    fun getGeneralStatistics(): LiveData<GeneralStatistics> {
         val generalStatistics = MediatorLiveData<GeneralStatistics>()
         viewModelScope.launch {
             generalStatistics.addSource(usedPensSource) { list ->
                 mGeneralStatistics.usedPens = list.size
+
                 generalStatistics.postValue(mGeneralStatistics)
             }
 
@@ -42,6 +49,18 @@ class StatisticsViewModel @Inject constructor(
                     calendar.timeInMillis = times.average().toLong()
                     mGeneralStatistics.averageTimeHour = calendar.get(Calendar.HOUR_OF_DAY)
                     mGeneralStatistics.averageTimeMinute = calendar.get(Calendar.MINUTE)
+
+                    generalStatistics.postValue(mGeneralStatistics)
+                }
+            }
+
+            generalStatistics.addSource(heightMeasures) { list ->
+                if (list.size > 1) {
+                    val firstMeasure: Int = list.first().height
+                    val lastMeasure: Int = list.last().height
+
+                    mGeneralStatistics.totalGrowth = lastMeasure - firstMeasure
+
                     generalStatistics.postValue(mGeneralStatistics)
                 }
             }
@@ -49,12 +68,25 @@ class StatisticsViewModel @Inject constructor(
         return generalStatistics
     }
 
-    val heightStatistics by lazy {
-        val liveData = MutableLiveData<CurrentHeightData>()
-        viewModelScope.launch {
-            liveData.value = CurrentHeightData()
+    fun getHeightStatistics(): LiveData<HeightStatistics> {
+        val heightStatistics = MediatorLiveData<HeightStatistics>()
+
+        heightStatistics.addSource(heightMeasures) { list ->
+            val oneMonthAgo = Calendar.getInstance()
+            oneMonthAgo.add(Calendar.MONTH, -1)
+            val first = list.firstOrNull { it.date != null && it.date!! > oneMonthAgo }
+
+            if (first != null) {
+                mHeightStatistics.last30Days = list.last().height - first.height
+            }
+
+            mHeightStatistics.height = list.last().height
+
+            heightStatistics.postValue(mHeightStatistics)
         }
-        return@lazy liveData
+
+        return heightStatistics
     }
+
 
 }

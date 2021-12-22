@@ -15,15 +15,21 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.heightStatistics.observe(viewLifecycleOwner) { currentHeightData ->
+        viewModel.getHeightStatistics().observe(viewLifecycleOwner) { currentHeightData ->
             if (currentHeightData != null) {
                 binding.heightStats.updateCurrentHeightData(currentHeightData)
             }
         }
 
-        viewModel.loadGeneralStatistics().observe(viewLifecycleOwner) { generalStatistics ->
+        viewModel.getGeneralStatistics().observe(viewLifecycleOwner) { generalStatistics ->
             if (generalStatistics != null) {
                 binding.generalStats.updateGeneralStatistics(generalStatistics)
+            }
+        }
+
+        viewModel.heightMeasures.observe(viewLifecycleOwner) { heightMeasures ->
+            if (heightMeasures != null) {
+                binding.chartStats.updateChartData(heightMeasures)
             }
         }
     }
