@@ -32,7 +32,7 @@ object Mapper {
             drug = treatment.drug,
             lastUpdate = stringToCalendar(DD_MMM_YYYY_HH_MM, treatment.lastReview)
                 ?: Calendar.getInstance(),
-            dose = Measure(treatment.dose, MeasureUnit.MILLILITER),
+            dose = treatment.dose,
         )
     }
 
@@ -40,7 +40,7 @@ object Mapper {
         return if (treatment == null) TreatmentDTO()
         else TreatmentDTO(
             drug = treatment.drug ?: "",
-            dose = treatment.dose.number.toFloat(),
+            dose = treatment.dose,
             lastReview = dateToString(DD_MMM_YYYY_HH_MM, treatment.lastUpdate.timeInMillis)
         )
     }
@@ -110,7 +110,7 @@ object Mapper {
             startingDate = startingDate,
             endDate = endDate,
             drug = penDto.drug,
-            volumedConsumed = penDto.volumedConsumed,
+            volumedConsumed = penDto.volumeConsumed,
             cartridgeVolume = penDto.cartridgeVolume
         )
     }
@@ -125,7 +125,7 @@ object Mapper {
                 dateToString(DD_MM_YYYY, it.timeInMillis)
             },
             drug = pen.drug,
-            volumedConsumed = pen.volumedConsumed,
+            volumeConsumed = pen.volumedConsumed,
             cartridgeVolume = pen.cartridgeVolume
         )
     }

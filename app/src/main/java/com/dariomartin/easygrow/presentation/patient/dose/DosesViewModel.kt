@@ -68,7 +68,7 @@ class DosesViewModel @Inject constructor(
 
         if (currentPen == null) return Pair(0, 0)
 
-        doseVolume = treatment.dose.number.toFloat()
+        doseVolume = treatment.dose
 
         val totalDoses =
             (drug.cartridgeVolume / doseVolume).toInt()

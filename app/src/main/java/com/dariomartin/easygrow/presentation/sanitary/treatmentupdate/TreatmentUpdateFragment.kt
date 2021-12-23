@@ -33,7 +33,7 @@ class TreatmentUpdateFragment :
                 this.patient = patient
                 form.apply {
                     drug = patient.treatment?.drug
-                    dose = patient.treatment?.dose?.number?.toFloat() ?: 0F
+                    dose = patient.treatment?.dose ?: 0F
                 }
                 updateTreatment()
             }
