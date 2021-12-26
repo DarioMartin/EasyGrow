@@ -35,7 +35,7 @@
     <string name="patient_name">Nombre</string>
     <string name="patient_surname">Apellidos</string>
     <string name="patient_age">Edad</string>
-    <string name="patient_height">Altura</string>
+    <string name="patient_height">Estatura</string>
     <string name="patient_weight">Peso</string>
     <string name="submit">Enviar</string>
     <string name="modify">Modificar</string>
