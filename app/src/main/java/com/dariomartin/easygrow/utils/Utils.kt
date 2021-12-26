@@ -1,6 +1,5 @@
 package com.dariomartin.easygrow.utils
 
-import android.icu.util.MeasureUnit
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,15 +12,6 @@ object Utils {
         HH_MM("HH:mm"),
         MMM("MMM")
 
-    }
-
-    fun getMeasureUnitAbbreviation(unit: MeasureUnit): String {
-        return when (unit) {
-            MeasureUnit.MILLILITER -> "ml"
-            MeasureUnit.DECILITER -> "dl"
-            MeasureUnit.LITER -> "l"
-            else -> ""
-        }
     }
 
     fun dateToString(dateFormat: DateFormat, date: Long?): String {

@@ -82,8 +82,7 @@ class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         
         binding.dose.text = itemView.context.getString(
             R.string.dose_item_dose,
-            treatment.dose.number.toFloat(),
-            Utils.getMeasureUnitAbbreviation(treatment.dose.unit)
+            treatment.dose
         )
         binding.remainingPens.text = itemView.context.getString(
             R.string.dose_item_remaining_pens,

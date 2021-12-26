@@ -102,12 +102,12 @@ class LoginFragment : Fragment() {
         email: AppCompatEditText,
         password: AppCompatEditText
     ) {
-        binding.login.isEnabled = form.isValid()
         hideErrors()
         form = LoginForm(
             email.text.toString(),
             password.text.toString()
         )
+        binding.login.isEnabled = form.isValid()
     }
 
     private fun showErrors() {

@@ -43,7 +43,7 @@ class TreatmentUpdateViewModel @Inject constructor(
             patient?.apply {
                 treatment = Treatment(
                     drug = form.drug,
-                    dose = Measure(form.dose, MeasureUnit.MILLILITER),
+                    dose = form.dose,
                     lastUpdate = Calendar.getInstance()
                 )
             }?.let {

@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">EasyGrow</string>
+    <string name="app_name" translatable="false">EasyGrow</string>
 
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_sanitary">SanitaryActivity</string>
-    <string name="title_type_selection">Type Selection</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
+    <string name="title_activity_sanitary" translatable="false">SanitaryActivity</string>
+    <string name="title_type_selection" translatable="false">Type Selection</string>
 
     <string name="title_profile">Perfil</string>
     <string name="title_dose">Dosis</string>
@@ -15,10 +15,10 @@
     <string name="logout">Salir</string>
     <string name="patient_picture">Foto del paciente</string>
     <string name="full_name_format" translatable="false">%s %s</string>
-    <string name="height_cm_format">%d cm</string>
+    <string name="height_cm_format" translatable="false">%d cm</string>
     <string name="years_format">%d años</string>
-    <string name="weight_format">%.1f kg</string>
-    <string name="dose_item_dose">Dosis: %.2f %s</string>
+    <string name="weight_format" translatable="false">%.1f kg</string>
+    <string name="dose_item_dose">Dosis: %.2f ml</string>
     <string name="dose_item_remaining_pens">Plumas: %d</string>
     <string name="arm_l">brazo izqd.</string>
     <string name="arm_r">brazo dcho.</string>
@@ -28,23 +28,22 @@
     <string name="abd_r">abdomen dcho.</string>
     <string name="remaining_doses">Dosis restantes: %d</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in_short">Login</string>
     <string name="invalid_password">La contraseña debe tener al menos 8 caracteres</string>
     <string name="login_failed">"Login incorrecto"</string>
     <string name="patient_name">Nombre</string>
     <string name="patient_surname">Apellidos</string>
     <string name="patient_age">Edad</string>
-    <string name="patient_height">Altura</string>
+    <string name="patient_height">Estatura</string>
     <string name="patient_weight">Peso</string>
     <string name="submit">Enviar</string>
     <string name="modify">Modificar</string>
     <string name="create">Crear</string>
     <string name="title_profile_update">Datos del paciente</string>
     <string name="edit">Editar</string>
-    <string name="kg">kg</string>
-    <string name="cm">cm</string>
+    <string name="kg" translatable="false">kg</string>
+    <string name="cm" translatable="false">cm</string>
     <string name="patients_tab">Mis pacientes</string>
     <string name="drugs_tab">Fármacos</string>
     <string name="login">Login</string>
@@ -61,28 +60,28 @@
     <string name="patient_birthday_title">Fecha de nacimiento</string>
     <string name="patient_measures_title">Medidas</string>
     <string name="invalid_value">Valor incorrecto</string>
-    <string name="name_surname">%s %s</string>
+    <string name="name_surname" translatable="false">%s %s</string>
     <string name="search_patient">Buscar paciente</string>
     <string name="new_drug">Nuevo fármaco</string>
     <string name="drug_name">Nombre</string>
-    <string name="drug_pharmacy">Framacéutica</string>
+    <string name="drug_pharmacy">Farmacéutica</string>
     <string name="drug_concentration_title">Concentración del fármaco</string>
     <string name="drug_mass">Masa</string>
-    <string name="mg">mg</string>
-    <string name="ml">ml</string>
+    <string name="mg" translatable="false">mg</string>
+    <string name="ml" translatable="false">ml</string>
     <string name="drug_volume">Volumen</string>
     <string name="drug_url">Enlace ficha técnica</string>
     <string name="cartridge_volume">Volumen del cartucho</string>
     <string name="drug_link">Enlace ficha técnica</string>
     <string name="create_new_drug">Nuevo fármaco</string>
-    <string name="missing_drug_url">Url no disponible.\n\nActualiza la información del fármaco.</string>
+    <string name="missing_drug_url">Url no disponible.  Actualiza la información del fármaco.</string>
     <string name="update_drug">Modificar fármaco</string>
     <string name="update">Modificar</string>
     <string name="drug">Fármaco</string>
     <string name="title_new_pens">Nuevas plumas</string>
     <string name="update_treatment_disclaimer">Atención: SI modificas el fármaco se resetearán las plumas del paciente.</string>
     <string name="update_treatment_title">Ajuste del tratamiento</string>
-    <string name="update_treatment_body">A continuacón podrás ajustar el tratamiento del paciente y asignarle nuevas plumas.</string>
+    <string name="update_treatment_body">A continuación podrás ajustar el tratamiento del paciente y asignarle nuevas plumas.</string>
     <string name="dialog_remove_patient_title">Desasignar paciente</string>
     <string name="dialog_remove_patient_body">Vas a eliminar a %s de tu lista de pacientes. ¿Quieres continuar?</string>
     <string name="dialog_remove_durg_title">Eliminar fármaco</string>
@@ -99,15 +98,15 @@
     <string name="title_patient_search">Búsqueda de pacientes</string>
     <string name="title_drug_update">Datos del fármaco</string>
     <string name="title_drug_details">Fármaco</string>
-    <string name="hour_format">%02d : %02d</string>
-    <string name="single_hour_format">%02d</string>
+    <string name="hour_format" translatable="false">%02d : %02d</string>
+    <string name="single_hour_format" translatable="false">%02d</string>
     <string name="activate_reminder">Activar recordatorio</string>
     <string name="choose_reminder_time">Elige la hora del recordatorio</string>
     <string name="channel_description">Canal para administrar recordatorios</string>
     <string name="notification_title">Es hora de tu medicación</string>
     <string name="notification_text">No olvides administrar tu dosis diaria</string>
     <string name="invalid_email">Introduce un correo electrónico válido.</string>
-    <string name="invalid_surname">Intorduce un apellido</string>
+    <string name="invalid_surname">Introduce un apellido</string>
     <string name="invalid_name">Introduce un nombre</string>
     <string name="no_patients_message_title">Aún no has agregado ningún paciente.</string>
     <string name="no_patients_message_subtitle">Usa el botón + para agregar nuevos pacientes.</string>
@@ -115,15 +114,15 @@
     <string name="no_drugs_message_title">Aún no has agregado ningún fármaco.</string>
     <string name="no_drugs_message_subtitle">Usa el botón +  para dar de alta nuevos fármacos.</string>
     <string name="patient_added_correctly">%s se ha agregado correctamente</string>
-    <string name="no_patients_for_search_message_title">Actualmente no hay más usuarios disponibles o no complen el patrón de búsqueda.</string>
+    <string name="no_patients_for_search_message_title">Actualmente no hay más usuarios disponibles o no cumplen el patrón de búsqueda.</string>
     <string name="without_treatment">Sin tratamiento</string>
     <string name="no_administrations_message_title">Aún no hay administraciones registradas.</string>
     <string name="current_height_title">Tu estatura actual es</string>
     <string name="general_stats_title">Estadísticas generales</string>
     <string name="used_pens">Pluma usadas</string>
-    <string name="h">h</string>
-    <string name="administration_average_time">Hora media de adminsitración</string>
+    <string name="h" translatable="false">h</string>
+    <string name="administration_average_time">Hora media de administración</string>
     <string name="total_growth_stat_title">Estatura total ganada</string>
-    <string name="last_12_months_height">Has crecido %d cm. en los últimos 12 meses.</string>
+    <string name="last_12_months_height">Has crecido %d cm en los últimos 12 meses.</string>
     <string name="year_progress_title">Progreso en el %d</string>
 </resources>

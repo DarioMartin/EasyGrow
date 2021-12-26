@@ -119,7 +119,6 @@ class SignUpFragment : Fragment() {
         email: AppCompatEditText,
         password: AppCompatEditText
     ) {
-        binding.signUp.isEnabled = form.isValid()
         hideErrors()
         form = SignUpForm(
             name.text.toString(),
@@ -127,6 +126,7 @@ class SignUpFragment : Fragment() {
             email.text.toString(),
             password.text.toString()
         )
+        binding.signUp.isEnabled = form.isValid()
     }
 
     private fun showErrors() {
