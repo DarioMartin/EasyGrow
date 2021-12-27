@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_profile">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="patientId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_profileUpdateFragment"
+            app:destination="@id/navigation_profile_update" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_treatmentUpdateFragment"
+            app:destination="@id/treatmentUpdateFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile_update"
+        android:name="com.dariomartin.easygrow.presentation.patient.profile.ProfileUpdateFragment"
+        android:label="@string/title_profile_update"
+        tools:layout="@layout/fragment_profile_update">
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dose"
+        android:name="com.dariomartin.easygrow.presentation.patient.dose.DoseFragment"
+        android:label="@string/title_dose"
+        tools:layout="@layout/fragment_dose" >
+        <action
+            android:id="@+id/action_navigation_dose_to_reminderFragment"
+            app:destination="@id/reminderFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_statistics"
+        android:name="com.dariomartin.easygrow.presentation.patient.statistics.StatisticsFragment"
+        android:label="@string/title_statistics"
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/treatmentUpdateFragment"
+        android:name="com.dariomartin.easygrow.presentation.sanitary.treatmentupdate.TreatmentUpdateFragment"
+        android:label="@string/title_treatment_update"
+        tools:layout="@layout/treatment_update_fragment">
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/reminderFragment"
+        android:name="com.dariomartin.easygrow.presentation.patient.reminder.ReminderFragment"
+        android:label="@string/title_reminder"
+        tools:layout="@layout/reminder_fragment" />
+
+
+</navigation>

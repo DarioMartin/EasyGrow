@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toTopOf="parent"
+        android:alpha="0.7"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xxl"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2021" />
+
+    <LinearLayout
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xxl"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:layout_marginEnd="@dimen/spacing_xxl"
+        android:layout_marginBottom="@dimen/spacing_xxl"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/spacing_xxs"
+        android:paddingEnd="@dimen/spacing_xxs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:layout_height="120dp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:background="@drawable/dotted"
+        app:layout_constraintBottom_toBottomOf="@id/chart"
+        app:layout_constraintEnd_toEndOf="@id/chart"
+        app:layout_constraintStart_toStartOf="@id/chart"
+        app:layout_constraintTop_toTopOf="@id/chart"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-6dp"
+        android:textColor="@color/eg_green"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@id/line"
+        app:layout_constraintEnd_toStartOf="@id/line"
+        tools:text="120 cm" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

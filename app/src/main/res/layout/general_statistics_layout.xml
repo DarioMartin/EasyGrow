@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/stats_orange_gradient">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toTopOf="parent"
+        android:alpha="0.7"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xxl"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/general_stats_title"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/average_time_stat"
+        layout="@layout/average_time_stat"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="@dimen/spacing_s"
+        app:layout_constraintBottom_toBottomOf="@id/used_pens"
+        app:layout_constraintEnd_toStartOf="@id/used_pens"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/used_pens" />
+
+    <TextView
+        android:id="@+id/average_time_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginBottom="@dimen/spacing_xxl"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/administration_average_time"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/average_time_stat"
+        app:layout_constraintStart_toStartOf="@id/average_time_stat"
+        app:layout_constraintTop_toBottomOf="@id/average_time_stat" />
+
+    <TextView
+        android:id="@+id/used_pens"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_l"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="250" />
+
+    <TextView
+        android:id="@+id/used_pens_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xxl"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/used_pens"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/used_pens" />
+
+    <include
+        android:id="@+id/total_growth_stat"
+        layout="@layout/total_growth_stat"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginEnd="@dimen/spacing_s"
+        app:layout_constraintBottom_toBottomOf="@id/used_pens"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@id/used_pens"
+        app:layout_constraintTop_toTopOf="@id/used_pens" />
+
+    <TextView
+        android:id="@+id/total_growth_stat_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginBottom="@dimen/spacing_xxl"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/total_growth_stat_title"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/total_growth_stat"
+        app:layout_constraintStart_toStartOf="@id/total_growth_stat"
+        app:layout_constraintTop_toBottomOf="@id/total_growth_stat" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

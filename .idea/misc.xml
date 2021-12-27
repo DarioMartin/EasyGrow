@@ -3,14 +3,140 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.37604166666666666" />
+        <entry key="../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_list_item_2.xml" value="0.3234375" />
+        <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.3046875" />
+        <entry key="app/src/main/res/drawable/bg_tratment.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.2791666666666667" />
+        <entry key="app/src/main/res/drawable/dotted.xml" value="0.33177083333333335" />
+        <entry key="app/src/main/res/drawable/drug_header_gradient.xml" value="0.31927083333333334" />
+        <entry key="app/src/main/res/drawable/green_gradient.xml" value="0.34270833333333334" />
+        <entry key="app/src/main/res/drawable/ic_abs_l_check.xml" value="0.40520833333333334" />
+        <entry key="app/src/main/res/drawable/ic_arm_l_check.xml" value="0.3145833333333333" />
+        <entry key="app/src/main/res/drawable/ic_dose.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/ic_kid_doses.xml" value="0.3145833333333333" />
+        <entry key="app/src/main/res/drawable/ic_kid_placeholder.xml" value="0.2796875" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/ic_stats.xml" value="0.3692708333333333" />
+        <entry key="app/src/main/res/drawable/menu_icon_dose_selector.xml" value="0.3692708333333333" />
+        <entry key="app/src/main/res/drawable/menu_icon_stats_selector.xml" value="0.3692708333333333" />
+        <entry key="app/src/main/res/drawable/orange_button_disabled.xml" value="0.3343589743589744" />
+        <entry key="app/src/main/res/drawable/orange_button_selector.xml" value="0.3343589743589744" />
+        <entry key="app/src/main/res/drawable/orange_button_solid.xml" value="0.3343589743589744" />
+        <entry key="app/src/main/res/drawable/orange_button_solid_pressed.xml" value="0.3343589743589744" />
+        <entry key="app/src/main/res/drawable/orange_circle_stats.xml" value="0.34270833333333334" />
+        <entry key="app/src/main/res/drawable/pen_bakground.xml" value="0.2604166666666667" />
+        <entry key="app/src/main/res/drawable/pen_button.xml" value="0.3015625" />
+        <entry key="app/src/main/res/drawable/pen_empty_dose.xml" value="0.2604166666666667" />
+        <entry key="app/src/main/res/drawable/pen_needle.xml" value="0.3015625" />
+        <entry key="app/src/main/res/drawable/pen_remaining_dose.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/primary_button_disabled.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/primary_button_selector.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/primary_button_solid.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/primary_button_solid_pressed.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/profile_menu_icon_selector.xml" value="0.3692708333333333" />
+        <entry key="app/src/main/res/drawable/secondary_button_disabled.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/secondary_button_selector.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/secondary_button_solid.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/secondary_button_solid_pressed.xml" value="0.18703703703703703" />
+        <entry key="app/src/main/res/drawable/shadow.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/stats_green_gradient.xml" value="0.34270833333333334" />
+        <entry key="app/src/main/res/drawable/stats_orange_gradient.xml" value="0.34270833333333334" />
+        <entry key="app/src/main/res/drawable/user_error_placeholder.xml" value="0.2796875" />
+        <entry key="app/src/main/res/drawable/user_error_placeholder_bg.xml" value="0.1712962962962963" />
+        <entry key="app/src/main/res/drawable/verticalprogressbar.xml" value="0.4041666666666667" />
+        <entry key="app/src/main/res/drawable/white_gradient.xml" value="0.28020833333333334" />
+        <entry key="app/src/main/res/layout-w1240dp/activity_login2.xml" value="0.408843537414966" />
+        <entry key="app/src/main/res/layout-w936dp/activity_login2.xml" value="0.234765625" />
+        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.2859375" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/activity_login2.xml" value="0.31302083333333336" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_patient.xml" value="0.22447916666666667" />
+        <entry key="app/src/main/res/layout/activity_patient_search.xml" value="0.2540106951871658" />
+        <entry key="app/src/main/res/layout/activity_sanitary.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/activity_sanitary_old.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/app_bar_sanitary.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/average_time_stat.xml" value="0.35121834164660193" />
+        <entry key="app/src/main/res/layout/chart_month_column_item.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/chart_statistics_layout.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/content_sanitary.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/create_drug_fragment.xml" value="0.25622775800711745" />
+        <entry key="app/src/main/res/layout/dose_item.xml" value="0.16184666249192817" />
+        <entry key="app/src/main/res/layout/dose_item_empty.xml" value="0.24427083333333333" />
+        <entry key="app/src/main/res/layout/dose_vie_header_layout.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/drug_detail_fragment.xml" value="0.303125" />
+        <entry key="app/src/main/res/layout/drug_header.xml" value="0.2328508029431164" />
+        <entry key="app/src/main/res/layout/drug_item.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/drug_sugestion.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.3020833333333333" />
+        <entry key="app/src/main/res/layout/fragment_dose.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/fragment_drugs_tab.xml" value="0.2640625" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18309543434171835" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33444697430587206" />
+        <entry key="app/src/main/res/layout/fragment_patient_search.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/fragment_patient_search_item.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/fragment_patient_search_list.xml" value="0.3463541666666667" />
+        <entry key="app/src/main/res/layout/fragment_patients_tab.xml" value="0.3256904637832204" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.4010590579624603" />
+        <entry key="app/src/main/res/layout/fragment_profile_create.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/fragment_profile_update.xml" value="0.28994082840236685" />
+        <entry key="app/src/main/res/layout/fragment_sanitary.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/fragment_sanitary_tabs.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.31302083333333336" />
+        <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.31302083333333336" />
+        <entry key="app/src/main/res/layout/fragment_statistics.xml" value="0.2734375" />
+        <entry key="app/src/main/res/layout/fragment_type_selection.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/general_statistics_layout.xml" value="0.1953125" />
+        <entry key="app/src/main/res/layout/height_statistics_layout.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/kid_body.xml" value="0.39317773788150806" />
+        <entry key="app/src/main/res/layout/missing_url_error.xml" value="0.303125" />
+        <entry key="app/src/main/res/layout/nav_header_sanitary.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/new_patient_activity.xml" value="0.23399014778325122" />
+        <entry key="app/src/main/res/layout/new_patient_fragment.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/no_administrations_message.xml" value="0.3255208333333333" />
+        <entry key="app/src/main/res/layout/no_doses_message.xml" value="0.3255208333333333" />
+        <entry key="app/src/main/res/layout/no_drugs_message.xml" value="0.3255208333333333" />
+        <entry key="app/src/main/res/layout/no_patients_for_search_message.xml" value="0.3255208333333333" />
+        <entry key="app/src/main/res/layout/no_patients_message.xml" value="0.2640625" />
+        <entry key="app/src/main/res/layout/patient_header.xml" value="0.39374772158540616" />
+        <entry key="app/src/main/res/layout/patient_item.xml" value="0.314877909435292" />
+        <entry key="app/src/main/res/layout/patient_search_fragment.xml" value="0.2859375" />
+        <entry key="app/src/main/res/layout/patient_search_item.xml" value="0.33645833333333336" />
+        <entry key="app/src/main/res/layout/penview_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/reminder_fragment.xml" value="0.259375" />
+        <entry key="app/src/main/res/layout/sanitary_tabs_fragment.xml" value="0.2859375" />
+        <entry key="app/src/main/res/layout/statistc_1_layout.xml" value="0.3265625" />
+        <entry key="app/src/main/res/layout/statistc_2_layout.xml" value="0.3265625" />
+        <entry key="app/src/main/res/layout/total_growth_stat.xml" value="0.3265625" />
+        <entry key="app/src/main/res/layout/treatment_administration.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/treatment_administration_item.xml" value="0.2864583333333333" />
+        <entry key="app/src/main/res/layout/treatment_dose.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/treatment_header.xml" value="0.2900280747831742" />
+        <entry key="app/src/main/res/layout/treatment_update_fragment.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.303125" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.22447916666666667" />
+        <entry key="app/src/main/res/menu/drug_details_menu.xml" value="0.303125" />
+        <entry key="app/src/main/res/menu/patient_dose_menu.xml" value="0.2734375" />
+        <entry key="app/src/main/res/menu/patient_menu.xml" value="0.346875" />
+        <entry key="app/src/main/res/menu/patient_profile_menu.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/menu/patient_search_menu.xml" value="0.3890625" />
+        <entry key="app/src/main/res/menu/sanitary.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/menu/sanitary_menu.xml" value="0.37604166666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.10320030664361464" />
+      </ProjectState>
+    </option>
   </component>
 </project>

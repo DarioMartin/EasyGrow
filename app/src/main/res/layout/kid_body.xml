@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_l">
+
+    <ImageView
+        android:id="@+id/kid_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_kid_doses"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/arm_l_check"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_arm_l_check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/arm_r_check"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_arm_r_check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/abs_l_check"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_abs_l_check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/abs_r_check"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_abs_r_check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/leg_l_check"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_leg_l_check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/leg_r_check"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_leg_r_check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/arm_l"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@id/kid_image"
+        app:layout_constraintEnd_toStartOf="@id/arm_r"
+        app:layout_constraintStart_toStartOf="@id/kid_image"
+        app:layout_constraintTop_toTopOf="@id/kid_image"
+        app:layout_constraintVertical_bias="0.54"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:background="#30000000" />
+
+    <View
+        android:id="@+id/arm_r"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@id/kid_image"
+        app:layout_constraintEnd_toEndOf="@id/kid_image"
+        app:layout_constraintStart_toEndOf="@id/arm_l"
+        app:layout_constraintTop_toTopOf="@id/kid_image"
+        app:layout_constraintVertical_bias="0.54"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:background="#30000000" />
+
+    <View
+        android:id="@+id/abs_l"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toTopOf="@id/leg_l"
+        app:layout_constraintEnd_toStartOf="@id/abs_r"
+        app:layout_constraintStart_toStartOf="@id/kid_image"
+        app:layout_constraintTop_toBottomOf="@id/arm_l"
+        tools:background="#30000000" />
+
+    <View
+        android:id="@+id/abs_r"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toTopOf="@id/leg_r"
+        app:layout_constraintEnd_toEndOf="@id/kid_image"
+        app:layout_constraintStart_toEndOf="@id/abs_l"
+        app:layout_constraintTop_toBottomOf="@id/arm_r"
+        tools:background="#30000000" />
+
+    <View
+        android:id="@+id/leg_l"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@id/kid_image"
+        app:layout_constraintEnd_toStartOf="@id/leg_r"
+        app:layout_constraintStart_toStartOf="@id/kid_image"
+        app:layout_constraintTop_toTopOf="@id/kid_image"
+        app:layout_constraintVertical_bias="0.88"
+        tools:background="#30000000" />
+
+    <View
+        android:id="@+id/leg_r"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@id/kid_image"
+        app:layout_constraintEnd_toEndOf="@id/kid_image"
+        app:layout_constraintStart_toEndOf="@id/leg_l"
+        app:layout_constraintTop_toTopOf="@id/kid_image"
+        app:layout_constraintVertical_bias="0.88"
+        tools:background="#30000000" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

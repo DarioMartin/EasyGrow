@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eg_purple_3"
+    tools:context=".presentation.patient.profile.ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_m">
+
+        <TextView
+            android:id="@+id/drug_data_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/eg_purple_2"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/new_drug" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_m"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/drug_data_title">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/drug_name"
+                android:inputType="textCapWords"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pharmacy_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_input_layout">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pharmacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/drug_pharmacy"
+                android:inputType="textCapWords"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/concentration_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/drug_concentration_title"
+            android:textColor="@color/eg_purple_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pharmacy_input_layout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mass_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxs"
+            android:layout_marginEnd="@dimen/spacing_xxs"
+            app:layout_constraintEnd_toStartOf="@id/volume_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/concentration_title"
+            app:suffixText="@string/mg"
+            app:suffixTextColor="@color/eg_purple_2">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/mass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/drug_mass"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/volume_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/mass_input_layout"
+            app:layout_constraintTop_toTopOf="@id/mass_input_layout"
+            app:suffixText="@string/ml"
+            app:suffixTextColor="@color/eg_purple_2">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/volume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/drug_volume"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/cartridge_volume_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/cartridge_volume"
+            android:textColor="@color/eg_purple_2"
+            app:layout_constraintEnd_toStartOf="@id/guideline1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/volume_input_layout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cartridge_volume_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxs"
+            android:layout_marginEnd="@dimen/spacing_xxs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cartridge_volume_title"
+            app:suffixText="@string/ml"
+            app:suffixTextColor="@color/eg_purple_2">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/cartridge_volume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/drug_volume"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/link_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/drug_link"
+            android:textColor="@color/eg_purple_2"
+            app:layout_constraintEnd_toStartOf="@id/guideline1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cartridge_volume_input_layout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/url_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:layout_marginEnd="@dimen/spacing_xxs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/link_title"
+            app:suffixTextColor="@color/eg_purple_2">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/drug_url"
+                android:inputType="textUri"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/submit_button"
+            style="@style/EGButton.Secondary"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/spacing_xxl"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:layout_marginEnd="@dimen/spacing_xxl"
+            android:layout_marginBottom="@dimen/spacing_m"
+            android:text="@string/create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/url_input_layout"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

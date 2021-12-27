@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.easygrow">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.dariomartin.easygrow">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
+        android:name=".EGApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EasyGrow">
+        android:theme="@style/Theme.EasyGrow"
+        tools:ignore="LockedOrientationActivity"
+        tools:replace="android:allowBackup">
+
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.login.AuthActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.patient.PatientActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.sanitary.SanitaryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
+        <receiver android:name=".presentation.patient.reminder.AlarmReceiver" />
     </application>
 
 </manifest>
